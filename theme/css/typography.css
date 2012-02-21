@@ -1,6 +1,6 @@
 
 body {
-    font-family: Georgia, serif;;
+    font-family: Garamond, Georgia, serif;;
     font-size: 100%;
 }
 
@@ -75,7 +75,9 @@ th {
     padding-right: 5px;
 }
 
-pre, code {
+pre, code, cite {
+    font-family: "Courier New", Courier, monospace;
+    font-style: normal;
     padding: 5px;
     color: #333;
 /*    overflow: auto;*/
