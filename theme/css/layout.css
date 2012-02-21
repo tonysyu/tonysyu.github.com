@@ -1,0 +1,50 @@
+
+body{
+    margin: 0 auto;
+    padding: 0 1.5em;
+}
+
+img {
+    border: 1px solid #ccc;
+    margin:0 0.5em;
+}
+
+body, #footer {
+    min-width: 200px;
+    max-width: 800px;
+}
+
+
+#sidebar {
+    float:left;
+    width: 100px;
+    padding-right: 15px;
+    margin-right: 15px;}
+
+#main{
+    float:left;
+    max-width: 600px;
+    margin-right: 0;
+}
+
+#footer{
+    clear: both;
+    margin-right: 0;
+    padding-top: 15px;
+    border-top: 1px #aaa dotted;
+}
+
+#footer {
+    text-align: right;
+}
+
+#footer img {
+    margin: 0 0 5px 0;
+}
+
+
+dl {
+    margin-bottom: 15px;
+    clear: both;
+}
+
