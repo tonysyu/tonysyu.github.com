@@ -78,6 +78,7 @@ th {
 pre, code, cite {
     font-family: "Courier New", Courier, monospace;
     font-style: normal;
+    font-size: 80%;
     padding: 5px;
     color: #333;
 /*    overflow: auto;*/
