@@ -1,0 +1,140 @@
+<html lang="en-US" class="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>
+    
+        :-T
+    
+    Git: tips
+</title>
+
+    <link href=".././feeds/all.atom.xml"
+        type="application/atom+xml"
+        relJ="alternate"
+        title="Tony S. Yu ATOM Feed" />
+
+    
+
+    <link rel="stylesheet" href=".././theme/css/main.css">
+
+    <body>
+        <h1 id="logo">
+            <a href="../.">
+                
+                    Tony S. Yu
+                
+            </a>
+        </h1>
+
+        <div id="sidebar">
+           <ul class="fakelist">
+                
+                    <li>
+                        <a href=".././pages/about-me.html">About me</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././pages/research.html">Research</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././index.html">Articles</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././pages/design.html">Design</a>
+                    </li>
+                
+                <li><a href="mailto:me@tonysyu.com">Contact</a></li>
+            </ul>
+        </div>
+
+        <div id="main">
+            
+
+    <h1>Git: tips </h1>
+
+    
+
+
+    <div>
+        <p>There are plenty of guides for learning git and there are plenty of reference
+manuals as well. The problem with git is that there are so many commands to do
+so many different things (and sometimes, many commands to do the same
+thing). This article just highlights a few commands that I find really useful
+when the time arises. Whether it's useful to you depends on what you want to
+do.</p>
+<div class="section" id="aliased-commands">
+<h2>Aliased commands</h2>
+<p>In your <cite>~/.gitconfig</cite> file, you can define shell aliases (under the heading
+<cite>[alias]</cite>) for some commonly used commands. This is really useful when you
+often call the same command with an option.</p>
+<blockquote>
+<dl class="docutils">
+<dt><cite>co = checkout</cite></dt>
+<dd>I switch between branches frequently, so this saves a lot of typing.</dd>
+<dt><cite>wdiff = diff --word-diff</cite></dt>
+<dd>I mainly use word-diff for LaTeX: If you don't hard-wrap paragraphs and
+change a single word, normal diffs can give you a big block of green and
+red. Word-diffs will highlight the individual words that were changed.</dd>
+<dt><cite>sdiff = diff --staged</cite></dt>
+<dd>When I make multiple changes (either in multiple files, or in the same
+file) but only want to commit a subset of them, I like check the diff
+(to make sure I'm not missing any relevant changes) and the diff for
+the files staged for commit (to make sure I'm not including any
+extraneous changes).</dd>
+</dl>
+</blockquote>
+</div>
+<div class="section" id="fixing-commits">
+<h2>Fixing commits</h2>
+<blockquote>
+<p><cite>git commit --amend</cite></p>
+<dl class="docutils">
+<dt><cite>git rebase or `git rebase -i</cite></dt>
+<dd>(where <cite>-i</cite> = using an image in <cite>skimage.data</cite>).
+This allows</dd>
+</dl>
+</blockquote>
+</div>
+<div class="section" id="fixing-code">
+<h2>Fixing code</h2>
+<blockquote>
+<dl class="docutils">
+<dt><cite>git bisect</cite></dt>
+<dd>look for...</dd>
+</dl>
+</blockquote>
+</div>
+<div class="section" id="miscellany">
+<h2>Miscellany</h2>
+<blockquote>
+<dl class="docutils">
+<dt><cite>git stash</cite></dt>
+<dd>Save</dd>
+</dl>
+<p><cite>git log -p</cite></p>
+</blockquote>
+</div>
+
+    </div>
+
+    <h2 id="date">
+        February 29, 2012 by Tony S. Yu
+    </h2>
+
+
+        </div>
+
+        <div id="footer">
+            <ul class="horizontal">
+                <li><a href=".././feeds/all.atom.xml">RSS</a></li>
+                <li><a href="http://github.com/tonysyu/">GitHub</a></li>
+                <li>&copy; 2012 Tony S. Yu.</li>
+            </ul>
+        </div>
+
+    </body>
+</html>
