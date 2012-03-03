@@ -104,7 +104,10 @@ This allows</dd>
 <blockquote>
 <dl class="docutils">
 <dt><cite>git bisect</cite></dt>
-<dd>look for...</dd>
+<dd>My typical workflow is to first find a commit that passes tests, and then
+set that as a &quot;good&quot; commit. Next, I let <cite>git bisect</cite> iterate through the
+commits and each time running the tests and marking a commit as good or
+bad until <cite>git</cite> finds the bad commit.</dd>
 </dl>
 </blockquote>
 </div>
@@ -114,8 +117,20 @@ This allows</dd>
 <dl class="docutils">
 <dt><cite>git stash</cite></dt>
 <dd>Save</dd>
+<dt><cite>git log -p</cite></dt>
+<dd>Show changes.</dd>
 </dl>
-<p><cite>git log -p</cite></p>
+</blockquote>
+</div>
+<div class="section" id="gotchas">
+<h2>Gotchas</h2>
+<blockquote>
+<dl class="docutils">
+<dt><cite>git add --all</cite> vs <cite>git commit -a</cite></dt>
+<dd><cite>git add --all</cite> adds all files not ignored by git to the index (i.e.
+staged for commit). In contrast <cite>git commit -a</cite> adds all <em>tracked</em> files
+to the index and, of course, commits them.</dd>
+</dl>
 </blockquote>
 </div>
 
