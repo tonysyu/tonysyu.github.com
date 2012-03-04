@@ -107,9 +107,8 @@ colors from the &quot;cool&quot; colormap to color each curve:</p>
 <span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="n">phase_shift</span><span class="p">:</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">shift</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
-<p>I tend to prefer this method because the loop definition is a bit simpler
-(i.e., no call to <tt class="docutils literal">zip</tt>). I've wrapped the creation of a color cycling from
-a colormap in utility package called <a class="reference external" href="http://tonysyu.github.com/mpltools">mpltools</a>:</p>
+<p>I prefer this method because the loop definition is a bit simpler (i.e., no
+call to <tt class="docutils literal">zip</tt>). I've added this method to a utility package called <a class="reference external" href="http://tonysyu.github.com/mpltools">mpltools</a>:</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">color</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
@@ -119,7 +118,8 @@ a colormap in utility package called <a class="reference external" href="http://
 </pre></div>
 <p>The <a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_cycle_cmap.html">cycle_cmap</a> function doesn't really save that much typing, but I find it
 easier to read, nonetheless. Also, it has some pre-defined limits for colormaps
-to prevent use of very-light colors (i.e., low-contrast on white backgrounds).</p>
+to prevent use of very-light colors (which have low-contrast on white
+backgrounds).</p>
 </div>
 <div class="section" id="choosing-colors-for-a-varying-parameter">
 <h2>Choosing colors for a varying parameter</h2>

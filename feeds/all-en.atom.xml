@@ -29,9 +29,8 @@ colors from the &amp;quot;cool&amp;quot; colormap to color each curve:&lt;/p&gt;
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;shift&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;phase_shift&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;shift&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;lw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;I tend to prefer this method because the loop definition is a bit simpler
-(i.e., no call to &lt;tt class="docutils literal"&gt;zip&lt;/tt&gt;). I've wrapped the creation of a color cycling from
-a colormap in utility package called &lt;a class="reference external" href="http://tonysyu.github.com/mpltools"&gt;mpltools&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;I prefer this method because the loop definition is a bit simpler (i.e., no
+call to &lt;tt class="docutils literal"&gt;zip&lt;/tt&gt;). I've added this method to a utility package called &lt;a class="reference external" href="http://tonysyu.github.com/mpltools"&gt;mpltools&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mpltools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;
 
 &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
@@ -41,7 +40,8 @@ a colormap in utility package called &lt;a class="reference external" href="http
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The &lt;a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_cycle_cmap.html"&gt;cycle_cmap&lt;/a&gt; function doesn't really save that much typing, but I find it
 easier to read, nonetheless. Also, it has some pre-defined limits for colormaps
-to prevent use of very-light colors (i.e., low-contrast on white backgrounds).&lt;/p&gt;
+to prevent use of very-light colors (which have low-contrast on white
+backgrounds).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="choosing-colors-for-a-varying-parameter"&gt;
 &lt;h2&gt;Choosing colors for a varying parameter&lt;/h2&gt;
