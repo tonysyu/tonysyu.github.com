@@ -1,0 +1,231 @@
+<html lang="en-US" class="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>
+    
+        :-T
+    
+    Matplotlib named colors
+</title>
+
+    <link href=".././feeds/all.atom.xml"
+        type="application/atom+xml"
+        relJ="alternate"
+        title="Tony S. Yu ATOM Feed" />
+
+    
+
+    <link rel="stylesheet" href=".././theme/css/main.css">
+
+    <body>
+        <h1 id="logo">
+            <a href="../.">
+                
+                    Tony S. Yu
+                
+            </a>
+        </h1>
+
+        <div id="sidebar">
+           <ul class="fakelist">
+                
+                    <li>
+                        <a href=".././pages/about-me.html">About me</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././pages/research.html">Research</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././index.html">Articles</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././pages/design.html">Design</a>
+                    </li>
+                
+                <li><a href="mailto:me@tonysyu.com">Contact</a></li>
+            </ul>
+        </div>
+
+        <div id="main">
+            
+
+    <h1>Matplotlib named colors </h1>
+
+    
+    <p>
+        tags:
+        
+            <a href=".././tag/matplotlib.html">matplotlib</a><!--
+            -->,
+        
+            <a href=".././tag/color.html">color</a><!--
+            -->
+        
+    </p>
+
+
+
+    <div>
+        <p>Most people just use a few of the most common colors; in particular, those with
+single-character shortcuts:</p>
+<blockquote>
+'b' = blue
+'g' = green
+'r' = red
+'c' = cyan
+'m' = magenta
+'y' = yellow
+'k' = black
+'w' = white</blockquote>
+<p>These colors are fine, but not ideal, for a number of use cases.  One way
+around this limitation is to explicitly pass RGB values to any color parameter.
+In this post, however, I'm going to focus on named colors.</p>
+<p>You can actually use any of the <a class="reference external" href="http://en.wikipedia.org/wiki/Web_colors#X11_color_names">X11 colors</a> (web-safe colors?) in Matplotlib.
+These colors are listed in the <tt class="docutils literal">cnames</tt> dictionary of the <tt class="docutils literal">colors</tt> module:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">content/posts/matplotlib-named-colors.rst</tt>, line 28)</p>
+<p>Content block expected for the &quot;code-block&quot; directive; none found.</p>
+<pre class="literal-block">
+.. code-block:: python
+
+
+</pre>
+</div>
+<p>Since it's a bit difficult to choose colors from such a big list, let's try to
+sort and filter these colors.</p>
+<div class="section" id="color-metrics">
+<h2>Color metrics</h2>
+<p>First, we need to figure out how to sort these colors. We can judge
+a color by any number of different <a class="reference external" href="http://en.wikipedia.org/wiki/HSL_and_HSV">color metrics</a>, but let's focus on
+luminance, hue, saturation, and value. HSV---hue, saturation, and value---is
+commonly used as an alternative color representation. These metrics are
+described thoroughly <cite>elsewhere &lt;http://en.wikipedia.org/wiki/HSL_and_HSV&gt;</cite>,
+and Matplotlib actually provides a tool to convert RGB values to HSV:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">content/posts/matplotlib-named-colors.rst</tt>, line 45)</p>
+<p>Content block expected for the &quot;code-block&quot; directive; none found.</p>
+<pre class="literal-block">
+.. code-block:: python
+
+
+</pre>
+</div>
+<p>and the luminance can be converted from RGB values as:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">content/posts/matplotlib-named-colors.rst</tt>, line 50)</p>
+<p>Content block expected for the &quot;code-block&quot; directive; none found.</p>
+<pre class="literal-block">
+.. code-block:: python
+
+
+</pre>
+</div>
+<div class="section" id="hue">
+<h3>Hue</h3>
+<p>Hue corresponds to what we normally think of as color
+(e.g. red, green, blue, etc.).</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">content/posts/matplotlib-named-colors.rst</tt>, line 59)</p>
+<p>Content block expected for the &quot;code-block&quot; directive; none found.</p>
+<pre class="literal-block">
+.. code-block:: python
+
+
+</pre>
+</div>
+<p>Through trial and error, I found the following hues are fairly good at
+distinguishing the colors</p>
+</div>
+<div class="section" id="saturation">
+<h3>Saturation</h3>
+<p>Roughly speaking, high saturation corresponds to intense colors, while low
+saturation corresponds to muted colors.</p>
+</div>
+<div class="section" id="value-and-luminance">
+<h3>Value and luminance</h3>
+<p>value roughly corresponds to lightness (</p>
+</div>
+</div>
+<div class="section" id="plotting-a-cheat-sheet">
+<h2>Plotting a cheat sheet</h2>
+<p>Weird grey values: <a class="reference external" href="http://en.wikipedia.org/wiki/Grey#Web_colors">http://en.wikipedia.org/wiki/Grey#Web_colors</a></p>
+</div>
+<div class="section" id="applications">
+<h2>Applications</h2>
+<p>Now, if you filter colors with some desired property, you can easily choose a set colors for a color cycle. Below is an example with a 7-color cycle with a luminance between 0.4 and 0.7.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">cycle</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;tomato&#39;</span><span class="p">,</span>
+         <span class="s">&#39;royalblue&#39;</span><span class="p">,</span>
+         <span class="s">&#39;gray&#39;</span><span class="p">,</span>
+         <span class="s">&#39;orange&#39;</span><span class="p">,</span>
+         <span class="s">&#39;limegreen&#39;</span><span class="p">,</span>
+         <span class="s">&#39;hotpink&#39;</span><span class="p">,</span>
+         <span class="s">&#39;deepskyblue&#39;</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_color_cycle</span><span class="p">(</span><span class="n">cycle</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cycle</span><span class="p">)):</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">shift</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+
+    </div>
+
+    <h2 id="date">
+        March 24, 2012 by Tony S. Yu
+    </h2>
+
+    
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'tonysyu';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </div>
+
+        <div id="footer">
+            <ul class="horizontal">
+                <li><a href=".././feeds/all.atom.xml">RSS</a></li>
+                <li><a href="http://github.com/tonysyu/">GitHub</a></li>
+                <li>&copy; 2012 Tony S. Yu.</li>
+            </ul>
+        </div>
+
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29631580-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+    </body>
+</html>

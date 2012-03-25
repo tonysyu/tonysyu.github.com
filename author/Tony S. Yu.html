@@ -78,7 +78,7 @@
         
         
             <h1>
-                <a href=".././line-color-cycling.html"
+                <a href=".././2012/line-color-cycling.html"
                     >Line-color cycling</a>
             </h1>
 
@@ -131,7 +131,7 @@ colors from the &quot;cool&quot; colormap to color each curve:</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="images/posts/2012/line-color-cycling-1.png" src="../static/images/posts/2012/line-color-cycling-1.png" />
+<img alt="images/posts/2012/line-color-cycling-1.png" src="static/images/posts/2012/line-color-cycling-1.png" />
 <p>Alternatively, you can set the color cycle of the plot axes:</p>
 <div class="highlight"><pre><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_color_cycle</span><span class="p">([</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">cool</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_lines</span><span class="p">)])</span>
@@ -177,7 +177,7 @@ label those rates with different colors:</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="images/posts/2012/line-color-cycling-2.png" src="../static/images/posts/2012/line-color-cycling-2.png" />
+<img alt="images/posts/2012/line-color-cycling-2.png" src="static/images/posts/2012/line-color-cycling-2.png" />
 <p>To simplify this process, I wrote a simple factory function (function that
 returns a function) called <a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_color_mapper.html">color_mapper</a>:</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">color</span>
@@ -219,23 +219,83 @@ returns a function) called <a class="reference external" href="http://tonysyu.gi
 
 
             
-                <p>
+
+            
+                <h1>Older articles</h1>
+                <hr/>
+                <ol>
+            
+
+        
+        
+
+        
+
+
+    
+        
+        
+            
+            <li>
+                <h1>
+                    <a href=".././2012/plotting-error-bars.html"
+                        rel="bookmark"
+                        title="Permalink to Plotting error bars"
+                        >Plotting error bars</a>
+                </h1>
+
+                
+
+    March 24, 2012
+    
+    <p>
+        tags:
+        
+            <a href=".././tag/matplotlib.html">matplotlib</a><!--
+            -->,
+        
+            <a href=".././tag/line plots.html">line plots</a><!--
+            -->
+        
+    </p>
+
+
+
+
+
+
+                <p>Let's say you have some continuous data with a continuous error (or variance)
+measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar ...</span></pre></div>
+
+                <a class="readmore"
+                    href=".././2012/plotting-error-bars.html"
+                    >read more</a>
+
+            </li>
+        
+
+        
+
+            <p>
     
     Page 1 / 1
     
 </p>
-            
-
-            
-
-        
-        
 
         
 
 
     
 
+    
+        </ol><!-- Close list for older articles -->
     
 
 
