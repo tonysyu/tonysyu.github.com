@@ -1,0 +1,217 @@
+<html lang="en-US" class="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>
+    
+        :-T
+    
+    Ragged arrays
+</title>
+
+    <link href=".././feeds/all.atom.xml"
+        type="application/atom+xml"
+        relJ="alternate"
+        title="Tony S. Yu ATOM Feed" />
+
+    
+
+    <link rel="stylesheet" href=".././theme/css/main.css">
+
+    <body>
+        <h1 id="logo">
+            <a href="../.">
+                
+                    Tony S. Yu
+                
+            </a>
+        </h1>
+
+        <div id="sidebar">
+           <ul class="fakelist">
+                
+                    <li>
+                        <a href=".././pages/about-me.html">About me</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././pages/research.html">Research</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././index.html">Articles</a>
+                    </li>
+                
+                    <li>
+                        <a href=".././pages/design.html">Design</a>
+                    </li>
+                
+                <li><a href="mailto:me@tonysyu.com">Contact</a></li>
+            </ul>
+        </div>
+
+        <div id="main">
+            
+
+    <h1>Ragged arrays </h1>
+
+    
+
+
+    <div>
+        <p>I often need to save a series of arrays in which <em>one</em> dimension varies in
+length; this is sometimes called a ragged array <a class="footnote-reference" href="#id2" id="id1">[1]</a>. For example, I'm running
+particle tracking experiments, and I need to save the 2D coordinates of all
+particles in each video frame. The number of particles in each frame will vary,
+however, so I can't simply save a (dense) 3D array.</p>
+<p>Apparently <a class="reference external" href="http://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files support ragged arrays out of the box (using <a class="reference external" href="http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/User-Defined-Types.html">VLEN
+types</a>), but, for some reason, I decided to reinvent the wheel. Basically, I'm
+going to stack all the ragged arrays along the dimension that varies in length,
+i.e.---the ragged dimension. Then, I can just use numpy's <a class="reference external" href="http://docs.scipy.org/doc/numpy-1.6.0/reference/generated/numpy.savez.html">.npz file</a> to store
+the array data.</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p>The following code assumes that you've imported numpy as:</p>
+<div class="last"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div></div>
+<div class="section" id="stacking-and-unstacking-arrays">
+<h2>Stacking and unstacking arrays</h2>
+<p>Stacking is actually built into numpy in a series of functions: <a class="reference external" href="http://docs.scipy.org/doc/numpy-1.6.0/reference/generated/numpy.concatenate.html">concatenate</a>,
+<a class="reference external" href="http://docs.scipy.org/doc/numpy-1.6.0/reference/generated/numpy.hstack.html">hstack</a>, <a class="reference external" href="http://docs.scipy.org/doc/numpy-1.6.0/reference/generated/numpy.vstack.html">vstack</a>, and <a class="reference external" href="http://docs.scipy.org/doc/numpy-1.6.0/reference/generated/numpy.dstack.html">dstack</a>. The main difference, here, is that I want to
+save the starting indices of the sub-arrays so that I can slice them back out
+later:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">stack_arrays</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">a</span><span class="p">)[</span><span class="n">axis</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">array_list</span><span class="p">]</span>
+    <span class="n">lengths</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">lengths</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">stacked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">idx</span><span class="p">,</span> <span class="n">stacked</span>
+</pre></div>
+<p>And to use <cite>stack_arrays</cite>, just pass in a list of arrays:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; array_list = [np.array([(0, 0), (1, 1)]),
+...               np.array([(2, 2), (3, 3), (4, 4)]),
+...               np.array([(5, 5)])]
+&gt;&gt;&gt; idx, stacked = stack_arrays(array_list)
+&gt;&gt;&gt; print idx
+[0 2 5]
+&gt;&gt;&gt; print stacked
+[[0 0]
+ [1 1]
+ [2 2]
+ [3 3]
+ [4 4]
+ [5 5]]
+</pre>
+<p>The returned indices specify the starting index of each sub-array, and the
+ragged arrays are stacked vertically (since <cite>axis = 0</cite> by default).</p>
+<p>Now that we have a stacking function, we need an unstacking function. Again,
+numpy has a few functions for unstacking</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">unstack_arrays</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">stacked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">start_idx</span> <span class="o">=</span> <span class="n">idx</span>
+    <span class="n">end_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">idx</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">stacked</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]])</span>
+    <span class="c"># List of slices  matching array dimensions; equivalent to [:, :, ..., :]</span>
+    <span class="n">slice_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)]</span> <span class="o">*</span> <span class="n">stacked</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="n">array_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">):</span>
+        <span class="n">slice_list</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">array_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stacked</span><span class="p">[</span><span class="n">slice_list</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">array_list</span>
+</pre></div>
+<p>To split up the array from the last example into a list of ragged arrays, just
+pass in the starting indices and the stacked array (and the axis, if necessary)</p>
+<p>Example:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; stacked = np.array([(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])
+&gt;&gt;&gt; idx = [0, 2, 5]
+&gt;&gt;&gt; for ra in unstack_arrays(idx, stacked):
+...     print ra
+[[0 0]
+ [1 1]]
+[[2 2]
+ [3 3]
+ [4 4]]
+[[5 5]]
+</pre>
+<p>Instead of explicitly passing in the stacking axis, you could compare the
+shapes of all the arrays---the dimension that doesn't match would be the
+dimension you stack. Nevertheless, you would still need to specify the axis
+when unstacking, so I don't think this approach is worth the effort.</p>
+</div>
+<div class="section" id="saving-and-loading">
+<h2>Saving and loading</h2>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">save_stacked_array</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">idx</span><span class="p">,</span> <span class="n">stacked</span> <span class="o">=</span> <span class="n">stack_arrays</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">stacked_array</span><span class="o">=</span><span class="n">stacked</span><span class="p">,</span> <span class="n">stacked_index</span><span class="o">=</span><span class="n">idx</span><span class="p">)</span>
+</pre></div>
+<p>And the corresponding load function would be:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">load_stacked_arrays</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">npzfile</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s">&#39;stacked_index&#39;</span><span class="p">]</span>
+    <span class="n">stacked</span> <span class="o">=</span> <span class="n">npzfile</span><span class="p">[</span><span class="s">&#39;stacked_array&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">unstack_arrays</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">stacked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+</pre></div>
+<p>Alternatively, the save function could store the stacking-axis in the .npz file
+so that you don't have to specify it in the load function.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://mail.scipy.org/pipermail/numpy-discussion/2011-March/055208.html">http://mail.scipy.org/pipermail/numpy-discussion/2011-March/055208.html</a></td></tr>
+</tbody>
+</table>
+</div>
+
+    </div>
+
+    <h2 id="date">
+        April 10, 2012 by Tony S. Yu
+    </h2>
+
+    
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'tonysyu';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </div>
+
+        <div id="footer">
+            <ul class="horizontal">
+                <li><a href=".././feeds/all.atom.xml">RSS</a></li>
+                <li><a href="http://github.com/tonysyu/">GitHub</a></li>
+                <li>&copy; 2012 Tony S. Yu.</li>
+            </ul>
+        </div>
+
+    
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29631580-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+    </body>
+</html>
