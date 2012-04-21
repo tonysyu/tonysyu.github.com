@@ -76,11 +76,11 @@ th {
 }
 
 pre, code, cite {
-    font-family: "Courier New", Courier, monospace;
+    font-family: Courier, monospace;
     font-style: normal;
     font-size: 80%;
     padding: 5px;
-    color: #333;
+    color: #777;
 /*    overflow: auto;*/
 }
 
@@ -89,6 +89,7 @@ code {
 }
 
 pre {
+    color: #000;
     background-color: #f2f2f2;
     border-left: 1px solid #aaa;
 }
