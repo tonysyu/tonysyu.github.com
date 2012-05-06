@@ -7,14 +7,10 @@ familiar with.&lt;/p&gt;
 pretty pictures.  Let's just assume you already have some stream functions
 close at hand. For example, here's the stream function, $\psi$, for the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow_around_a_circular_cylinder"&gt;flow
 around a cylinder&lt;/a&gt;:&lt;/p&gt;
-&lt;div&gt;
-&lt;math xmlns="http://www.w3.org/1998/Math/MathML" mode="display"&gt;
-&lt;mtable&gt;
-&lt;mtr&gt;
-&lt;mtd&gt;&lt;mi&gt;ψ&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;U&lt;/mi&gt;&lt;mfenced open="(" close=")"&gt;
-&lt;mrow&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mfrac&gt;
-&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;R&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/mrow&gt;
-&lt;mrow&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;/mfenced&gt;&lt;mo&gt;sin&lt;/mo&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/math&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\psi = U \left( r - \frac{R^2}{r} \right) \sin \theta
+\end{equation*}
 &lt;/div&gt;
 &lt;p&gt;Here, $U$ is the (horizontal) flow velocity, $R$ is the radius of the cylinder,
 and $r$ and $\theta$ are polar coordinates. Let's rewrite this equation as
@@ -34,17 +30,11 @@ you're not familiar with sympy functions, check out &lt;a class="reference exter
 &lt;p&gt;The stream function is a bit abstract, so let's convert it to horizontal and
 vertical velocities, $u$ and $v$. These velocities can be written as
 derivatives of the stream function:&lt;/p&gt;
-&lt;div&gt;
-&lt;math xmlns="http://www.w3.org/1998/Math/MathML" mode="display"&gt;
-&lt;mtable&gt;
-&lt;mtr&gt;
-&lt;mtd&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;
-&lt;mrow&gt;&lt;mo&gt;∂&lt;/mo&gt;&lt;mi&gt;ψ&lt;/mi&gt;&lt;/mrow&gt;
-&lt;mrow&gt;&lt;mo&gt;∂&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/mtd&gt;&lt;/mtr&gt;
-&lt;mtr&gt;
-&lt;mtd&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mfrac&gt;
-&lt;mrow&gt;&lt;mo&gt;∂&lt;/mo&gt;&lt;mi&gt;ψ&lt;/mi&gt;&lt;/mrow&gt;
-&lt;mrow&gt;&lt;mo&gt;∂&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/math&gt;
+&lt;div class="math"&gt;
+\begin{align*}
+u = \frac{\partial \psi}{\partial y} \\
+v = -\frac{\partial \psi}{\partial x}
+\end{align*}
 &lt;/div&gt;
 &lt;p&gt;And since &lt;cite&gt;cylinder_stream_function&lt;/cite&gt; returns sympy functions, we can use their
 &lt;cite&gt;diff&lt;/cite&gt; methods to take derivatives, and then convert the resulting &lt;em&gt;sympy&lt;/em&gt;
@@ -65,7 +55,7 @@ of matplotlib):&lt;/p&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;plot_streamlines&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;xlim&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ylim&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
     &lt;span class="n"&gt;x0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;xlim&lt;/span&gt;
     &lt;span class="n"&gt;y0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ylim&lt;/span&gt;
-    &lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ogrid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;y0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;y1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ogrid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;y0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;y1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;100j&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;x1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;100j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;streamplot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;cornflowerblue&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which accepts a matplotlib axes and our velocity components, $u$ and $v$. Here,
@@ -115,11 +105,10 @@ the derivatives in the &lt;cite&gt;plot_streamlines&lt;/cite&gt; function and yo
 we might as well play around with it a bit more. Luckily, there's a stream
 function that describes &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow#Examples_of_two-dimensional_potential_flows"&gt;flow around a range of geometries&lt;/a&gt; (e.g., corners and
 walls):&lt;/p&gt;
-&lt;div&gt;
-&lt;math xmlns="http://www.w3.org/1998/Math/MathML" mode="display"&gt;
-&lt;mtable&gt;
-&lt;mtr&gt;
-&lt;mtd&gt;&lt;mi&gt;ψ&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;sin&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;θ&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/math&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\psi = A r^n = \sin n \theta
+\end{equation*}
 &lt;/div&gt;
 &lt;p&gt;where $A$ is a constant that determines the scale and rotation, and
 $n$ is a constant that determines the geometry. You should be able to write the

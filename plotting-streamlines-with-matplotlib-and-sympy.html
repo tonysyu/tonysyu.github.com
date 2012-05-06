@@ -82,14 +82,10 @@ familiar with.</p>
 pretty pictures.  Let's just assume you already have some stream functions
 close at hand. For example, here's the stream function, $\psi$, for the <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow_around_a_circular_cylinder">flow
 around a cylinder</a>:</p>
-<div>
-<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display">
-<mtable>
-<mtr>
-<mtd><mi>ψ</mi><mo>=</mo><mi>U</mi><mfenced open="(" close=")">
-<mrow><mi>r</mi><mo>-</mo><mfrac>
-<mrow><msup><mi>R</mi><mn>2</mn></msup></mrow>
-<mrow><mi>r</mi></mrow></mfrac></mrow></mfenced><mo>sin</mo><mi>θ</mi></mtd></mtr></mtable></math>
+<div class="math">
+\begin{equation*}
+\psi = U \left( r - \frac{R^2}{r} \right) \sin \theta
+\end{equation*}
 </div>
 <p>Here, $U$ is the (horizontal) flow velocity, $R$ is the radius of the cylinder,
 and $r$ and $\theta$ are polar coordinates. Let's rewrite this equation as
@@ -109,17 +105,11 @@ you're not familiar with sympy functions, check out <a class="reference external
 <p>The stream function is a bit abstract, so let's convert it to horizontal and
 vertical velocities, $u$ and $v$. These velocities can be written as
 derivatives of the stream function:</p>
-<div>
-<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display">
-<mtable>
-<mtr>
-<mtd><mi>u</mi><mo>=</mo><mfrac>
-<mrow><mo>∂</mo><mi>ψ</mi></mrow>
-<mrow><mo>∂</mo><mi>y</mi></mrow></mfrac></mtd></mtr>
-<mtr>
-<mtd><mi>v</mi><mo>=</mo><mo>-</mo><mfrac>
-<mrow><mo>∂</mo><mi>ψ</mi></mrow>
-<mrow><mo>∂</mo><mi>x</mi></mrow></mfrac></mtd></mtr></mtable></math>
+<div class="math">
+\begin{align*}
+u = \frac{\partial \psi}{\partial y} \\
+v = -\frac{\partial \psi}{\partial x}
+\end{align*}
 </div>
 <p>And since <cite>cylinder_stream_function</cite> returns sympy functions, we can use their
 <cite>diff</cite> methods to take derivatives, and then convert the resulting <em>sympy</em>
@@ -140,7 +130,7 @@ of matplotlib):</p>
 <span class="k">def</span> <span class="nf">plot_streamlines</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
     <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">xlim</span>
     <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">ylim</span>
-    <span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[</span><span class="n">y0</span><span class="p">:</span><span class="n">y1</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span><span class="n">x1</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[</span><span class="n">y0</span><span class="p">:</span><span class="n">y1</span><span class="p">:</span><span class="mi">100j</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span><span class="n">x1</span><span class="p">:</span><span class="mi">100j</span><span class="p">]</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">v</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;cornflowerblue&#39;</span><span class="p">)</span>
 </pre></div>
 <p>which accepts a matplotlib axes and our velocity components, $u$ and $v$. Here,
@@ -190,11 +180,10 @@ the derivatives in the <cite>plot_streamlines</cite> function and you're good to
 we might as well play around with it a bit more. Luckily, there's a stream
 function that describes <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow#Examples_of_two-dimensional_potential_flows">flow around a range of geometries</a> (e.g., corners and
 walls):</p>
-<div>
-<math xmlns="http://www.w3.org/1998/Math/MathML" mode="display">
-<mtable>
-<mtr>
-<mtd><mi>ψ</mi><mo>=</mo><mi>A</mi><msup><mi>r</mi><mi>n</mi></msup><mo>=</mo><mo>sin</mo><mi>n</mi><mi>θ</mi></mtd></mtr></mtable></math>
+<div class="math">
+\begin{equation*}
+\psi = A r^n = \sin n \theta
+\end{equation*}
 </div>
 <p>where $A$ is a constant that determines the scale and rotation, and
 $n$ is a constant that determines the geometry. You should be able to write the
