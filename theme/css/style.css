@@ -24,6 +24,15 @@ h2#date {
 }
 
 img.border {
- border: 1px solid lightgray;
+    border: 1px solid lightgray;
 }
 
+ol.articles {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+ol.articles li {
+    padding-bottom: 2em;
+}

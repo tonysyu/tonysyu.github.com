@@ -63,9 +63,8 @@
 </p>
 
 <p>
-    Every once and awhile, I may stray into other topics, such as design,
-    presentations, scientific publications, LaTeX, fluid mechanics, or
-    education.  It's a blog: you shouldn't expect much focus.
+    Occasionally, I may stray into other topics, such as design, presentations,
+    scientific publications, LaTeX, fluid mechanics, etc.
 </p>
 
 <a href="archives.html">Article Archives</a>
@@ -78,7 +77,60 @@
         
         
             
-                <ol start="1">
+                <ol class="articles"
+                    start="1">
+            
+            <li>
+                <h1>
+                    <a href="./plotting-error-bars.html"
+                        rel="bookmark"
+                        title="Permalink to Plotting error bars"
+                        >Plotting error bars</a>
+                </h1>
+
+                
+
+    March 24, 2012
+    
+    <p>
+        tags:
+        
+            <a href="./tag/matplotlib.html">matplotlib</a><!--
+            -->,
+        
+            <a href="./tag/line plots.html">line plots</a><!--
+            -->
+        
+    </p>
+
+
+
+
+
+
+                <p>Let's say you have some continuous data with a continuous error (or variance)
+measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar ...</span></pre></div>
+
+                <a class="readmore"
+                    href="./plotting-error-bars.html"
+                    >read more</a>
+
+            </li>
+        
+
+        
+
+
+    
+        
+        
             
             <li>
                 <h1>

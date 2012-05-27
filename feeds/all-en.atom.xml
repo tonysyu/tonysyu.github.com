@@ -1,5 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.com" rel="alternate"></link><link href="http://tonysyu.github.com/feeds/all-en.atom.xml" rel="self"></link><id>http://tonysyu.github.com</id><updated>2012-04-21T00:00:00-04:00</updated><entry><title>Plotting streamlines with Matplotlib and SymPy</title><link href="http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html" rel="alternate"></link><updated>2012-04-21T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html</id><summary type="html">&lt;p&gt;Fluid mechanics lends itself to some beautiful &lt;a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion"&gt;visualizations&lt;/a&gt; and &lt;a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029"&gt;images&lt;/a&gt;.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.com" rel="alternate"></link><link href="http://tonysyu.github.com/feeds/all-en.atom.xml" rel="self"></link><id>http://tonysyu.github.com</id><updated>2012-05-27T00:00:00-04:00</updated><entry><title>Ragged arrays</title><link href="http://tonysyu.github.com/ragged-arrays.html" rel="alternate"></link><updated>2012-05-27T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>http://tonysyu.github.com/ragged-arrays.html</id><summary type="html">&lt;p&gt;I often need to save a series of arrays in which &lt;em&gt;one&lt;/em&gt; dimension varies in
+length---sometimes called a ragged array &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt;. For example, I'm running
+particle tracking experiments, and I need to save the 2D coordinates of all
+particles in each video frame. The number of particles in each frame will vary
+due to movement across the edges of the frame and velocity components normal to
+the focal plane; so, I can't simply save a (dense) 3D array. Instead, I just
+store this data in a Python list of &lt;tt class="docutils literal"&gt;N&lt;/tt&gt;-by-2 numpy arrays, where &lt;tt class="docutils literal"&gt;N&lt;/tt&gt; is the
+number of particles in a frame and varies for each array.&lt;/p&gt;
+&lt;p&gt;The question is: How do you save this list of arrays? In my first attempt,
+I saved each array individually (as separate keys in an &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html"&gt;.npz file&lt;/a&gt;); this
+approach gave slow save/load times and larger file sizes. A better approach is
+to stack all the ragged arrays along the dimension that varies in
+length---i.e.  the ragged dimension. Then, I use numpy's &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html"&gt;.npz file&lt;/a&gt; to save
+the array data.&lt;/p&gt;
+&lt;div class="section" id="stacking-and-splitting-arrays"&gt;
+&lt;h2&gt;Stacking and splitting arrays&lt;/h2&gt;
+&lt;p&gt;numpy provides a number of functions to stack arrays: &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.concatenate.html"&gt;concatenate&lt;/a&gt;, &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.hstack.html"&gt;hstack&lt;/a&gt;,
+&lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.vstack.html"&gt;vstack&lt;/a&gt;, and &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html"&gt;dstack&lt;/a&gt;. The main difference here is that we want to save the
+starting indices of the sub-arrays so that we can slice them back out later:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;stack_ragged&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;array_list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;lengths&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;array_list&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cumsum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lengths&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;stacked&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;concatenate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;array_list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;stacked&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This returns the stacked array and the starting index of each sub-array. To use
+&lt;cite&gt;stack_ragged&lt;/cite&gt;, just pass in a list of arrays:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;array_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)]),&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;               &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)]),&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;               &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)])]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;stacked&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;stack_ragged&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;array_list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;stacked&lt;/span&gt;
+&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here, the ragged arrays are stacked vertically, since &lt;tt class="docutils literal"&gt;axis = 0&lt;/tt&gt; by default.&lt;/p&gt;
+&lt;p&gt;To split up this array back into a list of ragged arrays, just pass in the
+stacked array and the starting indices (and the axis, if necessary) to numpy's
+&lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html"&gt;split&lt;/a&gt; function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stacked&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt;
+&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;which returns our original list of arrays. (Note: the loop is just for prettier
+printing.)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="saving-and-loading"&gt;
+&lt;h2&gt;Saving and loading&lt;/h2&gt;
+&lt;p&gt;So stacking turns our list of arrays into a single array, which we can easily
+save using numpy's &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.save.html"&gt;save&lt;/a&gt; (single array) or &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html"&gt;savez&lt;/a&gt; (&lt;tt class="docutils literal"&gt;dict&lt;/tt&gt; of arrays)
+functions. If we want to get back our original arrays, however, we also need to
+save the start indices:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;save_stacked_array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;array_list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;stacked&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;stack_ragged&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;array_list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savez&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stacked_array&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;stacked&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stacked_index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, we define a function to load our original list of arrays:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;load_stacked_arrays&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;npzfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fname&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;npzfile&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;stacked_index&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;stacked&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;npzfile&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;stacked_array&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stacked&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Alternatively, the save function could store the stacking-axis in the .npz file
+so that you don't have to specify it in the load function. Another improvement
+would be to guess the stacking axis in &lt;tt class="docutils literal"&gt;stack_ragged&lt;/tt&gt; by checking which axis
+varies in size (this would fail, however, for constant &lt;tt class="docutils literal"&gt;N&lt;/tt&gt;). And finally, you
+can use &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html"&gt;savez_compressed&lt;/a&gt; instead of &lt;a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html"&gt;savez&lt;/a&gt; to reduce storage.&lt;/p&gt;
+&lt;p&gt;P.S. After implementing this approach, I learned that &lt;a class="reference external" href="http://en.wikipedia.org/wiki/NetCDF"&gt;NetCDF&lt;/a&gt; files support
+ragged arrays out of the box (using &lt;a class="reference external" href="http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/User-Defined-Types.html"&gt;VLEN types&lt;/a&gt;)---it's not the first time
+I've reinvented the wheel; it won't be the last.&lt;/p&gt;
+&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://mail.scipy.org/pipermail/numpy-discussion/2011-March/055208.html"&gt;http://mail.scipy.org/pipermail/numpy-discussion/2011-March/055208.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="numpy"></category><category term="io"></category><category term="data"></category></entry><entry><title>Plotting streamlines with Matplotlib and SymPy</title><link href="http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html" rel="alternate"></link><updated>2012-04-21T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html</id><summary type="html">&lt;p&gt;Fluid mechanics lends itself to some beautiful &lt;a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion"&gt;visualizations&lt;/a&gt; and &lt;a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029"&gt;images&lt;/a&gt;.
 I won't cover anything too complicated here, just potential flow, which any
 undergrad who has taken a fluid mechanics course should be (at least somewhat)
 familiar with.&lt;/p&gt;

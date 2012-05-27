@@ -10,18 +10,18 @@
     Ragged arrays
 </title>
 
-    <link href=".././feeds/all.atom.xml"
+    <link href="./feeds/all.atom.xml"
         type="application/atom+xml"
         relJ="alternate"
         title="Tony S. Yu ATOM Feed" />
 
     
 
-    <link rel="stylesheet" href=".././theme/css/main.css">
+    <link rel="stylesheet" href="./theme/css/main.css">
 
     <body>
         <h1 id="logo">
-            <a href="../.">
+            <a href=".">
                 
                     Tony S. Yu
                 
@@ -32,19 +32,19 @@
            <ul class="fakelist">
                 
                     <li>
-                        <a href=".././pages/about-me.html">About me</a>
+                        <a href="./pages/about-me.html">About me</a>
                     </li>
                 
                     <li>
-                        <a href=".././pages/research.html">Research</a>
+                        <a href="./pages/research.html">Research</a>
                     </li>
                 
                     <li>
-                        <a href=".././index.html">Articles</a>
+                        <a href="./index.html">Articles</a>
                     </li>
                 
                     <li>
-                        <a href=".././pages/design.html">Design</a>
+                        <a href="./pages/design.html">Design</a>
                     </li>
                 
                 <li><a href="mailto:me@tonysyu.com">Contact</a></li>
@@ -60,10 +60,13 @@
     <p>
         tags:
         
-            <a href=".././tag/numpy.html">numpy</a><!--
+            <a href="./tag/numpy.html">numpy</a><!--
             -->,
         
-            <a href=".././tag/io.html">io</a><!--
+            <a href="./tag/io.html">io</a><!--
+            -->,
+        
+            <a href="./tag/data.html">data</a><!--
             -->
         
     </p>
@@ -72,34 +75,38 @@
 
     <div>
         <p>I often need to save a series of arrays in which <em>one</em> dimension varies in
-length; this is sometimes called a ragged array <a class="footnote-reference" href="#id2" id="id1">[1]</a>. For example, I'm running
+length---sometimes called a ragged array <a class="footnote-reference" href="#id2" id="id1">[1]</a>. For example, I'm running
 particle tracking experiments, and I need to save the 2D coordinates of all
-particles in each video frame. The number of particles in each frame will vary,
-however, so I can't simply save a (dense) 3D array. Instead, I'm going to store
-a Python list of <tt class="docutils literal">N</tt>-by-2 numpy arrays, where <tt class="docutils literal">N</tt> varies for each array
-(i.e. <tt class="docutils literal">N</tt> can vary from frame to frame).</p>
-<p>The question is: How do you save these lists of arrays? I decided to just stack
-all the ragged arrays along the dimension that varies in length---i.e. the
-ragged dimension. Then, I can use numpy's <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">.npz file</a> to save the array data.</p>
-<div class="section" id="stacking-and-unstacking-arrays">
-<h2>Stacking and unstacking arrays</h2>
-<p>numpy has a number of functions to stack arrays: <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.concatenate.html">concatenate</a>, <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.hstack.html">hstack</a>,
-<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.vstack.html">vstack</a>, and <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html">dstack</a>. The main difference, here, is that we want to save the
+particles in each video frame. The number of particles in each frame will vary
+due to movement across the edges of the frame and velocity components normal to
+the focal plane; so, I can't simply save a (dense) 3D array. Instead, I just
+store this data in a Python list of <tt class="docutils literal">N</tt>-by-2 numpy arrays, where <tt class="docutils literal">N</tt> is the
+number of particles in a frame and varies for each array.</p>
+<p>The question is: How do you save this list of arrays? In my first attempt,
+I saved each array individually (as separate keys in an <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">.npz file</a>); this
+approach gave slow save/load times and larger file sizes. A better approach is
+to stack all the ragged arrays along the dimension that varies in
+length---i.e.  the ragged dimension. Then, I use numpy's <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">.npz file</a> to save
+the array data.</p>
+<div class="section" id="stacking-and-splitting-arrays">
+<h2>Stacking and splitting arrays</h2>
+<p>numpy provides a number of functions to stack arrays: <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.concatenate.html">concatenate</a>, <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.hstack.html">hstack</a>,
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.vstack.html">vstack</a>, and <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html">dstack</a>. The main difference here is that we want to save the
 starting indices of the sub-arrays so that we can slice them back out later:</p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="k">def</span> <span class="nf">stack_arrays</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">stack_ragged</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">a</span><span class="p">)[</span><span class="n">axis</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">array_list</span><span class="p">]</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">lengths</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">stacked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">stacked</span><span class="p">,</span> <span class="n">idx</span>
 </pre></div>
-<p>The returned indices specify the starting index of each sub-array. To use
-<cite>stack_arrays</cite>, just pass in a list of arrays:</p>
+<p>This returns the stacked array and the starting index of each sub-array. To use
+<cite>stack_ragged</cite>, just pass in a list of arrays:</p>
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">array_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]),</span>
 <span class="o">...</span>               <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]),</span>
 <span class="o">...</span>               <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)])]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">stacked</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stack_arrays</span><span class="p">(</span><span class="n">array_list</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">stacked</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stack_ragged</span><span class="p">(</span><span class="n">array_list</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">idx</span>
 <span class="p">[</span><span class="mi">2</span> <span class="mi">5</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">stacked</span>
@@ -111,9 +118,9 @@ starting indices of the sub-arrays so that we can slice them back out later:</p>
  <span class="p">[</span><span class="mi">5</span> <span class="mi">5</span><span class="p">]]</span>
 </pre></div>
 <p>Here, the ragged arrays are stacked vertically, since <tt class="docutils literal">axis = 0</tt> by default.</p>
-<p>To split up the array from the last example into a list of ragged arrays, just
-pass in the stacked array and the starting indices (and the axis, if necessary)
-to numpy's <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html">split</a> function:</p>
+<p>To split up this array back into a list of ragged arrays, just pass in the
+stacked array and the starting indices (and the axis, if necessary) to numpy's
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html">split</a> function:</p>
 <div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">stacked</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
 <span class="o">...</span>     <span class="k">print</span> <span class="n">array</span>
 <span class="p">[[</span><span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
@@ -123,17 +130,17 @@ to numpy's <a class="reference external" href="http://docs.scipy.org/doc/numpy/r
  <span class="p">[</span><span class="mi">4</span> <span class="mi">4</span><span class="p">]]</span>
 <span class="p">[[</span><span class="mi">5</span> <span class="mi">5</span><span class="p">]]</span>
 </pre></div>
-<p>which returns our original list of arrays. (Note the loop is just for prettier
+<p>which returns our original list of arrays. (Note: the loop is just for prettier
 printing.)</p>
 </div>
 <div class="section" id="saving-and-loading">
 <h2>Saving and loading</h2>
 <p>So stacking turns our list of arrays into a single array, which we can easily
-save using numpy's <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.save.html">save</a> (single array) or <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">savez</a> (<tt class="docutils literal">dict</tt> of arrays).  If we
-want to get back our original arrays, however, we also need to save the start
-indices using <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">savez</a>:</p>
+save using numpy's <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.save.html">save</a> (single array) or <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">savez</a> (<tt class="docutils literal">dict</tt> of arrays)
+functions. If we want to get back our original arrays, however, we also need to
+save the start indices:</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">save_stacked_array</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="n">stacked</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stack_arrays</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">stacked</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">stack_ragged</span><span class="p">(</span><span class="n">array_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
     <span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">stacked_array</span><span class="o">=</span><span class="n">stacked</span><span class="p">,</span> <span class="n">stacked_index</span><span class="o">=</span><span class="n">idx</span><span class="p">)</span>
 </pre></div>
 <p>Finally, we define a function to load our original list of arrays:</p>
@@ -144,10 +151,13 @@ indices using <a class="reference external" href="http://docs.scipy.org/doc/nump
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">stacked</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
 </pre></div>
 <p>Alternatively, the save function could store the stacking-axis in the .npz file
-so that you don't have to specify it in the load function.</p>
-<p>After implementing this approach, I learned that <a class="reference external" href="http://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files support ragged
-arrays out of the box (using <a class="reference external" href="http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/User-Defined-Types.html">VLEN types</a>)---it's not the first time I've
-reinvented the wheel; it won't be the last.</p>
+so that you don't have to specify it in the load function. Another improvement
+would be to guess the stacking axis in <tt class="docutils literal">stack_ragged</tt> by checking which axis
+varies in size (this would fail, however, for constant <tt class="docutils literal">N</tt>). And finally, you
+can use <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">savez_compressed</a> instead of <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html">savez</a> to reduce storage.</p>
+<p>P.S. After implementing this approach, I learned that <a class="reference external" href="http://en.wikipedia.org/wiki/NetCDF">NetCDF</a> files support
+ragged arrays out of the box (using <a class="reference external" href="http://www.unidata.ucar.edu/software/netcdf/docs/netcdf/User-Defined-Types.html">VLEN types</a>)---it's not the first time
+I've reinvented the wheel; it won't be the last.</p>
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -182,7 +192,7 @@ reinvented the wheel; it won't be the last.</p>
 
         <div id="footer">
             <ul class="horizontal">
-                <li><a href=".././feeds/all.atom.xml">RSS</a></li>
+                <li><a href="./feeds/all.atom.xml">RSS</a></li>
                 <li><a href="http://github.com/tonysyu/">GitHub</a></li>
                 <li>&copy; 2012 Tony S. Yu.</li>
             </ul>
