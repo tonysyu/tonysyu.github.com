@@ -77,24 +77,33 @@
         
         
             <h1>
-                <a href=".././plotting-streamlines-with-matplotlib-and-sympy.html"
-                    >Plotting streamlines with Matplotlib and SymPy</a>
+                <a href=".././animating-particles-in-a-flow.html"
+                    >Animating particles in a flow</a>
             </h1>
 
             
 
-    April 21, 2012
+    July 02, 2012
     
     <p>
         tags:
-        
-            <a href=".././tag/fluids.html">fluids</a><!--
-            -->,
         
             <a href=".././tag/matplotlib.html">matplotlib</a><!--
             -->,
         
             <a href=".././tag/sympy.html">sympy</a><!--
+            -->,
+        
+            <a href=".././tag/scipy.html">scipy</a><!--
+            -->,
+        
+            <a href=".././tag/mpltools.html">mpltools</a><!--
+            -->,
+        
+            <a href=".././tag/animation.html">animation</a><!--
+            -->,
+        
+            <a href=".././tag/fluids.html">fluids</a><!--
             -->
         
     </p>
@@ -104,148 +113,232 @@
 
 
 
-            <p>Fluid mechanics lends itself to some beautiful <a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion">visualizations</a> and <a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029">images</a>.
-I won't cover anything too complicated here, just potential flow, which any
-undergrad who has taken a fluid mechanics course should be (at least somewhat)
-familiar with.</p>
-<p>I won't really cover the <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow">math or theory</a> here; I'm just going to plot some
-pretty pictures.  Let's just assume you already have some stream functions
-close at hand. For example, here's the stream function, $\psi$, for the <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow_around_a_circular_cylinder">flow
-around a cylinder</a>:</p>
-<div class="math">
-\begin{equation*}
-\psi = U \left( r - \frac{R^2}{r} \right) \sin \theta
-\end{equation*}
-</div>
-<p>Here, $U$ is the (horizontal) flow velocity, $R$ is the radius of the cylinder,
-and $r$ and $\theta$ are polar coordinates. Let's rewrite this equation as
-a python function that returns a <a class="reference external" href="http://code.google.com/p/sympy/">sympy</a> function (since we're going to want
-some derivatives later):</p>
+            <p>This article demonstrates matplotlib's <a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html">animation</a> module by animating marker
+particles in a fluid flow around a cylinder. It's a bit long because it ties
+together a number of different ideas:</p>
+<ul class="simple">
+<li>stream functions</li>
+<li>numerical integration</li>
+<li>plotting and animation</li>
+</ul>
+<p>Before we really start, let's copy a function from a previous article on
+<a class="reference external" href="http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html">stream functions in potential flow</a>.</p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 
-<span class="k">def</span> <span class="nf">cylinder_stream_function</span><span class="p">(</span><span class="n">U</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">U</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-</pre></div>
-<p>This function returns a sympy function object that takes variables $x$ and $y$
-(instead of $r$ and $\theta$), which are convenient for plotting later. (If
-you're not familiar with sympy functions, check out <a class="reference external" href="http://docs.sympy.org/dev/tutorial.html">some tutorials</a>.)</p>
-<p>The stream function is a bit abstract, so let's convert it to horizontal and
-vertical velocities, $u$ and $v$. These velocities can be written as
-derivatives of the stream function:</p>
-<div class="math">
-\begin{align*}
-u = \frac{\partial \psi}{\partial y} \\
-v = -\frac{\partial \psi}{\partial x}
-\end{align*}
-</div>
-<p>And since <cite>cylinder_stream_function</cite> returns sympy functions, we can use their
-<cite>diff</cite> methods to take derivatives, and then convert the resulting <em>sympy</em>
-functions into <em>numpy</em> functions using <cite>lambdify</cite> (<a class="reference external" href="http://docs.sympy.org/dev/modules/utilities/lambdify.html">huh?</a>):</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">velocity_field</span><span class="p">(</span><span class="n">psi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">velocity_field</span><span class="p">(</span><span class="n">psi</span><span class="p">):</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">psi</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="s">&#39;numpy&#39;</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="o">-</span><span class="n">psi</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s">&#39;numpy&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span>
 </pre></div>
-<p>Now, we have functions <cite>u(x, y)</cite> and <cite>v(x, y)</cite>, which can accept numpy arrays.
-Before showing some pretty plots, let's create a couple of convenience
-functions. First, here's a simple function that creates a grid of points, <cite>X</cite>
-and <cite>Y</cite>, and plots streamlines using matplotlib's <a class="reference external" href="https://github.com/matplotlib/matplotlib/pull/664">brand-spanking-new</a>
-<cite>streamplot</cite> function (as of this writing, you'll need a recent github version
-of matplotlib):</p>
+<p>Here, <tt class="docutils literal">velocity_field</tt> accepts a symbolic function, <tt class="docutils literal">psi</tt>, and returns
+functions that calculate the velocity components for coordinates <tt class="docutils literal">x</tt> and
+<tt class="docutils literal">y</tt>. Given a stream function <tt class="docutils literal">psi</tt>, we can calculate the velocity at any
+point in space. For plotting, however, we need translate these velocities to
+displacements; in other words, we need to integrate.</p>
+<div class="section" id="calculating-particle-displacements">
+<h2>Calculating particle displacements</h2>
+<p>To calculate displacements from velocities, we need a <a class="reference external" href="http://en.wikipedia.org/wiki/Numerical_ordinary_differential_equations">numerical integration</a>
+routine. Below, we wrap three integration functions:</p>
+<ul class="simple">
+<li>a simple first-order stepper based on <a class="reference external" href="http://en.wikipedia.org/wiki/Euler_method">Euler's method</a></li>
+<li>one using a (simple) <a class="reference external" href="http://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_method">Runge-Kutta</a> implementation in matplotlib</li>
+<li>and one based on scipy's <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html#scipy.integrate.odeint">odeint</a> function</li>
+</ul>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">mlab</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
 
-<span class="k">def</span> <span class="nf">plot_streamlines</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
-    <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">xlim</span>
-    <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">ylim</span>
-    <span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[</span><span class="n">y0</span><span class="p">:</span><span class="n">y1</span><span class="p">:</span><span class="mi">100j</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span><span class="n">x1</span><span class="p">:</span><span class="mi">100j</span><span class="p">]</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">u</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">v</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;cornflowerblue&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">vel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span> <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">pts</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">dt</span>
+
+<span class="k">def</span> <span class="nf">rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">new_pts</span> <span class="o">=</span> <span class="p">[</span><span class="n">mlab</span><span class="o">.</span><span class="n">rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">new_pts</span>
+
+<span class="k">def</span> <span class="nf">ode_scipy</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">new_pts</span> <span class="o">=</span> <span class="p">[</span><span class="n">integrate</span><span class="o">.</span><span class="n">odeint</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">new_pts</span>
+
+<span class="n">available_integrators</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">euler</span><span class="o">=</span><span class="n">euler</span><span class="p">,</span> <span class="n">rk4</span><span class="o">=</span><span class="n">rk4</span><span class="p">,</span> <span class="n">scipy</span><span class="o">=</span><span class="n">ode_scipy</span><span class="p">)</span>
 </pre></div>
-<p>which accepts a matplotlib axes and our velocity components, $u$ and $v$. Here,
-<cite>np.ogrid</cite> just creates a 100-by-100 grid of points between the specified $x$
-and $y$ limits. Note that the indices to <cite>np.ogrid</cite> look like
-<cite>start:stop:step</cite>, but the &quot;step&quot; here is imaginary. Using imaginary numbers
-tells numpy to interpret the last value as the &quot;number of points between start
-and stop&quot; instead of &quot;step interval&quot; (kind of like switching from <cite>np.arange</cite>
-to <cite>np.linspace</cite>).</p>
-<p>Next, to prettify our plots a bit, let's create a function that removes extra
-white-space, ticks, and spines (the lines surrounding the axes):</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">format_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">&#39;equal&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([])</span>
-    <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
-        <span class="n">spine</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<p>These integration functions return updated particle coordinates based on a
+velocity function, <tt class="docutils literal">f</tt>; the initial coordinates, <tt class="docutils literal">pts</tt>; and the time step,
+<tt class="docutils literal">dt</tt>.  These functions would be faster if they operated on all coordinates
+simultaneously instead of looping; however, that would require you to join the
+(N-by-2) coordinates into a single 1D array so that the integration routines
+will run properly. After that, you'd have to split them back up for plotting.</p>
+<p>Next, we define a factory function (a function that returns a function) that
+connects our integrator to our velocity-field functions. The returned function
+will return the next particle position based on the current particle position
+and the time step.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">displace_func_from_velocity_funcs</span><span class="p">(</span><span class="n">u_func</span><span class="p">,</span> <span class="n">v_func</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;rk4&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return function that calculates particle positions after time step.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    u_func, v_func : functions</span>
+<span class="sd">        Velocity fields which return velocities at arbitrary coordinates.</span>
+<span class="sd">    method : {&#39;euler&#39; | &#39;rk4&#39; | &#39;scipy&#39;}</span>
+<span class="sd">        Integration method to update particle positions at each time step.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">velocity</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return (u, v) velocities for given (x, y) coordinates.&quot;&quot;&quot;</span>
+        <span class="c"># Dummy `t` variable required to work with integrators</span>
+        <span class="c"># Must return a list (not a tuple) for scipy&#39;s integrate functions.</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">u_func</span><span class="p">(</span><span class="o">*</span><span class="n">xy</span><span class="p">),</span> <span class="n">v_func</span><span class="p">(</span><span class="o">*</span><span class="n">xy</span><span class="p">)]</span>
+
+    <span class="n">odeint</span> <span class="o">=</span> <span class="n">available_integrators</span><span class="p">[</span><span class="n">method</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">displace</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">odeint</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">displace</span>
 </pre></div>
-<p>Now with that out of the way, let's plot the flow around a cylinder:</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="n">psi</span> <span class="o">=</span> <span class="n">cylinder_stream_function</span><span class="p">()</span>
-<span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">velocity_field</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
-
-<span class="n">xlim</span> <span class="o">=</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">plot_streamlines</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">)</span>
-
-<span class="n">c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-
-<span class="n">format_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-</pre></div>
-<p>Stepping through block-by-block: we first create the stream function (using the
-default velocity and cylinder radius) and create velocity functions $u$ and
-$v$. Next, we tweak the default sizes (of both the data-limits and the figure)
-and call our convenience function, <cite>plot_streamlines</cite>. For better
-visualization, we also plot a circle, which represents the cylinder. Finally,
-we call our convenience function <cite>format_axes</cite> to clean up the plot. And here's
-the result:</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-1.png" src="../static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-1.png" />
-<p>That's all there is to it. If you have your equations written in terms of
-potential functions instead of stream functions, then you can just switch out
-the derivatives in the <cite>plot_streamlines</cite> function and you're good to go.</p>
-<p>Since we spent so much time writing a framework for plotting stream functions,
-we might as well play around with it a bit more. Luckily, there's a stream
-function that describes <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow#Examples_of_two-dimensional_potential_flows">flow around a range of geometries</a> (e.g., corners and
-walls):</p>
-<div class="math">
-\begin{equation*}
-\psi = A r^n = \sin n \theta
-\end{equation*}
+<p>This function looks long, but it's mostly documentation and comments.</p>
 </div>
-<p>where $A$ is a constant that determines the scale and rotation, and
-$n$ is a constant that determines the geometry. You should be able to write the
-python function yourself based on the cylinder example above, but just for
-posterity:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">corner_stream_function</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-  <span class="n">r</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-  <span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="n">n</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span>
+<div class="section" id="animations-in-matplotlib">
+<h2>Animations in Matplotlib</h2>
+<p>Finally, we get to the animation portion. Matplotlib (or more precisely, Ryan
+May) added the <a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html">animation</a> module in version 1.1. This module greatly simplifies
+the process of generating animations. Nevertheless, I wanted a way to reuse
+animations, which didn't seem terribly easy based on the <a class="reference external" href="http://matplotlib.sourceforge.net/examples/animation/index.html">animation
+examples</a>.  I ended up creating a fairly simple <a class="reference external" href="https://github.com/tonysyu/mpltools/blob/master/mpltools/animation.py#L27">Animation class</a>, which uses
+(but doesn't subclass) matplotlib's animation class.</p>
+<p>The following example uses <cite>mpltools.animation</cite> to plot particles in
+a potential flow. There are a few important parts:</p>
+<ul class="simple">
+<li><tt class="docutils literal">__init__</tt> creates a figure (the name <tt class="docutils literal">self.fig</tt> is required) where the
+animation gets drawn.</li>
+<li><tt class="docutils literal">init_background</tt> draws any background elements that aren't updated
+between frames (optional).</li>
+<li><tt class="docutils literal">update</tt> adds particles on the left side of the frame, updates their positions
+for a specified time step, and removes particles that leave the right side of
+the frame.</li>
+</ul>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpltools.animation</span> <span class="kn">import</span> <span class="n">Animation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s">&#39;contour&#39;</span><span class="p">,</span> <span class="n">negative_linestyle</span><span class="o">=</span><span class="s">&#39;solid&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">StreamFuncAnim</span><span class="p">(</span><span class="n">Animation</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_function</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span>
+        <span class="c"># Initialize velocity field and displace *functions*</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">velocity_field</span><span class="p">(</span><span class="n">stream_function</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">displace</span> <span class="o">=</span> <span class="n">displace_func_from_velocity_funcs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+        <span class="c"># Save bounds of plot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xlim</span> <span class="o">=</span> <span class="n">xlim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="o">=</span> <span class="n">ylim</span> <span class="k">if</span> <span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">xlim</span>
+        <span class="c"># Animation objects must create `fig` and `ax` attributes.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">&#39;equal&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init_background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Draw background with streamlines of flow.</span>
+
+<span class="sd">        Note: artists drawn here aren&#39;t removed or updated between frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlim</span>
+        <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span>
+        <span class="c"># Create 100 x 100 grid of coordinates.</span>
+        <span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="n">x0</span><span class="p">:</span><span class="n">x1</span><span class="p">:</span><span class="mi">100j</span><span class="p">,</span> <span class="n">y0</span><span class="p">:</span><span class="n">y1</span><span class="p">:</span><span class="mi">100j</span><span class="p">]</span>
+        <span class="c"># Horizontal and vertical velocities corresponding to coordinates.</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">streamplot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;0.7&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update locations of &quot;particles&quot; in flow on each frame frame.&quot;&quot;&quot;</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">pts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+            <span class="n">pts</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">random_y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">)))</span>
+            <span class="n">pts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displace</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+            <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+            <span class="n">pts</span> <span class="o">=</span> <span class="n">remove_particles</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+            <span class="n">lines</span><span class="p">,</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#39;ro&#39;</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">lines</span><span class="p">,</span> <span class="c"># return line so that blit works properly</span>
 </pre></div>
-<p>Now, let's start simple with a vertical flow impinging on a horizontal wall (<cite>n
-= 2</cite>), or, equivalently, flow around a 90-degree corner:</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-2.png" src="../static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-2.png" />
-<p>Here's flow around a 125-degree corner (<cite>n = 3/2</cite>):</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-3.png" src="../static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-3.png" />
-<p>Finally, when <cite>n</cite> is negative, we can simulate singularities. Here's
-a <a class="reference external" href="http://en.wikipedia.org/wiki/Quadrupole">quadrupole</a> (<cite>n = -2</cite>):</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-4.png" src="../static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-4.png" />
-<p>Beautiful, don't you think?</p>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-extensions: ["tex2jax.js"],
-jax: ["input/TeX", "output/HTML-CSS"],
-tex2jax: {
-  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-  processEscapes: true
-},
-"HTML-CSS": { availableFonts: ["TeX"] }
-});
-</script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<p>In the <tt class="docutils literal">update</tt> method, I've chosen to clear and redraw all the displayed
+particles, but it would probably be more efficient to update the particle
+positions.</p>
+<p><tt class="docutils literal">StreamFuncAnim</tt> calls a couple of small utility functions: First,
+<tt class="docutils literal">random_y</tt>, which returns a random y-position within the domain so that we
+can add particles to the left edge.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">random_y</span><span class="p">(</span><span class="n">ylim</span><span class="p">):</span>
+    <span class="n">yrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">yrange</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+<p>It also calls <tt class="docutils literal">remove_particles</tt>, which removes particles that are outside
+the limits of the plot.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">remove_particles</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">outside_xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">outside_ylim</span> <span class="o">=</span> <span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">outside_xlim</span><span class="o">|</span><span class="n">outside_ylim</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pts</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
+</pre></div>
+<p>Now we have an animation class, <tt class="docutils literal">StreamFuncAnim</tt>, that we can use to animate
+the flow of particles.</p>
+</div>
+<div class="section" id="particles-flowing-around-a-cylinder">
+<h2>Particles flowing around a cylinder</h2>
+<p>For this example, let's copy a function from a previous article on <a class="reference external" href="http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html">stream
+functions in potential flow</a>. The following function defines the stream
+function (in symbolic form) for a cylinder in a uniform flow:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="n">radius</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">cylinder_stream_function</span><span class="p">(</span><span class="n">U</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="n">radius</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">psi</span> <span class="o">=</span> <span class="n">U</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">psi</span>
+</pre></div>
+<p>We could go ahead and use <tt class="docutils literal">StreamFuncAnim</tt> to animate particles in this flow,
+but instead, let's subclass <tt class="docutils literal">StreamFuncAnim</tt> and add a circle to identify
+where the cylinder is defined:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">CylinderFlow</span><span class="p">(</span><span class="n">StreamFuncAnim</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init_background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">StreamFuncAnim</span><span class="o">.</span><span class="n">init_background</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+<p>Finally, we can show this animation by passing an instance of the stream
+function to the animation class and calling its <tt class="docutils literal">animate</tt> method:</p>
+<div class="highlight"><pre><span class="n">stream_function</span> <span class="o">=</span> <span class="n">cylinder_stream_function</span><span class="p">()</span>
+<span class="n">cylinder_flow</span> <span class="o">=</span> <span class="n">CylinderFlow</span><span class="p">(</span><span class="n">stream_function</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">cylinder_flow</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">blit</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+<video controls="controls">
+    <source src="../static/images/posts/2012/particles_flowing_around_cylinder.webm" type="video/webm"/>
+    <source src="../static/images/posts/2012/particles_flowing_around_cylinder.m4v"/>
+    Video display requires browser that supports webm or m4v.
+</video><p>Science!</p>
+</div>
+<div class="section" id="final-thoughts">
+<h2>Final thoughts</h2>
+<p>It's interesting to note that the Euler method is noticeably less-accurate than
+<tt class="docutils literal">'rk4'</tt> or scipy's integration routines (as one might expect). Particles
+entering and leaving the frame should do so symmetrically (particle paths on
+the right of the sphere should mirror those on the left). When using the naive
+<tt class="docutils literal">'euler'</tt> implementation, however, noticeable errors build up: Particles
+entering along the centerline of the cylinder (i.e. the stagnation point) will
+drift away from the centerline by the time they reach the opposite side of the
+cylinder.  I haven't noticed much difference between matplotlib's <tt class="docutils literal">'rk4'</tt>
+implementation and the more-accurate functions in <tt class="docutils literal">scipy.integrate</tt>, but in
+real-world use, scipy's functions are preferred.</p>
+</div>
+
 
             
 
@@ -267,23 +360,26 @@ tex2jax: {
             
             <li>
                 <h1>
-                    <a href=".././plotting-error-bars.html"
+                    <a href=".././ragged-arrays.html"
                         rel="bookmark"
-                        title="Permalink to Plotting error bars"
-                        >Plotting error bars</a>
+                        title="Permalink to Ragged arrays"
+                        >Ragged arrays</a>
                 </h1>
 
                 
 
-    March 24, 2012
+    May 27, 2012
     
     <p>
         tags:
         
-            <a href=".././tag/matplotlib.html">matplotlib</a><!--
+            <a href=".././tag/numpy.html">numpy</a><!--
             -->,
         
-            <a href=".././tag/line plots.html">line plots</a><!--
+            <a href=".././tag/io.html">io</a><!--
+            -->,
+        
+            <a href=".././tag/data.html">data</a><!--
             -->
         
     </p>
@@ -293,18 +389,13 @@ tex2jax: {
 
 
 
-                <p>Let's say you have some continuous data with a continuous error (or variance)
-measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar ...</span></pre></div>
+                <p>I often need to save a series of arrays in which <em>one</em> dimension varies in
+length---sometimes called a ragged array <a class="footnote-reference" href="#id2" id="id1">[1]</a>. For example, I'm running
+particle tracking experiments, and I need to save the 2D coordinates of all
+particles in each video frame. The number of particles in each ...</p>
 
                 <a class="readmore"
-                    href=".././plotting-error-bars.html"
+                    href=".././ragged-arrays.html"
                     >read more</a>
 
             </li>
@@ -314,7 +405,7 @@ measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> f
 
             <p>
     
-    Page 1 / 2
+    Page 1 / 3
     
         <a href=".././category/20122.html">&raquo;</a>
     
