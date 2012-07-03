@@ -82,23 +82,26 @@
             
             <li>
                 <h1>
-                    <a href=".././plotting-error-bars.html"
+                    <a href=".././ragged-arrays.html"
                         rel="bookmark"
-                        title="Permalink to Plotting error bars"
-                        >Plotting error bars</a>
+                        title="Permalink to Ragged arrays"
+                        >Ragged arrays</a>
                 </h1>
 
                 
 
-    March 24, 2012
+    May 27, 2012
     
     <p>
         tags:
         
-            <a href=".././tag/matplotlib.html">matplotlib</a><!--
+            <a href=".././tag/numpy.html">numpy</a><!--
             -->,
         
-            <a href=".././tag/line plots.html">line plots</a><!--
+            <a href=".././tag/io.html">io</a><!--
+            -->,
+        
+            <a href=".././tag/data.html">data</a><!--
             -->
         
     </p>
@@ -108,69 +111,13 @@
 
 
 
-                <p>Let's say you have some continuous data with a continuous error (or variance)
-measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar ...</span></pre></div>
+                <p>I often need to save a series of arrays in which <em>one</em> dimension varies in
+length---sometimes called a ragged array <a class="footnote-reference" href="#id2" id="id1">[1]</a>. For example, I'm running
+particle tracking experiments, and I need to save the 2D coordinates of all
+particles in each video frame. The number of particles in each ...</p>
 
                 <a class="readmore"
-                    href=".././plotting-error-bars.html"
-                    >read more</a>
-
-            </li>
-        
-
-        
-
-
-    
-        
-        
-            
-            <li>
-                <h1>
-                    <a href=".././plotting-streamlines-with-matplotlib-and-sympy.html"
-                        rel="bookmark"
-                        title="Permalink to Plotting streamlines with Matplotlib and SymPy"
-                        >Plotting streamlines with Matplotlib and SymPy</a>
-                </h1>
-
-                
-
-    April 21, 2012
-    
-    <p>
-        tags:
-        
-            <a href=".././tag/fluids.html">fluids</a><!--
-            -->,
-        
-            <a href=".././tag/matplotlib.html">matplotlib</a><!--
-            -->,
-        
-            <a href=".././tag/sympy.html">sympy</a><!--
-            -->
-        
-    </p>
-
-
-
-
-
-
-                <p>Fluid mechanics lends itself to some beautiful <a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion">visualizations</a> and <a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029">images</a>.
-I won't cover anything too complicated here, just potential flow, which any
-undergrad who has taken a fluid mechanics course should be (at least somewhat)
-familiar with.</p>
-<p>I won't really cover the <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow">math or theory</a> here; I'm ...</p>
-
-                <a class="readmore"
-                    href=".././plotting-streamlines-with-matplotlib-and-sympy.html"
+                    href=".././ragged-arrays.html"
                     >read more</a>
 
             </li>
@@ -181,12 +128,10 @@ familiar with.</p>
             <p>
     
         
-            <a href=".././author/Tony S. Yu.html">&laquo;</a>
+            <a href=".././author/Tony S. Yu2.html">&laquo;</a>
         
     
-    Page 2 / 3
-    
-        <a href=".././author/Tony S. Yu3.html">&raquo;</a>
+    Page 3 / 3
     
 </p>
 

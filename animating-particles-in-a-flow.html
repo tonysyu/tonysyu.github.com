@@ -10,18 +10,18 @@
     Animating particles in a flow
 </title>
 
-    <link href=".././feeds/all.atom.xml"
+    <link href="./feeds/all.atom.xml"
         type="application/atom+xml"
         relJ="alternate"
         title="Tony S. Yu ATOM Feed" />
 
     
 
-    <link rel="stylesheet" href=".././theme/css/main.css">
+    <link rel="stylesheet" href="./theme/css/main.css">
 
     <body>
         <h1 id="logo">
-            <a href="../.">
+            <a href=".">
                 
                     Tony S. Yu
                 
@@ -32,19 +32,19 @@
            <ul class="fakelist">
                 
                     <li>
-                        <a href=".././pages/about-me.html">About me</a>
+                        <a href="./pages/about-me.html">About me</a>
                     </li>
                 
                     <li>
-                        <a href=".././pages/research.html">Research</a>
+                        <a href="./pages/research.html">Research</a>
                     </li>
                 
                     <li>
-                        <a href=".././index.html">Articles</a>
+                        <a href="./index.html">Articles</a>
                     </li>
                 
                     <li>
-                        <a href=".././pages/design.html">Design</a>
+                        <a href="./pages/design.html">Design</a>
                     </li>
                 
                 <li><a href="mailto:me@tonysyu.com">Contact</a></li>
@@ -60,22 +60,22 @@
     <p>
         tags:
         
-            <a href=".././tag/matplotlib.html">matplotlib</a><!--
+            <a href="./tag/matplotlib.html">matplotlib</a><!--
             -->,
         
-            <a href=".././tag/sympy.html">sympy</a><!--
+            <a href="./tag/sympy.html">sympy</a><!--
             -->,
         
-            <a href=".././tag/scipy.html">scipy</a><!--
+            <a href="./tag/scipy.html">scipy</a><!--
             -->,
         
-            <a href=".././tag/mpltools.html">mpltools</a><!--
+            <a href="./tag/mpltools.html">mpltools</a><!--
             -->,
         
-            <a href=".././tag/animation.html">animation</a><!--
+            <a href="./tag/animation.html">animation</a><!--
             -->,
         
-            <a href=".././tag/fluids.html">fluids</a><!--
+            <a href="./tag/fluids.html">fluids</a><!--
             -->
         
     </p>
@@ -91,8 +91,8 @@ together a number of different ideas:</p>
 <li>numerical integration</li>
 <li>plotting and animation</li>
 </ul>
-<p>Before we really start, let me copy a function from a previous article on
-<a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html">stream functions in potential flow</a>.</p>
+<p>Before we really start, let's copy a function from a previous article on
+<a class="reference external" href="http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html">stream functions in potential flow</a>.</p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 
@@ -101,19 +101,19 @@ together a number of different ideas:</p>
     <span class="n">v</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="o">-</span><span class="n">psi</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s">&#39;numpy&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span>
 </pre></div>
-<p>Here, <tt class="docutils literal">velocity_field</tt> accepts a symbolic function, <tt class="docutils literal">psi</tt>, and <em>returns
-functions</em> that calculate the velocity components for coordinates <tt class="docutils literal">x</tt> and
+<p>Here, <tt class="docutils literal">velocity_field</tt> accepts a symbolic function, <tt class="docutils literal">psi</tt>, and returns
+functions that calculate the velocity components for coordinates <tt class="docutils literal">x</tt> and
 <tt class="docutils literal">y</tt>. Given a stream function <tt class="docutils literal">psi</tt>, we can calculate the velocity at any
 point in space. For plotting, however, we need translate these velocities to
 displacements; in other words, we need to integrate.</p>
 <div class="section" id="calculating-particle-displacements">
 <h2>Calculating particle displacements</h2>
-<p>There are many different <a class="reference external" href="http://en.wikipedia.org/wiki/Numerical_ordinary_differential_equations">numerical integration</a> routines. Below I wrap
-three integration functions:</p>
+<p>To calculate displacements from velocities, we need a <a class="reference external" href="http://en.wikipedia.org/wiki/Numerical_ordinary_differential_equations">numerical integration</a>
+routine. Below, we wrap three integration functions:</p>
 <ul class="simple">
 <li>a simple first-order stepper based on <a class="reference external" href="http://en.wikipedia.org/wiki/Euler_method">Euler's method</a></li>
-<li>one using a (simple) <a class="reference external" href="http://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_method">Runge-Kutta</a> implementation in <cite>matplotlib</cite></li>
-<li>and one based scipy's <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html#scipy.integrate.odeint">odeint</a> function</li>
+<li>one using a (simple) <a class="reference external" href="http://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_method">Runge-Kutta</a> implementation in matplotlib</li>
+<li>and one based on scipy's <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html#scipy.integrate.odeint">odeint</a> function</li>
 </ul>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">mlab</span>
@@ -133,15 +133,14 @@ three integration functions:</p>
 
 <span class="n">available_integrators</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">euler</span><span class="o">=</span><span class="n">euler</span><span class="p">,</span> <span class="n">rk4</span><span class="o">=</span><span class="n">rk4</span><span class="p">,</span> <span class="n">scipy</span><span class="o">=</span><span class="n">ode_scipy</span><span class="p">)</span>
 </pre></div>
-<p>These integration functions return updated particle coordinates based on on
-velocity function, <cite>f</cite>; the initial coordinates, <cite>pts</cite>; and the time step,
-<cite>dt</cite>.  These functions would be faster if they operated on all coordinates
-simultaneously (instead of looping), but that would require you to join the
-coordinates into a single 1D array (from <tt class="docutils literal">pts</tt>, which is N-by-2) so that the
-integration routines will run properly. Then, you'd have to split them back up
-for plotting.</p>
+<p>These integration functions return updated particle coordinates based on a
+velocity function, <tt class="docutils literal">f</tt>; the initial coordinates, <tt class="docutils literal">pts</tt>; and the time step,
+<tt class="docutils literal">dt</tt>.  These functions would be faster if they operated on all coordinates
+simultaneously instead of looping; however, that would require you to join the
+(N-by-2) coordinates into a single 1D array so that the integration routines
+will run properly. After that, you'd have to split them back up for plotting.</p>
 <p>Next, we define a factory function (a function that returns a function) that
-connects our integrator and our velocity-field functions. The returned function
+connects our integrator to our velocity-field functions. The returned function
 will return the next particle position based on the current particle position
 and the time step.</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">displace_func_from_velocity_funcs</span><span class="p">(</span><span class="n">u_func</span><span class="p">,</span> <span class="n">v_func</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;rk4&#39;</span><span class="p">):</span>
@@ -175,14 +174,13 @@ and the time step.</p>
 <p>Finally, we get to the animation portion. Matplotlib (or more precisely, Ryan
 May) added the <a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html">animation</a> module in version 1.1. This module greatly simplifies
 the process of generating animations. Nevertheless, I wanted a way to reuse
-animations, which didn't seem terribly easy based on the <a class="reference external" href="http://matplotlib.sourceforge.net/examples/animation/index.html">animation examples</a>.
-I ended up creating a fairly simple <a class="reference external" href="https://github.com/tonysyu/mpltools/blob/master/mpltools/animation.py#L27">Animation class</a> (most of it is filled
-with docstrings), which uses (but doesn't subclass) matplotlib's animation
-class.</p>
+animations, which didn't seem terribly easy based on the <a class="reference external" href="http://matplotlib.sourceforge.net/examples/animation/index.html">animation
+examples</a>.  I ended up creating a fairly simple <a class="reference external" href="https://github.com/tonysyu/mpltools/blob/master/mpltools/animation.py#L27">Animation class</a>, which uses
+(but doesn't subclass) matplotlib's animation class.</p>
 <p>The following example uses <cite>mpltools.animation</cite> to plot particles in
 a potential flow. There are a few important parts:</p>
 <ul class="simple">
-<li><tt class="docutils literal">__init__</tt> creates a figure (the name <tt class="docutils literal">fig</tt> is required) where the
+<li><tt class="docutils literal">__init__</tt> creates a figure (the name <tt class="docutils literal">self.fig</tt> is required) where the
 animation gets drawn.</li>
 <li><tt class="docutils literal">init_background</tt> draws any background elements that aren't updated
 between frames (optional).</li>
@@ -240,12 +238,15 @@ the frame.</li>
 <p>In the <tt class="docutils literal">update</tt> method, I've chosen to clear and redraw all the displayed
 particles, but it would probably be more efficient to update the particle
 positions.</p>
-<p>The above class calls a couple of small utility functions: First, <cite>random_y</cite>, which returns a random y-position within the domain so that we can add particles to the left edge.</p>
+<p><tt class="docutils literal">StreamFuncAnim</tt> calls a couple of small utility functions: First,
+<tt class="docutils literal">random_y</tt>, which returns a random y-position within the domain so that we
+can add particles to the left edge.</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">random_y</span><span class="p">(</span><span class="n">ylim</span><span class="p">):</span>
     <span class="n">yrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">yrange</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
-<p>Also, it calls <cite>remove_particles</cite>, which removes particles that are outside the limits of the plot.</p>
+<p>It also calls <tt class="docutils literal">remove_particles</tt>, which removes particles that are outside
+the limits of the plot.</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">remove_particles</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>
@@ -254,11 +255,14 @@ positions.</p>
     <span class="n">keep</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">outside_xlim</span><span class="o">|</span><span class="n">outside_ylim</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pts</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
 </pre></div>
-<p>Now we have an animation class, <tt class="docutils literal">StreamFuncAnim</tt>, that we can use to animate particles in potential flow.</p>
+<p>Now we have an animation class, <tt class="docutils literal">StreamFuncAnim</tt>, that we can use to animate
+the flow of particles.</p>
 </div>
 <div class="section" id="particles-flowing-around-a-cylinder">
 <h2>Particles flowing around a cylinder</h2>
-<p>For this example, let's copy a function from a previous article on <a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html">stream functions in potential flow</a>. The following function defines the stream function (in symbolic form) for a cylinder in a uniform flow:</p>
+<p>For this example, let's copy a function from a previous article on <a class="reference external" href="http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html">stream
+functions in potential flow</a>. The following function defines the stream
+function (in symbolic form) for a cylinder in a uniform flow:</p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 
@@ -269,33 +273,40 @@ positions.</p>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">U</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">psi</span>
 </pre></div>
-<p>We could go ahead and use <tt class="docutils literal">StreamFuncAnim</tt> to animate particles in this flow, but I want to add a circle to identify where the cylinder is defined, so I subclass <tt class="docutils literal">StreamFuncAnim</tt> instead:</p>
+<p>We could go ahead and use <tt class="docutils literal">StreamFuncAnim</tt> to animate particles in this flow,
+but instead, let's subclass <tt class="docutils literal">StreamFuncAnim</tt> and add a circle to identify
+where the cylinder is defined:</p>
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">CylinderFlow</span><span class="p">(</span><span class="n">StreamFuncAnim</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">init_background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">StreamFuncAnim</span><span class="o">.</span><span class="n">init_background</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
-<p>Finally, we can show this animation by passing an instance of the stream function to the animation class and calling its <tt class="docutils literal">animate</tt> method:</p>
+<p>Finally, we can show this animation by passing an instance of the stream
+function to the animation class and calling its <tt class="docutils literal">animate</tt> method:</p>
 <div class="highlight"><pre><span class="n">stream_function</span> <span class="o">=</span> <span class="n">cylinder_stream_function</span><span class="p">()</span>
 <span class="n">cylinder_flow</span> <span class="o">=</span> <span class="n">CylinderFlow</span><span class="p">(</span><span class="n">stream_function</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">cylinder_flow</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">blit</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 <video controls="controls">
-    <source src="../static/particles_flowing_around_cylinder.webm" type="video/webm"/>
-    <source src="../static/particles_flowing_around_cylinder.m4v"/>
+    <source src="static/images/posts/2012/particles_flowing_around_cylinder.webm" type="video/webm"/>
+    <source src="static/images/posts/2012/particles_flowing_around_cylinder.m4v"/>
     Video display requires browser that supports webm or m4v.
-</video><p>It's interesting to note that the Euler method is noticeably less-accurate than
-'rk4' or scipy's integration routines (as one might expect). Particles entering
-and leaving the frame should do so symmetrically (particle paths on the right
-of the sphere should mirror those on the left). When using the naive 'euler'
-implementation, however, noticeable errors build up: Particles entering along
-the centerline of the cylinder (i.e. the stagnation point) will drift away from
-the centerline by the time they reach the opposite side of the cylinder.
-I haven't noticed much difference between matplotlib's <cite>rk4</cite> implementation and
-the more-accurate functions in <cite>scipy.integrate</cite>, but in real-world use,
-scipy's functions are preferred.</p>
+</video><p>Science!</p>
+</div>
+<div class="section" id="final-thoughts">
+<h2>Final thoughts</h2>
+<p>It's interesting to note that the Euler method is noticeably less-accurate than
+<tt class="docutils literal">'rk4'</tt> or scipy's integration routines (as one might expect). Particles
+entering and leaving the frame should do so symmetrically (particle paths on
+the right of the sphere should mirror those on the left). When using the naive
+<tt class="docutils literal">'euler'</tt> implementation, however, noticeable errors build up: Particles
+entering along the centerline of the cylinder (i.e. the stagnation point) will
+drift away from the centerline by the time they reach the opposite side of the
+cylinder.  I haven't noticed much difference between matplotlib's <tt class="docutils literal">'rk4'</tt>
+implementation and the more-accurate functions in <tt class="docutils literal">scipy.integrate</tt>, but in
+real-world use, scipy's functions are preferred.</p>
 </div>
 
     </div>
@@ -324,7 +335,7 @@ scipy's functions are preferred.</p>
 
         <div id="footer">
             <ul class="horizontal">
-                <li><a href=".././feeds/all.atom.xml">RSS</a></li>
+                <li><a href="./feeds/all.atom.xml">RSS</a></li>
                 <li><a href="http://github.com/tonysyu/">GitHub</a></li>
                 <li>&copy; 2012 Tony S. Yu.</li>
             </ul>
