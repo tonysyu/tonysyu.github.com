@@ -11,14 +11,17 @@ img {
 body, #footer {
     min-width: 200px;
     max-width: 800px;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 #logo a, #logo a:visited {
-    color: gray;
-    font-size: 160%;
-    float:left;
-    width: 100%;
-    padding: 20px;
+    color: white;
+    background-color: #CECAC3;
+    font-size: 70%;
+    float: left;
+    padding: 5px 10px 5px 20px;
+    margin-bottom: 20px;
 }
 
 #logo a:hover {
@@ -27,16 +30,12 @@ body, #footer {
 
 #sidebar {
     float:left;
-    width: 100px;
-    padding-right: 15px;
-    margin-right: 15px;}
+    width: 130px;
+    margin-left: 0px;
+}
 
 #sidebar li {
     padding: 5px 0;
-}
-
-#sidebar li a {
-    padding: 5px;
 }
 
 #sidebar a:hover {
@@ -48,6 +47,7 @@ body, #footer {
     float:left;
     max-width: 600px;
     margin-right: 0;
+    margin-left: 20px;
     padding-bottom: 20px;
 }
 
