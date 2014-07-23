@@ -3,71 +3,51 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>
-    
-        :-T
-    
+    <title>        :-T
     Plotting error bars
 </title>
 
-    <link href="./feeds/all.atom.xml"
+    <link href="http://tonysyu.github.com/"
         type="application/atom+xml"
         relJ="alternate"
         title="Tony S. Yu ATOM Feed" />
 
-    
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="http://tonysyu.github.com/theme/css/main.css">
 
     <body>
         <div id="sidebar">
                 <h1 id="logo">
-                    <a href=".">
-                        
+                    <a href="http://tonysyu.github.com">
                             Tony S. Yu
-                        
                     </a>
                 </h1>
            <ul class="fakelist">
-                
                     <li>
-                        <a href="./pages/about-me.html">About me</a>
+                        <a href="http://tonysyu.github.com/pages/about-me.html">About me</a>
                     </li>
-                
                     <li>
-                        <a href="./pages/research.html">Research</a>
+                        <a href="http://tonysyu.github.com/pages/research.html">Research</a>
                     </li>
-                
                     <li>
-                        <a href="./index.html">Articles</a>
+                        <a href="http://tonysyu.github.com/index.html">Articles</a>
                     </li>
-                
                     <li>
-                        <a href="./pages/design.html">Design</a>
+                        <a href="http://tonysyu.github.com/pages/design.html">Design</a>
                     </li>
-                
                 <li><a href="mailto:me@tonysyu.com">Contact</a></li>
             </ul>
         </div>
 
         <div id="main">
-            
 
     <h1>Plotting error bars </h1>
 
-    
     <p>
         tags:
-        
-            <a href="./tag/matplotlib.html">matplotlib</a><!--
-            -->,
-        
-            <a href="./tag/line plots.html">line plots</a><!--
-            -->
-        
-    </p>
-
-
+            <a href="http://tonysyu.github.com/tag/matplotlib.html">matplotlib</a><!--
+            -->,            <a href="http://tonysyu.github.com/tag/line plots.html">line plots</a><!--
+            -->    </p>
 
     <div>
         <p>Let's say you have some continuous data with a continuous error (or variance)
@@ -83,7 +63,7 @@ measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> f
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 <p>which produces the following plot:</p>
-<img alt="images/posts/2012/plotting-error-bars-1.png" src="static/images/posts/2012/plotting-error-bars-1.png" />
+<img alt="" src="images/posts/2012/plotting-error-bars-1.png" />
 <p>The numerous error bars make the plot really noisy, and, in my opinion, they're
 really distracting. Instead, you could use matplotlib's <cite>fillbetween</cite> to
 denote the error as a region in the plot. In the following, I try to imitate
@@ -106,7 +86,7 @@ denote the error as a region in the plot. In the following, I try to imitate
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 <p>which gives:</p>
-<img alt="images/posts/2012/plotting-error-bars-2.png" src="static/images/posts/2012/plotting-error-bars-2.png" />
+<img alt="" src="images/posts/2012/plotting-error-bars-2.png" />
 <p>With the fill method, you lose information about the direction of the error
 (especially if you have errors in both x and y), but for most use cases, this
 works pretty well.</p>
@@ -117,7 +97,7 @@ works pretty well.</p>
         March 24, 2012 by Tony S. Yu
     </h2>
 
-    
+
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'tonysyu';
@@ -131,19 +111,16 @@ works pretty well.</p>
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
         </div>
 
         <div id="footer">
             <ul class="horizontal">
-                <li><a href="./feeds/all.atom.xml">RSS</a></li>
+                <li><a href="http://tonysyu.github.com/">RSS</a></li>
                 <li><a href="http://github.com/tonysyu/">GitHub</a></li>
-                <li>&copy; 2012 Tony S. Yu.</li>
+                <li>&copy; 2014 Tony S. Yu.</li>
             </ul>
         </div>
 
-    
 
 <script type="text/javascript">
 
@@ -158,7 +135,6 @@ works pretty well.</p>
   })();
 
 </script>
-
 
 
     </body>

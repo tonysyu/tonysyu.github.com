@@ -3,77 +3,53 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>
-    
-        :-T
-    
+    <title>        :-T
     Line-color cycling
 </title>
 
-    <link href="./feeds/all.atom.xml"
+    <link href="http://tonysyu.github.com/"
         type="application/atom+xml"
         relJ="alternate"
         title="Tony S. Yu ATOM Feed" />
 
-    
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="http://tonysyu.github.com/theme/css/main.css">
 
     <body>
         <div id="sidebar">
                 <h1 id="logo">
-                    <a href=".">
-                        
+                    <a href="http://tonysyu.github.com">
                             Tony S. Yu
-                        
                     </a>
                 </h1>
            <ul class="fakelist">
-                
                     <li>
-                        <a href="./pages/about-me.html">About me</a>
+                        <a href="http://tonysyu.github.com/pages/about-me.html">About me</a>
                     </li>
-                
                     <li>
-                        <a href="./pages/research.html">Research</a>
+                        <a href="http://tonysyu.github.com/pages/research.html">Research</a>
                     </li>
-                
                     <li>
-                        <a href="./index.html">Articles</a>
+                        <a href="http://tonysyu.github.com/index.html">Articles</a>
                     </li>
-                
                     <li>
-                        <a href="./pages/design.html">Design</a>
+                        <a href="http://tonysyu.github.com/pages/design.html">Design</a>
                     </li>
-                
                 <li><a href="mailto:me@tonysyu.com">Contact</a></li>
             </ul>
         </div>
 
         <div id="main">
-            
 
     <h1>Line-color cycling </h1>
 
-    
     <p>
         tags:
-        
-            <a href="./tag/matplotlib.html">matplotlib</a><!--
-            -->,
-        
-            <a href="./tag/line plots.html">line plots</a><!--
-            -->,
-        
-            <a href="./tag/mpltools.html">mpltools</a><!--
-            -->,
-        
-            <a href="./tag/color.html">color</a><!--
-            -->
-        
-    </p>
-
-
+            <a href="http://tonysyu.github.com/tag/matplotlib.html">matplotlib</a><!--
+            -->,            <a href="http://tonysyu.github.com/tag/line plots.html">line plots</a><!--
+            -->,            <a href="http://tonysyu.github.com/tag/mpltools.html">mpltools</a><!--
+            -->,            <a href="http://tonysyu.github.com/tag/color.html">color</a><!--
+            -->    </p>
 
     <div>
         <p>When plotting a series of lines, it's nice to pull a series of colors from
@@ -99,7 +75,7 @@ colors from the &quot;cool&quot; colormap to color each curve:</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="images/posts/2012/line-color-cycling-1.png" src="static/images/posts/2012/line-color-cycling-1.png" />
+<img alt="" src="images/posts/2012/line-color-cycling-1.png" />
 <p>Alternatively, you can set the color cycle of the plot axes:</p>
 <div class="highlight"><pre><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_color_cycle</span><span class="p">([</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">cool</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_lines</span><span class="p">)])</span>
@@ -145,7 +121,7 @@ label those rates with different colors:</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="images/posts/2012/line-color-cycling-2.png" src="static/images/posts/2012/line-color-cycling-2.png" />
+<img alt="" src="images/posts/2012/line-color-cycling-2.png" />
 <p>To simplify this process, I wrote a simple factory function (function that
 returns a function) called <a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_color_mapper.html">color_mapper</a>:</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">color</span>
@@ -191,7 +167,7 @@ returns a function) called <a class="reference external" href="http://tonysyu.gi
         March 04, 2012 by Tony S. Yu
     </h2>
 
-    
+
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'tonysyu';
@@ -205,19 +181,16 @@ returns a function) called <a class="reference external" href="http://tonysyu.gi
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
         </div>
 
         <div id="footer">
             <ul class="horizontal">
-                <li><a href="./feeds/all.atom.xml">RSS</a></li>
+                <li><a href="http://tonysyu.github.com/">RSS</a></li>
                 <li><a href="http://github.com/tonysyu/">GitHub</a></li>
-                <li>&copy; 2012 Tony S. Yu.</li>
+                <li>&copy; 2014 Tony S. Yu.</li>
             </ul>
         </div>
 
-    
 
 <script type="text/javascript">
 
@@ -232,7 +205,6 @@ returns a function) called <a class="reference external" href="http://tonysyu.gi
   })();
 
 </script>
-
 
 
     </body>

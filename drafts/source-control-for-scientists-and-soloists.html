@@ -1,0 +1,323 @@
+<html lang="en-US" class="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>        :-T
+    Source control for scientists and soloists
+</title>
+
+    <link href="http://tonysyu.github.com/"
+        type="application/atom+xml"
+        relJ="alternate"
+        title="Tony S. Yu ATOM Feed" />
+
+
+    <link rel="stylesheet" href="http://tonysyu.github.com/theme/css/main.css">
+
+    <body>
+        <div id="sidebar">
+                <h1 id="logo">
+                    <a href="http://tonysyu.github.com">
+                            Tony S. Yu
+                    </a>
+                </h1>
+           <ul class="fakelist">
+                    <li>
+                        <a href="http://tonysyu.github.com/pages/about-me.html">About me</a>
+                    </li>
+                    <li>
+                        <a href="http://tonysyu.github.com/pages/research.html">Research</a>
+                    </li>
+                    <li>
+                        <a href="http://tonysyu.github.com/index.html">Articles</a>
+                    </li>
+                    <li>
+                        <a href="http://tonysyu.github.com/pages/design.html">Design</a>
+                    </li>
+                <li><a href="mailto:me@tonysyu.com">Contact</a></li>
+            </ul>
+        </div>
+
+        <div id="main">
+
+    <h1>Source control for scientists and soloists </h1>
+
+    <p>
+        tags:
+            <a href="http://tonysyu.github.com/tag/git.html">git</a><!--
+            -->,            <a href="http://tonysyu.github.com/tag/craftsmanship.html">craftsmanship</a><!--
+            -->    </p>
+
+    <div>
+        <p>Normally when people talk about source control, it focuses on collaboration: if
+you're collaborating on code and you're not using source control, you're doing
+it wrong! If you're just working on your own code, though, you should still be
+using source control.</p>
+<p>This is a text version of a presentation I gave for my old lab group, back in
+the day when I was in academia. If anyone needs to adopt source control, it's
+scientific programmers: Scientists often develop code for themselves
+(collaboration often focuses on the results, not the code), so we're prone to
+think that source control is not relevant. The purpose of this article is to
+convince you that source control is important---<em>even if you're the only one
+looking at the code</em>.</p>
+<p>I'll be focusing on git, since it's what I use for my day-to-day routine, but
+any (distributed) version/source/revision control software will do. Some
+commands will differ for other software, but the basic concepts are still the
+same.</p>
+<div class="section" id="motivation">
+<h2>Motivation</h2>
+<p>As mentioned above, this was written as a presentation to scientific
+programmers, and a large part of that presentation focused on motivating
+scientists to use source control. To that end, here's why you should be using
+source control:</p>
+<ul class="simple">
+<li>There are often huge time gaps between breaking code, and realizing that your
+code was broken. Source control remembers when you don't.</li>
+<li>You should document your rationale for changing code. (commit message)</li>
+<li>It's key to reproducible research: You keep a lab notebook for a reason (your
+memory sucks). Version control is your code notebook.</li>
+</ul>
+<p>Because this motivation part is so important, I put this into context with
+real-world examples below.</p>
+</div>
+<div class="section" id="basic-concept">
+<h2>Basic Concept</h2>
+<ul class="simple">
+<li>Save code as logical sets of changes and write a good description of why you
+changed it.</li>
+<li>Now you have a history of changes, that means you can:<ul>
+<li>look back at your rationale</li>
+<li>change back if you need to</li>
+<li>find out where things went wrong</li>
+<li>remove code with the knowledge that you can easily go back</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="why-you-should-use-source-control">
+<h2>Why you should use source control</h2>
+<p>The purpose of this article is to convince you to use source control, so I want
+to give concrete examples of how source control helps you. These examples are
+taken from a Matlab code base that I adopted. In addition to my frustrations
+with dealing with Matlab (&lt;3 Python), I had to navigate a code base that was
+sorely lacking the benefits of source control, which is what prompted my
+original presentation.</p>
+<p>All examples are taken from real changes that I made to my adopted code base.
+Apologies to the original authors of this code.</p>
+<div class="section" id="you-re-already-trying-to-fake-it">
+<h3>You're already trying to fake it!</h3>
+<p>Here are some files from the code base I adopted.</p>
+<img alt="" src="images/posts/2013/duplicates_directory.png" />
+<p>You can see there are some newer versions of some files, but the author didn't
+want get rid of the older files ... just in case. Or wait, are some parts of
+the code still using the older versions? Yes, you can easily search (grep,
+<a class="reference external" href="https://pypi.python.org/pypi/grin">grin</a>, ack, whatever), but don't make me
+do extra work: I'm lazy.</p>
+<p>Let's look closer at the two duplicates at the bottom: <tt class="docutils literal">id_paths.m</tt> and
+<tt class="docutils literal">id_paths2.m</tt>. Here's is a <tt class="docutils literal">diff</tt> of those two files:</p>
+<img alt="" src="images/posts/2013/id_paths_diff.png" />
+<p>Note that these files were a few hundred lines each, but the <strong>only</strong>
+difference between these two files are the lines highlighted in red. If there's
+a newer version of something, just keep the newest version! Version control
+will allow you to go back if really need to; otherwise, it's just
+a distraction.</p>
+</div>
+<div class="section" id="you-don-t-delete-enough-code">
+<h3>You don't delete enough code!</h3>
+<p>(or: &quot;Stop commenting out code and delete it already!&quot;)</p>
+<p>Sometimes you add debugging code when you're developing your algorithms, but
+the final product shouldn't have the code, so you do this:</p>
+<img alt="" src="images/posts/2013/commented_out_code.png" />
+<p>Notice the return statement in the middle of that code block. What you don't
+see above is that there are a few hundred more lines of code that never get
+run because of the early return statement. Keeping all that code around makes
+it harder for you when you revisit the code. If you want to keep some debugging
+code, save that separately so that you can easily focus on the important stuff.</p>
+</div>
+</div>
+<div class="section" id="the-basic-commands">
+<h2>The basic commands</h2>
+<div class="section" id="git-init-create-a-repository">
+<h3><tt class="docutils literal">git init</tt>: Create a repository</h3>
+<p>This is important to know, but it isn't that exciting. You just go into the
+directory that contains all of your code (subdirectories will be included) and
+run <tt class="docutils literal">git init</tt> to create the git repository (i.e. &quot;repo&quot;). This just needs to
+be done once per project.</p>
+<p>Just think of the repository as a place where the history is being stored.
+A lot happens behind the scenes but who cares. (Maybe you care, but only after
+you really know how to <em>use</em> it.)</p>
+</div>
+<div class="section" id="git-add-and-git-commit-save-changes">
+<h3><tt class="docutils literal">git add</tt> and <tt class="docutils literal">git commit</tt>: Save changes</h3>
+<p>The concept of <tt class="docutils literal">add</tt> and <tt class="docutils literal">commit</tt> can be a bit confusing, especially if
+you're coming from some other version control systems. Many other version
+control systems just do what's equivalent to <tt class="docutils literal">git commit <span class="pre">--all</span></tt> (or <tt class="docutils literal">git
+commit <span class="pre">-a</span></tt>).</p>
+<p>So let's assumed that we're just committing everything for now. This basically
+saves all your changes... &quot;But wait, I've been saving my changes in my
+editor/IDE; hell, it even auto-saves.&quot; The power of committing your changes
+to git is that you save the history. This concept is much more powerful than
+something like <a class="reference external" href="http://en.wikipedia.org/wiki/Time_Machine_(Mac_OS)">Time Machine</a>. You had a reason for changing your code: You
+should document it (e.g., &quot;Fix for when the signal is all zeros&quot;, &quot;Update code
+to &lt;this paper that improves on the original algorithm&gt;&quot;). Sure you could add
+a code comment to (poorly) document a few lines that changed, but what if those
+changes spanned multiple parts of the code. Your commit (and <em>descriptive</em>
+commit message) groups those logical changes together.</p>
+<p>Note: For the remainder of this article, I might use &quot;commit&quot; and &quot;version&quot;
+interchangeably. &quot;commit&quot;, the noun, is more-or-less synonymous with version
+(although you might consider a &quot;version&quot; a collection of commits), whereas
+&quot;commit&quot;, the verb, is a way of saving a &quot;version&quot;.</p>
+<p><em>After</em> you get into the habit of committing your changes using
+<tt class="docutils literal">git commit <span class="pre">--all</span></tt>, you'll want to evolve towards explicitly calling
+<tt class="docutils literal">git add</tt> to specify which files you want to add to a specific commit. This
+helps you group your changes better and helps you write a better, more
+<em>descriptive</em> commit message.</p>
+<div class="section" id="git-add-organize-your-save">
+<h4><tt class="docutils literal">git add</tt>: Organize your save</h4>
+<p>We're not always great at concentrating on a single change. Explicitly
+specifying the files you want to add to the commit will force you to be more
+organized about the changes you made.</p>
+<p><tt class="docutils literal">git add</tt> puts your changes into what's called the &quot;staging area&quot;, and then
+then you call <tt class="docutils literal">git commit</tt> to commit everything from the staging area.</p>
+<p>More advanced: If you've made changes that aren't really part of the same
+fix/feature/whatever, you can add specific lines, but that's for another post.</p>
+</div>
+</div>
+<div class="section" id="git-log-your-code-history">
+<h3><tt class="docutils literal">git log</tt>: Your code history</h3>
+<p>The log is your code notebook. You have a history of all the commits you have
+made. Most scientists want a history of the calculations they've done with all
+the missteps and epiphanies documented. Sometimes you just don't remember why
+you did something. This is a quick way to look back in time when your memory
+fails you.</p>
+</div>
+<div class="section" id="git-diff-what-did-i-do">
+<h3><tt class="docutils literal">git diff</tt>: What did I do?</h3>
+<p>(or: &quot;Finally! this works. Wait. What actually fixed the problem?&quot;)</p>
+<p>You've made a ton of changes to fix some bug or add some feature. Inevitably,
+you've made some changes that weren't really part of the feature (e.g. print
+statements for debugging). <tt class="docutils literal">git diff</tt> allows you to check what has changed
+from the original implementation.</p>
+<p>More advanced: If you're using the staging area properly, you call
+<tt class="docutils literal">git diff <span class="pre">--staged</span></tt> to make sure that all the code you've added really
+pertains to the (very descriptive) commit message you're going to write.</p>
+</div>
+<div class="section" id="git-checkout-revisit-old-code">
+<h3><tt class="docutils literal">git checkout</tt>: Revisit old code</h3>
+<p>(or: &quot;Argh, I wish I hadn’t made these changes!&quot;)</p>
+<p>I know my function didn't behave this way before,... wait am I sure about that.
+Well, you can always go back to old code by checking out an older version.</p>
+</div>
+<div class="section" id="git-blame-when-and-why-was-this-line-added">
+<h3><tt class="docutils literal">git blame</tt>: When and why was this line added?</h3>
+<p>(or: &quot;Why did I write this?&quot;)</p>
+<p>We've all looked at some part of our code and forgotten why we added needed it.
+<tt class="docutils literal">git blame</tt> allows you to look at when it was added, and your (very
+descriptive) commit message tells you why.</p>
+</div>
+<div class="section" id="git-bisect-when-did-this-behavior-change">
+<h3><tt class="docutils literal">git bisect</tt>: When did this <em>behavior</em> change?</h3>
+<p>(or: &quot;When did this stop working?&quot;)</p>
+<p>Warning: Using <tt class="docutils literal">git bisect</tt> is bit more difficult than some of the other
+commands. So if you're new to this, I'd wait to really try it out, but it's
+definitely a tool worth learning as you get more comfortable.</p>
+<p>Ok, so you know that an old version of the code worked differently before
+(you know because you can go back to old versions with <tt class="docutils literal">git checkout</tt>), but
+what was the actual change in the code that caused the change in behavior.</p>
+<p><tt class="docutils literal">git bisect</tt> allows you to efficiently find that change. Just write a test
+that indicates the change in behavior. A test that gives a thumbs up or down is
+ideal, but sometimes you just might have a plotting script that clearly shows
+the change in behavior. Just identify the commit that has the &quot;good&quot; behavior
+and <tt class="docutils literal">git bisect</tt> will keep checking out different versions of the code, and
+you just give that version a thumbs up or down.</p>
+<p><tt class="docutils literal">git bisect</tt> is as smart as you wish you always were: It looks at the version
+right in the middle of what you know to be good and bad. If the version in the
+middle is good, then the defect must have been added in the later half; if it's
+bad, then the defect must have happened in the earlier half. Keeping doing this
+until you narrow it down to the precise version.</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary</h2>
+<ul>
+<li><p class="first">Stop trying to invent your own version control</p>
+</li>
+<li><p class="first">Reproducibility and history are very important (especially for scientists)</p>
+</li>
+<li><p class="first">The basic usage of git is pretty simple. (If you're not comfortable on the
+command-line though, there are tools to help you out---see below.)</p>
+</li>
+<li><dl class="first docutils">
+<dt>Good commit messages are important</dt>
+<dd><ul class="first last simple">
+<li>Bad:   &quot;update code&quot;</li>
+<li>Good:  &quot;Add calculate_standard_error function&quot;, &quot;Fix for NaN inputs&quot;</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>This describes git usage from the perspective of someone who's comfortable
+using the command line. Since programming isn't the focus of many scientists,
+you may not be as comfortable on the command line. Fear not: There are many
+GUI clients for git. I can't really throw my weight behind any of them since
+I don't use any of them, but <a class="reference external" href="https://www.atlassian.com/software/sourcetree/overview">SourceTree</a> and <a class="reference external" href="http://www.syntevo.com/smartgithg/">SmartGit</a> both look pretty
+popular.</p>
+<p>In the end, I don't think I was successful in converting any of my fellow
+scientists to use source control. The problem is that it takes a bit of
+discipline at the very beginning, and, like many things in life, it's hard to
+see the benefits until you've already invested a bit of time to learn it.</p>
+<p>Now that my day job is software development, I don't need to convince anyone
+of the benefits of source control. But maybe there's a scientist out there who
+does need some convincing ...</p>
+</div>
+
+    </div>
+
+    <h2 id="date">
+        December 31, 2013 by Tony S. Yu
+    </h2>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'tonysyu';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+
+        <div id="footer">
+            <ul class="horizontal">
+                <li><a href="http://tonysyu.github.com/">RSS</a></li>
+                <li><a href="http://github.com/tonysyu/">GitHub</a></li>
+                <li>&copy; 2014 Tony S. Yu.</li>
+            </ul>
+        </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29631580-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+    </body>
+</html>

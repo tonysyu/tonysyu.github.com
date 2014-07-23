@@ -3,74 +3,52 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>
-    
-        :-T
-    
+    <title>        :-T
     Plotting streamlines with Matplotlib and SymPy
 </title>
 
-    <link href="./feeds/all.atom.xml"
+    <link href="http://tonysyu.github.com/"
         type="application/atom+xml"
         relJ="alternate"
         title="Tony S. Yu ATOM Feed" />
 
-    
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="http://tonysyu.github.com/theme/css/main.css">
 
     <body>
         <div id="sidebar">
                 <h1 id="logo">
-                    <a href=".">
-                        
+                    <a href="http://tonysyu.github.com">
                             Tony S. Yu
-                        
                     </a>
                 </h1>
            <ul class="fakelist">
-                
                     <li>
-                        <a href="./pages/about-me.html">About me</a>
+                        <a href="http://tonysyu.github.com/pages/about-me.html">About me</a>
                     </li>
-                
                     <li>
-                        <a href="./pages/research.html">Research</a>
+                        <a href="http://tonysyu.github.com/pages/research.html">Research</a>
                     </li>
-                
                     <li>
-                        <a href="./index.html">Articles</a>
+                        <a href="http://tonysyu.github.com/index.html">Articles</a>
                     </li>
-                
                     <li>
-                        <a href="./pages/design.html">Design</a>
+                        <a href="http://tonysyu.github.com/pages/design.html">Design</a>
                     </li>
-                
                 <li><a href="mailto:me@tonysyu.com">Contact</a></li>
             </ul>
         </div>
 
         <div id="main">
-            
 
     <h1>Plotting streamlines with Matplotlib and SymPy </h1>
 
-    
     <p>
         tags:
-        
-            <a href="./tag/fluids.html">fluids</a><!--
-            -->,
-        
-            <a href="./tag/matplotlib.html">matplotlib</a><!--
-            -->,
-        
-            <a href="./tag/sympy.html">sympy</a><!--
-            -->
-        
-    </p>
-
-
+            <a href="http://tonysyu.github.com/tag/fluids.html">fluids</a><!--
+            -->,            <a href="http://tonysyu.github.com/tag/matplotlib.html">matplotlib</a><!--
+            -->,            <a href="http://tonysyu.github.com/tag/sympy.html">sympy</a><!--
+            -->    </p>
 
     <div>
         <p>Fluid mechanics lends itself to some beautiful <a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion">visualizations</a> and <a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029">images</a>.
@@ -81,10 +59,8 @@ familiar with.</p>
 pretty pictures.  Let's just assume you already have some stream functions
 close at hand. For example, here's the stream function, $\psi$, for the <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow_around_a_circular_cylinder">flow
 around a cylinder</a>:</p>
-<div class="math">
-\begin{equation*}
-\psi = U \left( r - \frac{R^2}{r} \right) \sin \theta
-\end{equation*}
+<div class="formula">
+<i>ψ</i> = <i>U</i><span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><i>r</i> − <span class="fraction"><span class="ignored">(</span><span class="numerator"><i>R</i><sup>2</sup></span><span class="ignored">)/(</span><span class="denominator"><i>r</i></span><span class="ignored">)</span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span>sin<i>θ</i>
 </div>
 <p>Here, $U$ is the (horizontal) flow velocity, $R$ is the radius of the cylinder,
 and $r$ and $\theta$ are polar coordinates. Let's rewrite this equation as
@@ -104,11 +80,26 @@ you're not familiar with sympy functions, check out <a class="reference external
 <p>The stream function is a bit abstract, so let's convert it to horizontal and
 vertical velocities, $u$ and $v$. These velocities can be written as
 derivatives of the stream function:</p>
-<div class="math">
-\begin{align*}
-u = \frac{\partial \psi}{\partial y} \\
-v = -\frac{\partial \psi}{\partial x}
-\end{align*}
+<div class="formula">
+<span class="environment"><span class="arrayrow">
+<span class="arraycell align-r">
+<i>u</i> = <span class="fraction"><span class="ignored">(</span><span class="numerator">∂<i>ψ</i></span><span class="ignored">)/(</span><span class="denominator">∂<i>y</i></span><span class="ignored">)</span></span>
+</span>
+
+</span>
+<span class="arrayrow">
+<span class="arraycell align-r">
+ 
+</span>
+
+</span>
+<span class="arrayrow">
+<span class="arraycell align-r">
+<i>v</i> =  − <span class="fraction"><span class="ignored">(</span><span class="numerator">∂<i>ψ</i></span><span class="ignored">)/(</span><span class="denominator">∂<i>x</i></span><span class="ignored">)</span></span>
+</span>
+
+</span>
+</span>
 </div>
 <p>And since <cite>cylinder_stream_function</cite> returns sympy functions, we can use their
 <cite>diff</cite> methods to take derivatives, and then convert the resulting <em>sympy</em>
@@ -171,7 +162,7 @@ and call our convenience function, <cite>plot_streamlines</cite>. For better
 visualization, we also plot a circle, which represents the cylinder. Finally,
 we call our convenience function <cite>format_axes</cite> to clean up the plot. And here's
 the result:</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-1.png" src="static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-1.png" />
+<img alt="" src="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-1.png" />
 <p>That's all there is to it. If you have your equations written in terms of
 potential functions instead of stream functions, then you can just switch out
 the derivatives in the <cite>plot_streamlines</cite> function and you're good to go.</p>
@@ -179,10 +170,8 @@ the derivatives in the <cite>plot_streamlines</cite> function and you're good to
 we might as well play around with it a bit more. Luckily, there's a stream
 function that describes <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow#Examples_of_two-dimensional_potential_flows">flow around a range of geometries</a> (e.g., corners and
 walls):</p>
-<div class="math">
-\begin{equation*}
-\psi = A r^n = \sin n \theta
-\end{equation*}
+<div class="formula">
+<i>ψ</i> = <i>A</i><i>r</i><sup><i>n</i></sup> = sin<i>n</i><i>θ</i>
 </div>
 <p>where $A$ is a constant that determines the scale and rotation, and
 $n$ is a constant that determines the geometry. You should be able to write the
@@ -195,12 +184,12 @@ posterity:</p>
 </pre></div>
 <p>Now, let's start simple with a vertical flow impinging on a horizontal wall (<cite>n
 = 2</cite>), or, equivalently, flow around a 90-degree corner:</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-2.png" src="static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-2.png" />
+<img alt="" src="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-2.png" />
 <p>Here's flow around a 125-degree corner (<cite>n = 3/2</cite>):</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-3.png" src="static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-3.png" />
+<img alt="" src="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-3.png" />
 <p>Finally, when <cite>n</cite> is negative, we can simulate singularities. Here's
 a <a class="reference external" href="http://en.wikipedia.org/wiki/Quadrupole">quadrupole</a> (<cite>n = -2</cite>):</p>
-<img alt="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-4.png" src="static/images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-4.png" />
+<img alt="" src="images/posts/2012/plotting-streamlines-with-matplotlib-and-sympy-4.png" />
 <p>Beautiful, don't you think?</p>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -221,7 +210,7 @@ tex2jax: {
         April 21, 2012 by Tony S. Yu
     </h2>
 
-    
+
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'tonysyu';
@@ -235,19 +224,16 @@ tex2jax: {
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
         </div>
 
         <div id="footer">
             <ul class="horizontal">
-                <li><a href="./feeds/all.atom.xml">RSS</a></li>
+                <li><a href="http://tonysyu.github.com/">RSS</a></li>
                 <li><a href="http://github.com/tonysyu/">GitHub</a></li>
-                <li>&copy; 2012 Tony S. Yu.</li>
+                <li>&copy; 2014 Tony S. Yu.</li>
             </ul>
         </div>
 
-    
 
 <script type="text/javascript">
 
@@ -262,7 +248,6 @@ tex2jax: {
   })();
 
 </script>
-
 
 
     </body>
