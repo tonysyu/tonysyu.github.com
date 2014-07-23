@@ -5,3 +5,7 @@ h1, h2, h3 {
 img {
     padding: 20px;
 }
+
+a.image-reference {
+    border-bottom: none;
+}
