@@ -480,7 +480,7 @@ measurement. Typically, you would just call matplotlib's &lt;cite&gt;errorbar&lt
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which produces the following plot:&lt;/p&gt;
-&lt;img alt="" src="images/posts/2012/plotting-error-bars-1.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/plotting-error-bars-1.png" /&gt;
 &lt;p&gt;The numerous error bars make the plot really noisy, and, in my opinion, they're
 really distracting. Instead, you could use matplotlib's &lt;cite&gt;fillbetween&lt;/cite&gt; to
 denote the error as a region in the plot. In the following, I try to imitate
@@ -503,7 +503,7 @@ denote the error as a region in the plot. In the following, I try to imitate
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which gives:&lt;/p&gt;
-&lt;img alt="" src="images/posts/2012/plotting-error-bars-2.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/plotting-error-bars-2.png" /&gt;
 &lt;p&gt;With the fill method, you lose information about the direction of the error
 (especially if you have errors in both x and y), but for most use cases, this
 works pretty well.&lt;/p&gt;
@@ -530,7 +530,7 @@ colors from the &amp;quot;cool&amp;quot; colormap to color each curve:&lt;/p&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="" src="images/posts/2012/line-color-cycling-1.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-1.png" /&gt;
 &lt;p&gt;Alternatively, you can set the color cycle of the plot axes:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color_cycle&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n_lines&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
@@ -576,7 +576,7 @@ label those rates with different colors:&lt;/p&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="" src="images/posts/2012/line-color-cycling-2.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-2.png" /&gt;
 &lt;p&gt;To simplify this process, I wrote a simple factory function (function that
 returns a function) called &lt;a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_color_mapper.html"&gt;color_mapper&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mpltools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;

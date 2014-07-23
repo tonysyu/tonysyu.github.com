@@ -108,7 +108,7 @@ Apologies to the original authors of this code.</p>
 <div class="section" id="you-re-already-trying-to-fake-it">
 <h3>You're already trying to fake it!</h3>
 <p>Here are some files from the code base I adopted.</p>
-<img alt="" src="images/posts/2013/duplicates_directory.png" />
+<img alt="" src="http://tonysyu.github.com/images/posts/2013/duplicates_directory.png" />
 <p>You can see there are some newer versions of some files, but the author didn't
 want get rid of the older files ... just in case. Or wait, are some parts of
 the code still using the older versions? Yes, you can easily search (grep,
@@ -116,7 +116,7 @@ the code still using the older versions? Yes, you can easily search (grep,
 do extra work: I'm lazy.</p>
 <p>Let's look closer at the two duplicates at the bottom: <tt class="docutils literal">id_paths.m</tt> and
 <tt class="docutils literal">id_paths2.m</tt>. Here's is a <tt class="docutils literal">diff</tt> of those two files:</p>
-<img alt="" src="images/posts/2013/id_paths_diff.png" />
+<img alt="" src="http://tonysyu.github.com/images/posts/2013/id_paths_diff.png" />
 <p>Note that these files were a few hundred lines each, but the <strong>only</strong>
 difference between these two files are the lines highlighted in red. If there's
 a newer version of something, just keep the newest version! Version control
@@ -128,7 +128,7 @@ a distraction.</p>
 <p>(or: &quot;Stop commenting out code and delete it already!&quot;)</p>
 <p>Sometimes you add debugging code when you're developing your algorithms, but
 the final product shouldn't have the code, so you do this:</p>
-<img alt="" src="images/posts/2013/commented_out_code.png" />
+<img alt="" src="http://tonysyu.github.com/images/posts/2013/commented_out_code.png" />
 <p>Notice the return statement in the middle of that code block. What you don't
 see above is that there are a few hundred more lines of code that never get
 run because of the early return statement. Keeping all that code around makes

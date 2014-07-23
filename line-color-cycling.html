@@ -75,7 +75,7 @@ colors from the &quot;cool&quot; colormap to color each curve:</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="" src="images/posts/2012/line-color-cycling-1.png" />
+<img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-1.png" />
 <p>Alternatively, you can set the color cycle of the plot axes:</p>
 <div class="highlight"><pre><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_color_cycle</span><span class="p">([</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">cool</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_lines</span><span class="p">)])</span>
@@ -121,7 +121,7 @@ label those rates with different colors:</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="" src="images/posts/2012/line-color-cycling-2.png" />
+<img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-2.png" />
 <p>To simplify this process, I wrote a simple factory function (function that
 returns a function) called <a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_color_mapper.html">color_mapper</a>:</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">color</span>
