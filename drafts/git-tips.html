@@ -1,55 +1,128 @@
-<html lang="en-US" class="">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
+    <title>Git: tips - Tony S. Yu</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 
-    <title>        :-T
-    Git: tips
-</title>
+    <!-- Open Graph tags -->
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Git: tips"/>
+            <meta property="og:url" content="http://tonysyu.github.io/drafts/git-tips.html"/>
+            <meta property="og:description" content="There are plenty of guides for learning git and there are plenty of reference manuals as well. The problem with git is that there are so many commands to do so many different things (and sometimes, many commands to do the same thing). This article just highlights a few commands ..."/>
 
-    <link href="http://tonysyu.github.com/"
-        type="application/atom+xml"
-        relJ="alternate"
-        title="Tony S. Yu ATOM Feed" />
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://tonysyu.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
+    <link href="http://tonysyu.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/style.css" type="text/css"/>
 
-    <link rel="stylesheet" href="http://tonysyu.github.com/theme/css/main.css">
+        <link href="http://tonysyu.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu ATOM Feed"/>
 
-    <body>
-        <div id="sidebar">
-                <h1 id="logo">
-                    <a href="http://tonysyu.github.com">
-                            Tony S. Yu
-                    </a>
-                </h1>
-           <ul class="fakelist">
-                    <li>
-                        <a href="http://tonysyu.github.com/pages/about-me.html">About me</a>
-                    </li>
-                    <li>
-                        <a href="http://tonysyu.github.com/pages/research.html">Research</a>
-                    </li>
-                    <li>
-                        <a href="http://tonysyu.github.com/index.html">Articles</a>
-                    </li>
-                    <li>
-                        <a href="http://tonysyu.github.com/pages/design.html">Design</a>
-                    </li>
-                <li><a href="mailto:me@tonysyu.com">Contact</a></li>
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://tonysyu.github.io/" class="navbar-brand">
+Tony S. Yu            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://tonysyu.github.io/pages/about-me.html">
+                             About me
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/artwork.html">
+                             Artwork
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/design.html">
+                             Design
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-elastic-tail-swimmer.html">
+                             Figure: Elastic-tail swimmer
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-evolution-of-thin-film.html">
+                             Figure: Evolution of thin film
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-fog-accumulation-on-substrate.html">
+                             Figure: Fog accumulation on substrate
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-fog-tunnel.html">
+                             Figure: Fog tunnel
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-measuring-the-growth-of-needles.html">
+                             Figure: Measuring the growth of needles
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-propulsion-data.html">
+                             Figure: Propulsion data
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-shapes-of-hanging-flag.html">
+                             Figure: Shapes of hanging flag
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-wake-behind-flapper.html">
+                             Figure: Wake behind flapper
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/research.html">
+                             Research
+                          </a></li>
+                        <li >
+                            <a href="http://tonysyu.github.io/category/2012.html">2012</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://tonysyu.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
 
-        <div id="main">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
 
-    <h1>Git: tips </h1>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://tonysyu.github.io/drafts/git-tips.html"
+                       rel="bookmark"
+                       title="Permalink to Git: tips">
+                        Git: tips
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2013-12-31T00:00:00"> Tue 31 December 2013</time>
+    </span>
 
-    <p>
-        tags:
-            <a href="http://tonysyu.github.com/tag/git.html">git</a><!--
-            -->    </p>
 
-    <div>
-        <p>There are plenty of guides for learning git and there are plenty of reference
+
+<span class="label label-default">Tags</span>
+	<a href="http://tonysyu.github.io/tag/git.html">git</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>There are plenty of guides for learning git and there are plenty of reference
 manuals as well. The problem with git is that there are so many commands to do
 so many different things (and sometimes, many commands to do the same thing).
 This article just highlights a few commands that I regularly find useful.
@@ -150,51 +223,145 @@ to the index and, of course, commits them.</dd>
 </blockquote>
 </div>
 
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+
+
+
+                <li class="list-group-item"><a href="http://tonysyu.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://tonysyu.github.io/tag/matplotlib.html">
+                                matplotlib
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/sympy.html">
+                                sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/line-plots.html">
+                                line plots
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/color.html">
+                                color
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/scipy.html">
+                                scipy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/numpy.html">
+                                numpy
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="/pages/about-me.html" target="_blank">
+                About me
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="/pages/research.html" target="_blank">
+                Research
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="/index.html" target="_blank">
+                Articles
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="/pages/design.html" target="_blank">
+                Design
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
     </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2012 Tony S. Yu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
 
-    <h2 id="date">
-        December 31, 2013 by Tony S. Yu
-    </h2>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://tonysyu.github.io/theme/js/bootstrap.min.js"></script>
 
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://tonysyu.github.io/theme/js/respond.min.js"></script>
 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'tonysyu';
+    <script type="text/javascript">
 
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-        </div>
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29631580-1']);
+        _gaq.push(['_trackPageview']);
 
-        <div id="footer">
-            <ul class="horizontal">
-                <li><a href="http://tonysyu.github.com/">RSS</a></li>
-                <li><a href="http://github.com/tonysyu/">GitHub</a></li>
-                <li>&copy; 2014 Tony S. Yu.</li>
-            </ul>
-        </div>
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
 
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-29631580-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
-
-    </body>
+    </script>
+</body>
 </html>

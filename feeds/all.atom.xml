@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.com/" rel="alternate"></link><link href="http://tonysyu.github.com/feeds/all.atom.xml" rel="self"></link><id>http://tonysyu.github.com/</id><updated>2012-07-02T00:00:00-04:00</updated><entry><title>Animating particles in a flow</title><link href="http://tonysyu.github.com/animating-particles-in-a-flow.html" rel="alternate"></link><updated>2012-07-02T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.com,2012-07-02:animating-particles-in-a-flow.html</id><summary type="html">&lt;p&gt;This article demonstrates matplotlib's &lt;a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html"&gt;animation&lt;/a&gt; module by animating marker
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2012-07-02T00:00:00-04:00</updated><entry><title>Animating particles in a flow</title><link href="http://tonysyu.github.io/animating-particles-in-a-flow.html" rel="alternate"></link><updated>2012-07-02T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2012-07-02:animating-particles-in-a-flow.html</id><summary type="html">&lt;p&gt;This article demonstrates matplotlib's &lt;a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html"&gt;animation&lt;/a&gt; module by animating marker
 particles in a fluid flow around a cylinder. It's a bit long because it ties
 together a number of different ideas:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -224,7 +224,7 @@ cylinder.  I haven't noticed much difference between matplotlib's &lt;tt class="
 implementation and the more-accurate functions in &lt;tt class="docutils literal"&gt;scipy.integrate&lt;/tt&gt;, but in
 real-world use, scipy's functions are preferred.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="matplotlib"></category><category term="sympy"></category><category term="scipy"></category><category term="mpltools"></category><category term="animation"></category><category term="fluids"></category></entry><entry><title>Ragged arrays</title><link href="http://tonysyu.github.com/ragged-arrays.html" rel="alternate"></link><updated>2012-05-27T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.com,2012-05-27:ragged-arrays.html</id><summary type="html">&lt;p&gt;I often need to save a series of arrays in which &lt;em&gt;one&lt;/em&gt; dimension varies in
+</summary><category term="matplotlib"></category><category term="sympy"></category><category term="scipy"></category><category term="mpltools"></category><category term="animation"></category><category term="fluids"></category></entry><entry><title>Ragged arrays</title><link href="http://tonysyu.github.io/ragged-arrays.html" rel="alternate"></link><updated>2012-05-27T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2012-05-27:ragged-arrays.html</id><summary type="html">&lt;p&gt;I often need to save a series of arrays in which &lt;em&gt;one&lt;/em&gt; dimension varies in
 length---sometimes called a ragged array &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt;. For example, I'm running
 particle tracking experiments, and I need to save the 2D coordinates of all
 particles in each video frame. The number of particles in each frame will vary
@@ -315,7 +315,7 @@ I've reinvented the wheel; it won't be the last.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</summary><category term="numpy"></category><category term="io"></category><category term="data"></category></entry><entry><title>Plotting streamlines with Matplotlib and SymPy</title><link href="http://tonysyu.github.com/plotting-streamlines-with-matplotlib-and-sympy.html" rel="alternate"></link><updated>2012-04-21T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.com,2012-04-21:plotting-streamlines-with-matplotlib-and-sympy.html</id><summary type="html">&lt;p&gt;Fluid mechanics lends itself to some beautiful &lt;a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion"&gt;visualizations&lt;/a&gt; and &lt;a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029"&gt;images&lt;/a&gt;.
+</summary><category term="numpy"></category><category term="io"></category><category term="data"></category></entry><entry><title>Plotting streamlines with Matplotlib and SymPy</title><link href="http://tonysyu.github.io/plotting-streamlines-with-matplotlib-and-sympy.html" rel="alternate"></link><updated>2012-04-21T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2012-04-21:plotting-streamlines-with-matplotlib-and-sympy.html</id><summary type="html">&lt;p&gt;Fluid mechanics lends itself to some beautiful &lt;a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion"&gt;visualizations&lt;/a&gt; and &lt;a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029"&gt;images&lt;/a&gt;.
 I won't cover anything too complicated here, just potential flow, which any
 undergrad who has taken a fluid mechanics course should be (at least somewhat)
 familiar with.&lt;/p&gt;
@@ -467,7 +467,7 @@ tex2jax: {
 "HTML-CSS": { availableFonts: ["TeX"] }
 });
 &lt;/script&gt;
-&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;</summary><category term="fluids"></category><category term="matplotlib"></category><category term="sympy"></category></entry><entry><title>Plotting error bars</title><link href="http://tonysyu.github.com/plotting-error-bars.html" rel="alternate"></link><updated>2012-03-24T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.com,2012-03-24:plotting-error-bars.html</id><summary type="html">&lt;p&gt;Let's say you have some continuous data with a continuous error (or variance)
+&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;</summary><category term="fluids"></category><category term="matplotlib"></category><category term="sympy"></category></entry><entry><title>Plotting error bars</title><link href="http://tonysyu.github.io/plotting-error-bars.html" rel="alternate"></link><updated>2012-03-24T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2012-03-24:plotting-error-bars.html</id><summary type="html">&lt;p&gt;Let's say you have some continuous data with a continuous error (or variance)
 measurement. Typically, you would just call matplotlib's &lt;cite&gt;errorbar&lt;/cite&gt; function:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
@@ -480,7 +480,7 @@ measurement. Typically, you would just call matplotlib's &lt;cite&gt;errorbar&lt
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which produces the following plot:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/plotting-error-bars-1.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/plotting-error-bars-1.png" /&gt;
 &lt;p&gt;The numerous error bars make the plot really noisy, and, in my opinion, they're
 really distracting. Instead, you could use matplotlib's &lt;cite&gt;fillbetween&lt;/cite&gt; to
 denote the error as a region in the plot. In the following, I try to imitate
@@ -503,11 +503,11 @@ denote the error as a region in the plot. In the following, I try to imitate
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which gives:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/plotting-error-bars-2.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/plotting-error-bars-2.png" /&gt;
 &lt;p&gt;With the fill method, you lose information about the direction of the error
 (especially if you have errors in both x and y), but for most use cases, this
 works pretty well.&lt;/p&gt;
-</summary><category term="matplotlib"></category><category term="line plots"></category></entry><entry><title>Line-color cycling</title><link href="http://tonysyu.github.com/line-color-cycling.html" rel="alternate"></link><updated>2012-03-04T00:00:00-05:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.com,2012-03-04:line-color-cycling.html</id><summary type="html">&lt;p&gt;When plotting a series of lines, it's nice to pull a series of colors from
+</summary><category term="matplotlib"></category><category term="line plots"></category></entry><entry><title>Line-color cycling</title><link href="http://tonysyu.github.io/line-color-cycling.html" rel="alternate"></link><updated>2012-03-04T00:00:00-05:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2012-03-04:line-color-cycling.html</id><summary type="html">&lt;p&gt;When plotting a series of lines, it's nice to pull a series of colors from
 a colormap (especially if there's some sequential relationship between lines).
 In fact, this has been asked (and answered) multiple times on the Matplotlib
 mailing list (e.g., &lt;a class="footnote-reference" href="#id5" id="id1"&gt;[1]&lt;/a&gt; and &lt;a class="footnote-reference" href="#id6" id="id2"&gt;[2]&lt;/a&gt;) and on StackOverflow (e.g., &lt;a class="footnote-reference" href="#id7" id="id3"&gt;[3]&lt;/a&gt; and &lt;a class="footnote-reference" href="#id8" id="id4"&gt;[4]&lt;/a&gt;).&lt;/p&gt;
@@ -530,7 +530,7 @@ colors from the &amp;quot;cool&amp;quot; colormap to color each curve:&lt;/p&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-1.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/line-color-cycling-1.png" /&gt;
 &lt;p&gt;Alternatively, you can set the color cycle of the plot axes:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color_cycle&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n_lines&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
@@ -576,7 +576,7 @@ label those rates with different colors:&lt;/p&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-2.png" /&gt;
+&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/line-color-cycling-2.png" /&gt;
 &lt;p&gt;To simplify this process, I wrote a simple factory function (function that
 returns a function) called &lt;a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_color_mapper.html"&gt;color_mapper&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mpltools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;

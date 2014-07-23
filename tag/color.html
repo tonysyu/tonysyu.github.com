@@ -1,227 +1,245 @@
-<html lang="en-US" class="">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
+    <title>color - Tony S. Yu</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 
-    <title>Tony S. Yu - color</title>
+    <!-- Open Graph tags -->
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="Tony S. Yu"/>
+            <meta property="og:url" content="http://tonysyu.github.io"/>
+            <meta property="og:description" content="Tony S. Yu"/>
 
-    <link href="http://tonysyu.github.com/"
-        type="application/atom+xml"
-        relJ="alternate"
-        title="Tony S. Yu ATOM Feed" />
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://tonysyu.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
+    <link href="http://tonysyu.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/style.css" type="text/css"/>
 
-    <link rel="stylesheet" href="http://tonysyu.github.com/theme/css/main.css">
+        <link href="http://tonysyu.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu ATOM Feed"/>
 
-    <body>
-        <div id="sidebar">
-                <h1 id="logo">
-                    <a href="http://tonysyu.github.com">
-                            Tony S. Yu
-                    </a>
-                </h1>
-           <ul class="fakelist">
-                    <li>
-                        <a href="http://tonysyu.github.com/pages/about-me.html">About me</a>
-                    </li>
-                    <li>
-                        <a href="http://tonysyu.github.com/pages/research.html">Research</a>
-                    </li>
-                    <li>
-                        <a href="http://tonysyu.github.com/index.html">Articles</a>
-                    </li>
-                    <li>
-                        <a href="http://tonysyu.github.com/pages/design.html">Design</a>
-                    </li>
-                <li><a href="mailto:me@tonysyu.com">Contact</a></li>
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://tonysyu.github.io/" class="navbar-brand">
+Tony S. Yu            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://tonysyu.github.io/pages/about-me.html">
+                             About me
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/artwork.html">
+                             Artwork
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/design.html">
+                             Design
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-elastic-tail-swimmer.html">
+                             Figure: Elastic-tail swimmer
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-evolution-of-thin-film.html">
+                             Figure: Evolution of thin film
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-fog-accumulation-on-substrate.html">
+                             Figure: Fog accumulation on substrate
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-fog-tunnel.html">
+                             Figure: Fog tunnel
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-measuring-the-growth-of-needles.html">
+                             Figure: Measuring the growth of needles
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-propulsion-data.html">
+                             Figure: Propulsion data
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-shapes-of-hanging-flag.html">
+                             Figure: Shapes of hanging flag
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/figure-wake-behind-flapper.html">
+                             Figure: Wake behind flapper
+                          </a></li>
+                         <li><a href="http://tonysyu.github.io/pages/research.html">
+                             Research
+                          </a></li>
+                        <li >
+                            <a href="http://tonysyu.github.io/category/2012.html">2012</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://tonysyu.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
 
-        <div id="main">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
 
-
-<h1> Articles </h1>
-
-<p>
-    This blog is mostly dedicated to producing "pretty" scientific plots using
-    <a href="http://matplotlib.sourceforge.net/">Matplotlib</a> and was partly
-    inspired by <a href="http://www.gnuplotting.org">Gnuplotting</a>. There are
-    plenty of example plots in the
-    <a href="http://matplotlib.sourceforge.net/gallery.html">Matplotlib gallery</a>,
-    but this blog will (probably) be more focused on tweaking the aesthetics of
-    plots.
-</p>
-
-<p>
-    Occasionally, I may stray into other topics, such as design, presentations,
-    scientific publications, LaTeX, fluid mechanics, etc.
-</p>
-<a href="archives.html">Article Archives</a>
-
-<hr/>
-
-
-            <h1>
-                <a href="http://tonysyu.github.com/line-color-cycling.html"
-                    >Line-color cycling</a>
-            </h1>
-
-
-    March 04, 2012
-    <p>
-        tags:
-            <a href="http://tonysyu.github.com/tag/matplotlib.html">matplotlib</a><!--
-            -->,            <a href="http://tonysyu.github.com/tag/line plots.html">line plots</a><!--
-            -->,            <a href="http://tonysyu.github.com/tag/mpltools.html">mpltools</a><!--
-            -->,            <a href="http://tonysyu.github.com/tag/color.html">color</a><!--
-            -->    </p>
-
-
-            <p>When plotting a series of lines, it's nice to pull a series of colors from
+            <article>
+                <h2><a href="http://tonysyu.github.io/line-color-cycling.html">Line-color cycling</a></h2>
+                <div class="summary"><p>When plotting a series of lines, it's nice to pull a series of colors from
 a colormap (especially if there's some sequential relationship between lines).
 In fact, this has been asked (and answered) multiple times on the Matplotlib
-mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> and <a class="footnote-reference" href="#id6" id="id2">[2]</a>) and on StackOverflow (e.g., <a class="footnote-reference" href="#id7" id="id3">[3]</a> and <a class="footnote-reference" href="#id8" id="id4">[4]</a>).</p>
-<div class="section" id="sequential-curves">
-<h2>Sequential curves</h2>
-<p>Matplotlib makes it really simple to use evenly-spaced intervals of a colormap:
-you just call the colormap with evenly-spaced values between 0 and 1. For
-example, let's plot a sinusoidal curve with different phase shifts and use
-colors from the &quot;cool&quot; colormap to color each curve:</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="n">n_lines</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">phase_shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n_lines</span><span class="p">)</span>
-
-<span class="n">color_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_lines</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">shift</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">color_idx</span><span class="p">,</span> <span class="n">phase_shift</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">shift</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">cool</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-<img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-1.png" />
-<p>Alternatively, you can set the color cycle of the plot axes:</p>
-<div class="highlight"><pre><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_color_cycle</span><span class="p">([</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">cool</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_lines</span><span class="p">)])</span>
-<span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="n">phase_shift</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">shift</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-<p>I prefer this method because the loop definition is a bit simpler (i.e., no
-call to <tt class="docutils literal">zip</tt>). I've added this method to a utility package called <a class="reference external" href="http://tonysyu.github.com/mpltools">mpltools</a>:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">color</span>
-
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
-<span class="n">color</span><span class="o">.</span><span class="n">cycle_cmap</span><span class="p">(</span><span class="n">n_lines</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">cool</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="n">phase_shift</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">shift</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-<p>The <a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_cycle_cmap.html">cycle_cmap</a> function doesn't really save that much typing, but I find it
-easier to read, nonetheless. Also, it has some pre-defined limits for colormaps
-to prevent use of very-light colors (which have low-contrast on white
-backgrounds).</p>
-</div>
-<div class="section" id="choosing-colors-for-a-varying-parameter">
-<h2>Choosing colors for a varying parameter</h2>
-<p>A related concept arises when you want the line color to match a parameter
-value. This is slightly more complicated because you need to normalize the
-values you pass to the color map.</p>
-<p>Below, I plot a sinusoidal curve with different rates of exponential decay and
-label those rates with different colors:</p>
-<div class="highlight"><pre><span class="n">pvalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">pmin</span> <span class="o">=</span> <span class="n">pvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">pmax</span> <span class="o">=</span> <span class="n">pvalues</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">pval</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">pval</span> <span class="o">-</span> <span class="n">pmin</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">pmax</span> <span class="o">-</span> <span class="n">pmin</span><span class="p">)</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">pval</span> <span class="ow">in</span> <span class="n">pvalues</span><span class="p">:</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">pval</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">color</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">YlOrBr</span><span class="p">(</span><span class="n">norm</span><span class="p">(</span><span class="n">pval</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-
-<span class="n">leg</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s">&#39;</span><span class="si">%0.1f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pvalues</span><span class="p">],</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">leg</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;decay rate&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-<img alt="" src="http://tonysyu.github.com/images/posts/2012/line-color-cycling-2.png" />
-<p>To simplify this process, I wrote a simple factory function (function that
-returns a function) called <a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_color_mapper.html">color_mapper</a>:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">color</span>
-
-<span class="n">pvalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">prange</span> <span class="o">=</span> <span class="p">[</span><span class="n">pvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pvalues</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-<span class="n">map_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">color_mapper</span><span class="p">(</span><span class="n">prange</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;YlOrBr&#39;</span><span class="p">)</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">pval</span> <span class="ow">in</span> <span class="n">pvalues</span><span class="p">:</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">pval</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">map_color</span><span class="p">(</span><span class="n">pval</span><span class="p">))</span>
-</pre></div>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://old.nabble.com/custom-color-cycle-from-cmap-td28177653.html#a28177653">http://old.nabble.com/custom-color-cycle-from-cmap-td28177653.html#a28177653</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="http://www.mail-archive.com/matplotlib-users&#64;lists.sourceforge.net/msg20977.html">http://www.mail-archive.com/matplotlib-users&#64;lists.sourceforge.net/msg20977.html</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="http://stackoverflow.com/a/4390117/260303">http://stackoverflow.com/a/4390117/260303</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="http://stackoverflow.com/a/8391452/260303">http://stackoverflow.com/a/8391452/260303</a></td></tr>
-</tbody>
-</table>
-</div>
-
-
-<p>
-    Page 1 / 1
-</p>
-
-
-
-
-
-
+mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> and <a class="footnote-reference" href="#id6" id="id2">[2]</a>) and on StackOverflow ...</p>
+                    <a class="btn btn-default btn-xs" href="http://tonysyu.github.io/line-color-cycling.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
         </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
 
-        <div id="footer">
-            <ul class="horizontal">
-                <li><a href="http://tonysyu.github.com/">RSS</a></li>
-                <li><a href="http://github.com/tonysyu/">GitHub</a></li>
-                <li>&copy; 2014 Tony S. Yu.</li>
-            </ul>
-        </div>
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
 
 
-<script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-29631580-1']);
-  _gaq.push(['_trackPageview']);
+                <li class="list-group-item"><a href="http://tonysyu.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://tonysyu.github.io/tag/matplotlib.html">
+                                matplotlib
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/sympy.html">
+                                sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/line-plots.html">
+                                line plots
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/color.html">
+                                color
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/scipy.html">
+                                scipy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/numpy.html">
+                                numpy
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="/pages/about-me.html" target="_blank">
+                About me
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="/pages/research.html" target="_blank">
+                Research
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="/index.html" target="_blank">
+                Articles
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="/pages/design.html" target="_blank">
+                Design
+            </a>
+        </li>
+      </ul>
+    </li>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+        </ul>
+    </section>
 
-</script>
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2012 Tony S. Yu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
 
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://tonysyu.github.io/theme/js/bootstrap.min.js"></script>
 
-    </body>
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://tonysyu.github.io/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29631580-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
 </html>
