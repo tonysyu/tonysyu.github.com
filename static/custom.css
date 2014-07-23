@@ -6,6 +6,7 @@ img {
     padding: 20px;
 }
 
-a.image-reference a.image-reference:hover {
+a.image-reference,
+a.image-reference:hover {
     border-bottom: none;
 }
