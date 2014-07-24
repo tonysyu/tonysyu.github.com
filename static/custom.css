@@ -10,6 +10,6 @@ a.image-reference, a.image-reference:hover {
     border-bottom: none;
 }
 
-img#sidebar {
+img.sidebar {
     max-width: 100%;
 }
