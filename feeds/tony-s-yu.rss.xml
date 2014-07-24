@@ -16,7 +16,9 @@ videos:&lt;/p&gt;
 &lt;p&gt;But, even if don't want to watch these videos, the accompanying notebooks are
 worth a look: &lt;a class="reference external" href="https://github.com/scikit-image/skimage-tutorials/tree/master/scipy-2014"&gt;notebooks on github&lt;/a&gt;. Currently, the scikit-image website
 doesn't have any introductory tutorial docs, so this is probably the most
-complete source for introductory material.&lt;/p&gt;
+complete source for introductory material. I'd like to integrate these
+notebooks as a user guide on the website, but that may take a bit of time.&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Wed, 23 Jul 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-07-23:scikit-image-tutorial-at-scipy-2014.html</guid><category>scikit-image</category></item><item><title>Animating particles in a flow</title><link>http://tonysyu.github.io/animating-particles-in-a-flow.html</link><description>&lt;p&gt;This article demonstrates matplotlib's &lt;a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html"&gt;animation&lt;/a&gt; module by animating marker
 particles in a fluid flow around a cylinder. It's a bit long because it ties
 together a number of different ideas:&lt;/p&gt;

@@ -16,5 +16,7 @@ videos:&lt;/p&gt;
 &lt;p&gt;But, even if don't want to watch these videos, the accompanying notebooks are
 worth a look: &lt;a class="reference external" href="https://github.com/scikit-image/skimage-tutorials/tree/master/scipy-2014"&gt;notebooks on github&lt;/a&gt;. Currently, the scikit-image website
 doesn't have any introductory tutorial docs, so this is probably the most
-complete source for introductory material.&lt;/p&gt;
+complete source for introductory material. I'd like to integrate these
+notebooks as a user guide on the website, but that may take a bit of time.&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
 </summary><category term="scikit-image"></category></entry></feed>
