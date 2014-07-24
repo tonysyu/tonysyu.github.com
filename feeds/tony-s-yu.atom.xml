@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/tony-s-yu.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2012-07-02T00:00:00-04:00</updated><entry><title>Animating particles in a flow</title><link href="http://tonysyu.github.io/animating-particles-in-a-flow.html" rel="alternate"></link><updated>2012-07-02T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2012-07-02:animating-particles-in-a-flow.html</id><summary type="html">&lt;p&gt;This article demonstrates matplotlib's &lt;a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html"&gt;animation&lt;/a&gt; module by animating marker
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/tony-s-yu.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2014-07-23T00:00:00-04:00</updated><entry><title>Scikit-image tutorial at SciPy 2014</title><link href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html" rel="alternate"></link><updated>2014-07-23T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-07-23:scikit-image-tutorial-at-scipy-2014.html</id><summary type="html">&lt;p&gt;Juan Nunez-Iglesias, a fellow core-developer of &lt;a class="reference external" href="http://scikit-image.org/"&gt;scikit-image&lt;/a&gt;, and I gave
+a scikit-image tutorial at &lt;a class="reference external" href="https://conference.scipy.org/scipy2014/"&gt;SciPy 2014&lt;/a&gt;! I gave the first 2 hours (minus
+a quick intro), and Juan gave the second 2 hours. Surprisingly, this was the
+first tutorial at the (U.S.) SciPy conference (Emmanuelle Gouillart gave a
+tutorial at &lt;a class="reference external" href="https://github.com/scipy-lectures/scipy-lecture-notes/tree/master/advanced/image_processing"&gt;EuroSciPy 2013&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Anyway, if anyone you happen to have 4 hours to kill, here are links to the
+videos:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://youtu.be/MP-MTiCETYg"&gt;Part 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://youtu.be/SE7h0IWD93Y"&gt;Part 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://youtu.be/Yxpnvc4RHy4"&gt;Part 3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://youtu.be/pWnYjqudKHs"&gt;Part 4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But, even if don't want to watch these videos, the accompanying notebooks are
+worth a look: &lt;a class="reference external" href="https://github.com/scikit-image/skimage-tutorials/tree/master/scipy-2014"&gt;notebooks on github&lt;/a&gt;. Currently, the scikit-image website
+doesn't have any introductory tutorial docs, so this is probably the most
+complete source for introductory material.&lt;/p&gt;
+</summary><category term="scikit-image"></category></entry><entry><title>Animating particles in a flow</title><link href="http://tonysyu.github.io/animating-particles-in-a-flow.html" rel="alternate"></link><updated>2012-07-02T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2012-07-02:animating-particles-in-a-flow.html</id><summary type="html">&lt;p&gt;This article demonstrates matplotlib's &lt;a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html"&gt;animation&lt;/a&gt; module by animating marker
 particles in a fluid flow around a cylinder. It's a bit long because it ties
 together a number of different ideas:&lt;/p&gt;
 &lt;ul class="simple"&gt;

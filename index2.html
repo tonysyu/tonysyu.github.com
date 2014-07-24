@@ -49,6 +49,9 @@ Tony S. Yu            </a>
                     <li><a href="/index.html">Articles</a></li>
                     <li><a href="/pages/design.html">Design</a></li>
                         <li >
+                            <a href="http://tonysyu.github.io/category/2014.html">2014</a>
+                        </li>
+                        <li >
                             <a href="http://tonysyu.github.io/category/2012.html">2012</a>
                         </li>
             </ul>
@@ -65,6 +68,16 @@ Tony S. Yu            </a>
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://tonysyu.github.io/ragged-arrays.html">Ragged arrays</a></h2>
+                <div class="summary"><p>I often need to save a series of arrays in which <em>one</em> dimension varies in
+length---sometimes called a ragged array <a class="footnote-reference" href="#id2" id="id1">[1]</a>. For example, I'm running
+particle tracking experiments, and I need to save the 2D coordinates of all
+particles in each video frame. The number of particles in each ...</p>
+                    <a class="btn btn-default btn-xs" href="http://tonysyu.github.io/ragged-arrays.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://tonysyu.github.io/plotting-streamlines-with-matplotlib-and-sympy.html">Plotting streamlines with Matplotlib and SymPy</a></h2>
                 <div class="summary"><p>Fluid mechanics lends itself to some beautiful <a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion">visualizations</a> and <a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029">images</a>.
 I won't cover anything too complicated here, just potential flow, which any
@@ -72,21 +85,6 @@ undergrad who has taken a fluid mechanics course should be (at least somewhat)
 familiar with.</p>
 <p>I won't really cover the <a class="reference external" href="http://en.wikipedia.org/wiki/Potential_flow">math or theory</a> here; I'm ...</p>
                     <a class="btn btn-default btn-xs" href="http://tonysyu.github.io/plotting-streamlines-with-matplotlib-and-sympy.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://tonysyu.github.io/plotting-error-bars.html">Plotting error bars</a></h2>
-                <div class="summary"><p>Let's say you have some continuous data with a continuous error (or variance)
-measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://tonysyu.github.io/plotting-error-bars.html">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -120,18 +118,13 @@ measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> f
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/fluids.html">
-                                fluids
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/mpltools.html">
-                                mpltools
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://tonysyu.github.io/tag/sympy.html">
                                 sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -139,9 +132,9 @@ measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> f
                                 line plots
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/data.html">
-                                data
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -150,23 +143,33 @@ measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> f
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/color.html">
-                                color
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://tonysyu.github.io/tag/scipy.html">
                                 scipy
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/animation.html">
-                                animation
+                            <a href="http://tonysyu.github.io/tag/color.html">
+                                color
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://tonysyu.github.io/tag/numpy.html">
                                 numpy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/scikit-image.html">
+                                scikit-image
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
                             </a>
                         </li>
                     </ul>
@@ -207,7 +210,7 @@ measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> f
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2012 Tony S. Yu
+         <div class="col-xs-10">&copy; 2014 Tony S. Yu
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>

@@ -49,6 +49,9 @@ Tony S. Yu            </a>
                     <li><a href="/index.html">Articles</a></li>
                     <li><a href="/pages/design.html">Design</a></li>
                         <li >
+                            <a href="http://tonysyu.github.io/category/2014.html">2014</a>
+                        </li>
+                        <li >
                             <a href="http://tonysyu.github.io/category/2012.html">2012</a>
                         </li>
             </ul>
@@ -64,6 +67,21 @@ Tony S. Yu            </a>
     <div class="row">
         <div class="col-sm-9">
 
+            <article>
+                <h2><a href="http://tonysyu.github.io/plotting-error-bars.html">Plotting error bars</a></h2>
+                <div class="summary"><p>Let's say you have some continuous data with a continuous error (or variance)
+measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar ...</span></pre></div>
+                    <a class="btn btn-default btn-xs" href="http://tonysyu.github.io/plotting-error-bars.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
             <article>
                 <h2><a href="http://tonysyu.github.io/line-color-cycling.html">Line-color cycling</a></h2>
                 <div class="summary"><p>When plotting a series of lines, it's nice to pull a series of colors from
@@ -103,18 +121,13 @@ mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> a
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/fluids.html">
-                                fluids
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/mpltools.html">
-                                mpltools
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://tonysyu.github.io/tag/sympy.html">
                                 sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -122,9 +135,9 @@ mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> a
                                 line plots
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/data.html">
-                                data
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -133,23 +146,33 @@ mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> a
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/color.html">
-                                color
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://tonysyu.github.io/tag/scipy.html">
                                 scipy
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/animation.html">
-                                animation
+                            <a href="http://tonysyu.github.io/tag/color.html">
+                                color
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://tonysyu.github.io/tag/numpy.html">
                                 numpy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/scikit-image.html">
+                                scikit-image
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
                             </a>
                         </li>
                     </ul>
@@ -190,7 +213,7 @@ mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> a
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2012 Tony S. Yu
+         <div class="col-xs-10">&copy; 2014 Tony S. Yu
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
