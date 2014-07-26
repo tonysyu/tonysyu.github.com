@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Plotting error bars - Tony S. Yu</title>
+    <title>Tony S. Yu</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -11,10 +11,10 @@
     
 
     <!-- Open Graph tags -->
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Plotting error bars"/>
-            <meta property="og:url" content="http://tonysyu.github.io/plotting-error-bars.html"/>
-            <meta property="og:description" content="Let's say you have some continuous data with a continuous error (or variance) measurement. Typically, you would just call matplotlib's errorbar function: import numpy as np import matplotlib.pyplot as plt x = np.linspace(0, 2 * np.pi) y_sin = np.sin(x) y_cos = np.cos(x) plt.errorbar ..."/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="Tony S. Yu"/>
+            <meta property="og:url" content="http://tonysyu.github.io"/>
+            <meta property="og:description" content="Tony S. Yu"/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -54,7 +54,7 @@ Tony S. Yu            </a>
                         <li >
                             <a href="http://tonysyu.github.io/category/2014.html">2014</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://tonysyu.github.io/category/2012.html">2012</a>
                         </li>
             </ul>
@@ -70,81 +70,30 @@ Tony S. Yu            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="http://tonysyu.github.io/plotting-error-bars.html"
-                       rel="bookmark"
-                       title="Permalink to Plotting error bars">
-                        Plotting error bars
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2012-03-24T00:00:00"> Sat 24 March 2012</time>
-    </span>
-
-
-
-<span class="label label-default">Tags</span>
-	<a href="http://tonysyu.github.io/tag/matplotlib.html">matplotlib</a>
-        /
-	<a href="http://tonysyu.github.io/tag/line-plots.html">line plots</a>
-    
-</footer><!-- /.post-info -->                    </div>
+            <article>
+                <h2><a href="http://tonysyu.github.io/line-color-cycling.html">Line-color cycling</a></h2>
+                <div class="summary"><p>When plotting a series of lines, it's nice to pull a series of colors from
+a colormap (especially if there's some sequential relationship between lines).
+In fact, this has been asked (and answered) multiple times on the Matplotlib
+mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> and <a class="footnote-reference" href="#id6" id="id2">[2]</a>) and on StackOverflow ...</p>
+                    <a class="btn btn-default btn-xs" href="http://tonysyu.github.io/line-color-cycling.html">more ...</a>
                 </div>
-                <p>Let's say you have some continuous data with a continuous error (or variance)
-measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+            </article>
+            <hr/>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_sin</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_cos</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-<p>which produces the following plot:</p>
-<img alt="" src="http://tonysyu.github.io/images/posts/2012/plotting-error-bars-1.png" />
-<p>The numerous error bars make the plot really noisy, and, in my opinion, they're
-really distracting. Instead, you could use matplotlib's <cite>fillbetween</cite> to
-denote the error as a region in the plot. In the following, I try to imitate
-<cite>errorbar</cite>'s interface (minus many additional key-word arguments):</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">errorfill</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">alpha_fill</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">_get_lines</span><span class="o">.</span><span class="n">color_cycle</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">yerr</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">yerr</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
-        <span class="n">ymin</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yerr</span>
-        <span class="n">ymax</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">yerr</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">yerr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">yerr</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha_fill</span><span class="p">)</span>
-</pre></div>
-<p>Continuing with the data and imports from the first code block, you can use the <cite>errorfill</cite> function as follows:</p>
-<div class="highlight"><pre><span class="n">errorfill</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_sin</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
-<span class="n">errorfill</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_cos</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-<p>which gives:</p>
-<img alt="" src="http://tonysyu.github.io/images/posts/2012/plotting-error-bars-2.png" />
-<p>With the fill method, you lose information about the direction of the error
-(especially if you have errors in both x and y), but for most use cases, this
-works pretty well.</p>
-
-            </div>
-            <!-- /.entry-content -->
-        </article>
-    </section>
-
+    <ul class="pagination">
+            <li class="prev"><a href="http://tonysyu.github.io/index3.html">&laquo;</a>
+            </li>
+                <li class=""><a
+                        href="http://tonysyu.github.io/index.html">1</a></li>
+                <li class=""><a
+                        href="http://tonysyu.github.io/index2.html">2</a></li>
+                <li class=""><a
+                        href="http://tonysyu.github.io/index3.html">3</a></li>
+                <li class="active"><a
+                        href="http://tonysyu.github.io/index4.html">4</a></li>
+            <li class="next disabled"><a href="#">&raquo;</a></li>
+    </ul>
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 
