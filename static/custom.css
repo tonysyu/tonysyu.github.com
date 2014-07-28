@@ -6,10 +6,21 @@ img {
     padding: 20px;
 }
 
+a {
+    color: #428bca;
+}
+
 a.image-reference, a.image-reference:hover {
     border-bottom: none;
 }
 
 img.sidebar {
     max-width: 100%;
+}
+
+tt, literal-block, code {
+    color: #d00;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    padding: 2px 4px;
 }
