@@ -1,221 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/posts.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2014-07-25T00:00:00-04:00</updated><entry><title>Source control for scientists and soloists</title><link href="http://tonysyu.github.io/source-control-for-scientists-and-soloists.html" rel="alternate"></link><updated>2014-07-25T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-07-25:source-control-for-scientists-and-soloists.html</id><summary type="html">&lt;a class="reference external image-reference" href="http://git-scm.com/"&gt;&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_logo.png" /&gt;&lt;/a&gt;
-&lt;p&gt;Normally when people talk about source control, they focus on collaboration: If
-you're collaborating on code and you're not using source control, you're doing
-it wrong! If you're collaborating with others, source control looks roughly
-like this:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_collaborative_workspace.png" /&gt;
-&lt;p&gt;If you're just working on your own code, though, you should still be
-using source control. The soloist's workspace will look something like this:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_solo_workspace.png" /&gt;
-&lt;p&gt;Whether or not you have a remote repository depends on how much you trust your
-hard drive. If the above doesn't make sense, don't worry: These diagrams should
-(I hope) become clear shortly.&lt;/p&gt;
-&lt;p&gt;Here I'll be focusing on git, since it's what I use for my day-to-day routine,
-but any (distributed) version/source/revision control software will do. Some
-commands will differ for other software, but the basic concepts are still the
-same.&lt;/p&gt;
-&lt;div class="section" id="motivation"&gt;
-&lt;h2&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;This is a text version of a presentation I gave for my old lab group---back in
-the day when I was in academia. If &lt;em&gt;anyone&lt;/em&gt; needs to adopt source control, it's
-scientific programmers: Scientists often develop code for themselves
-(collaboration often focuses on the results, not the code), so we're prone to
-think that source control is not relevant. The purpose of this article is to
-convince you that source control is important---&lt;em&gt;even if you're the only one
-looking at the code&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Here's why you should be using source control:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/posts.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2014-08-04T00:00:00-04:00</updated><entry><title>pypath-magic</title><link href="http://tonysyu.github.io/pypath-magic.html" rel="alternate"></link><updated>2014-08-04T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-08-04:pypath-magic.html</id><summary type="html">&lt;div class="section" id="pypath-an-ipython-magic-for-manipulating-your-python-path"&gt;
+&lt;h2&gt;&lt;tt class="docutils literal"&gt;%pypath&lt;/tt&gt;: An IPython magic for manipulating your Python path&lt;/h2&gt;
+&lt;p&gt;So you're finally starting to write reusable code---extracting logically
+related bits into functions and grouping those functions together into modules.&lt;/p&gt;
+&lt;p&gt;Now, &lt;strong&gt;how do you actually import those modules&lt;/strong&gt;? If you're in the directory containing those modules, you're good to go:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;ls&lt;/span&gt;  &lt;span class="c"&gt;# Desired files are in the same directory.&lt;/span&gt;
+&lt;span class="n"&gt;data_wranglers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="n"&gt;plot_helpers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plot_helpers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plot_slope_marker&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Success&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If, instead, those files are located elsewhere, you might get something like
+this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;utils&lt;/span&gt;  &lt;span class="c"&gt;# Desired files are somewhere else.&lt;/span&gt;
+&lt;span class="n"&gt;data_wranglers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="n"&gt;plot_helpers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plot_helpers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plot_slope_marker&lt;/span&gt;
+&lt;span class="o"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="ne"&gt;ImportError&lt;/span&gt;                               &lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;ipython&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;141&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;d0fef5fa475&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;----&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plot_helpers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plot_slope_marker&lt;/span&gt;
+
+&lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;named&lt;/span&gt; &lt;span class="n"&gt;plot_helpers&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="sys-path"&gt;
+&lt;h3&gt;&lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;&lt;/h3&gt;
+&lt;p&gt;The quick fix here is to append to &lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;path/to/my-utils&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plot_helpers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plot_slope_marker&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Success&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;But&lt;/strong&gt;, the next time you fire up python, you get the same &lt;tt class="docutils literal"&gt;ImportError&lt;/tt&gt; we
+saw before.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="persistent-changes-to-your-path"&gt;
+&lt;h3&gt;Persistent changes to your path&lt;/h3&gt;
+&lt;p&gt;To make persistent changes to your Python path, you'll have to
+&lt;a class="reference external" href="http://stackoverflow.com/questions/3402168/permanently-add-a-directory-to-pythonpath"&gt;tweak your PYTHONPATH&lt;/a&gt; or figure out how to &lt;a class="reference external" href="https://docs.python.org/2/library/site.html#module-site"&gt;add '*.pth' files to your
+site-packages directory&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;These solutions are annoying for most users and downright intimidating to newer
+developers. &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; provides a simple solution for manipulating your
+Python path from &lt;a class="reference external" href="http://ipython.org"&gt;IPython&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-use-pypath-magic"&gt;
+&lt;h2&gt;How to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; package adds an &lt;a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/tutorial.html#magic-functions"&gt;IPython magic&lt;/a&gt; (err... &lt;a class="reference external" href="http://jupyter.org/"&gt;Jupyter&lt;/a&gt; magic?)
+command for easily manipulating your Python path.&lt;/p&gt;
+&lt;div class="section" id="load-the-extension"&gt;
+&lt;h3&gt;Load the extension&lt;/h3&gt;
+&lt;p&gt;To use the magic command, just load the extension from an IPython session:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;load_ext&lt;/span&gt; &lt;span class="n"&gt;pypath_magic&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="list-the-custom-paths"&gt;
+&lt;h3&gt;List the custom paths&lt;/h3&gt;
+&lt;p&gt;After loading, you will have access to the &lt;tt class="docutils literal"&gt;%pypath&lt;/tt&gt; magic. You can type:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;to list all the custom paths added by &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt;. When you get started,
+you won't have anything there.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-to-your-python-path"&gt;
+&lt;h3&gt;Add to your Python path&lt;/h3&gt;
+&lt;p&gt;To add some custom paths, just change to a directory and call &lt;tt class="docutils literal"&gt;%pypath &lt;span class="pre"&gt;-a&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;utils&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;ls&lt;/span&gt;
+&lt;span class="n"&gt;data_wranglers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="n"&gt;plot_helpers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;
+&lt;span class="n"&gt;Added&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;/absolute/path/to/my-utils&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt;
+&lt;span class="mf"&gt;0.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;utils&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now you can reuse those helper functions from anywhere:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plot_helpers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plot_slope_marker&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Changes to your Python path will persist across IPython sessions, and those
+paths will be available outside of IPython.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="deleting-one-of-your-custom-paths"&gt;
+&lt;h3&gt;Deleting one of your custom paths&lt;/h3&gt;
+&lt;p&gt;If you later want to delete a directory from your path, just use
+&lt;tt class="docutils literal"&gt;%pypath &lt;span class="pre"&gt;-d&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;utils&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;
+&lt;span class="n"&gt;Deleted&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;/absolute/path/to/my-utils&amp;#39;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;path.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="list-everything-in-your-python-path"&gt;
+&lt;h3&gt;List everything in your Python path&lt;/h3&gt;
+&lt;p&gt;You can also list your entire Python path with &lt;tt class="docutils literal"&gt;%pypath &lt;span class="pre"&gt;-l&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;
+
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tonysyu&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;yutils&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tonysyu&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;skimage&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tonysyu&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mpl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tonysyu&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipython&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tonysyu&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;deli&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Users&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tonysyu&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mpltools&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Applications&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Canopy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;appdata&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;canopy&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;1.1975&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;macosx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x86_64&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Canopy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Contents&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python27&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Applications&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Canopy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;appdata&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;canopy&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;1.1975&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;macosx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x86_64&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Canopy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Contents&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;my&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;utils&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="adding-and-deleting-using-arguments"&gt;
+&lt;h3&gt;Adding and deleting using arguments&lt;/h3&gt;
+&lt;p&gt;Finally, you can manipulate paths---without changing to those directories---by
+passing arguments to the add and delete commands.&lt;/p&gt;
+&lt;p&gt;First we add paths using relative or absolute directory paths:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;useful&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;
+&lt;span class="n"&gt;Added&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;/absolute/path/to/useful-modules&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;stuff&lt;/span&gt;
+&lt;span class="n"&gt;Added&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;/absolute/path/to/stuff&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;things&lt;/span&gt;
+&lt;span class="n"&gt;Added&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;/absolute/path/to/things&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt;
+&lt;span class="mf"&gt;0.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;useful&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;
+&lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;stuff&lt;/span&gt;
+&lt;span class="mf"&gt;2.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;things&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notice those numbers in the list above. We can use those indices to delete
+paths, or we can delete using string paths:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt;
+&lt;span class="mf"&gt;0.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;useful&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;
+&lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;things&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;17&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;stuff&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt;
+&lt;span class="mf"&gt;0.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;things&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-it-works"&gt;
+&lt;h2&gt;How it works&lt;/h2&gt;
+&lt;p&gt;The basic idea is really simple: The &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; command just maintains a custom
+&lt;tt class="docutils literal"&gt;*.pth&lt;/tt&gt; file in your site-packages directory. Altering that file alters the
+paths in the Python path. Since this is a custom &lt;tt class="docutils literal"&gt;*.pth&lt;/tt&gt; file, you don't have
+to worry about screwing up packages installed by other means.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install"&gt;
+&lt;h2&gt;Install&lt;/h2&gt;
+&lt;p&gt;To install using pip, just type the following in a terminal:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ pip install git+https://github.com/tonysyu/pypath-magic
+&lt;/pre&gt;
+&lt;p&gt;To install from source:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ git clone https://github.com/tonysyu/pypath-magic.git
+$ cd pypath-magic
+$ python setup.py install
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dependencies"&gt;
+&lt;h2&gt;Dependencies&lt;/h2&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;(Unless you have unit tests) There are often huge time gaps between breaking
-code, and realizing that your code was broken. Source control remembers when
-you don't.&lt;/li&gt;
-&lt;li&gt;You should document your rationale for changing code. (commit message)&lt;/li&gt;
-&lt;li&gt;It's key to reproducible research: You keep a lab notebook for a reason (your
-memory sucks). Version control is your code notebook.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Because this motivation part is so important, I put this into context with
-real-world examples below.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="basic-concept"&gt;
-&lt;h2&gt;Basic Concept&lt;/h2&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;Save code as logical sets of changes and write a good description of why you
-changed it. (&lt;tt class="docutils literal"&gt;git commit&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;git add&lt;/tt&gt;)&lt;/li&gt;
-&lt;li&gt;Now you have a history of changes, that means you can:&lt;ul&gt;
-&lt;li&gt;look back at your rationale (&lt;tt class="docutils literal"&gt;git log&lt;/tt&gt;)&lt;/li&gt;
-&lt;li&gt;change back if you need to (&lt;tt class="docutils literal"&gt;git checkout&lt;/tt&gt;)&lt;/li&gt;
-&lt;li&gt;find out where things went wrong (&lt;tt class="docutils literal"&gt;git blame&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;git bisect&lt;/tt&gt;)&lt;/li&gt;
-&lt;li&gt;remove code with the knowledge that you can easily go back&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;Python 2.7&lt;/li&gt;
+&lt;li&gt;IPython&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-&lt;div class="section" id="why-you-should-use-source-control"&gt;
-&lt;h2&gt;Why you should use source control&lt;/h2&gt;
-&lt;p&gt;The purpose of this article is to convince you to use source control, so I want
-to give concrete examples of how source control helps you. These examples are
-taken from a Matlab code base that I adopted. In addition to my frustrations
-with dealing with Matlab (&amp;lt;3 Python), I had to navigate a code base that was
-sorely lacking the benefits of source control, which is what prompted my
-original presentation.&lt;/p&gt;
-&lt;p&gt;All examples are taken from real changes that I made to my adopted code base.
-Apologies to the original authors of this code.&lt;/p&gt;
-&lt;div class="section" id="you-re-already-trying-to-fake-it"&gt;
-&lt;h3&gt;You're already trying to fake it!&lt;/h3&gt;
-&lt;p&gt;Here are some files from the code base I adopted.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/duplicates_directory.png" /&gt;
-&lt;p&gt;You can see there are some newer versions of some files, but the author didn't
-want get rid of the older files ... just in case. Or wait, are some parts of
-the code still using the older versions? Sure, you can easily search (grep,
-&lt;a class="reference external" href="https://pypi.python.org/pypi/grin"&gt;grin&lt;/a&gt;, ack, whatever), but don't make me
-do extra work: I'm lazy.&lt;/p&gt;
-&lt;p&gt;Let's look closer at the two duplicates at the bottom: &lt;tt class="docutils literal"&gt;id_paths.m&lt;/tt&gt; and
-&lt;tt class="docutils literal"&gt;id_paths2.m&lt;/tt&gt;. Here's is a &lt;tt class="docutils literal"&gt;diff&lt;/tt&gt; of those two files:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/id_paths_diff.png" /&gt;
-&lt;p&gt;Note that these files were a few hundred lines each, but the &lt;strong&gt;only&lt;/strong&gt;
-difference between these two files are the lines highlighted in red. If there's
-a newer version of something, just keep the newest version! Version control
-will allow you to go back if really need to; otherwise, it's just
-a distraction.&lt;/p&gt;
+&lt;div class="section" id="license"&gt;
+&lt;h2&gt;License&lt;/h2&gt;
+&lt;p&gt;New BSD (a.k.a. Modified BSD). See &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic/blob/master/LICENSE"&gt;LICENSE&lt;/a&gt; file in this directory for details.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class="section" id="you-don-t-delete-enough-code"&gt;
-&lt;h3&gt;You don't delete enough code!&lt;/h3&gt;
-&lt;p&gt;(or: &amp;quot;Stop commenting out code and delete it already!&amp;quot;)&lt;/p&gt;
-&lt;p&gt;Sometimes you add debugging code when you're developing your algorithms, but
-the final product shouldn't have the code, so you do this:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/commented_out_code.png" /&gt;
-&lt;p&gt;Notice the return statement in the middle of that code block. What you don't
-see above is that there are a few hundred more lines of code that never get
-run because of the early return statement. Keeping all that code around makes
-it harder for you when you revisit the code. If you want to keep some debugging
-code, save that separately so that you can easily focus on the important stuff.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="section" id="the-basic-commands"&gt;
-&lt;h2&gt;The basic commands&lt;/h2&gt;
-&lt;p&gt;Git is notoriously complicated (and inconsistent). That said, if you stick to
-some basic commands, you can get pretty far along.&lt;/p&gt;
-&lt;div class="section" id="git-init-create-a-repository"&gt;
-&lt;h3&gt;&lt;tt class="docutils literal"&gt;git init&lt;/tt&gt;: Create a repository&lt;/h3&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_init.png" /&gt;
-&lt;p&gt;This is important to know, but it isn't that exciting. You just go into the
-directory that contains all of your code (subdirectories will be included) and
-run &lt;tt class="docutils literal"&gt;git init&lt;/tt&gt; to create the git repository (i.e. &amp;quot;repo&amp;quot;). This just needs to
-be done once per project.&lt;/p&gt;
-&lt;p&gt;Just think of the repository as a place where the history is being stored.
-A lot happens behind the scenes but who cares. (Maybe you care, but only after
-you really know how to &lt;em&gt;use&lt;/em&gt; it.)&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="git-add-and-git-commit-save-changes"&gt;
-&lt;h3&gt;&lt;tt class="docutils literal"&gt;git add&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;git commit&lt;/tt&gt;: Save changes&lt;/h3&gt;
-&lt;p&gt;The concept of &lt;tt class="docutils literal"&gt;add&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;commit&lt;/tt&gt; can be a bit confusing, especially if
-you're coming from some other version control systems. Many other version
-control systems just do what's equivalent to &lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; (or &lt;tt class="docutils literal"&gt;git
-commit &lt;span class="pre"&gt;-a&lt;/span&gt;&lt;/tt&gt;).&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_commit.png" /&gt;
-&lt;p&gt;So let's assumed that we're just committing everything for now. This basically
-saves all your changes... &amp;quot;But wait, I've been saving my changes in my
-editor/IDE; hell, it even auto-saves.&amp;quot;&lt;/p&gt;
-&lt;p&gt;The power of committing your changes to git is that you save the history. This
-concept is much more powerful than something like &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Time_Machine_(Mac_OS)"&gt;Time Machine&lt;/a&gt;. You had
-a reason for changing your code; you should document it (e.g., &amp;quot;Fix for when
-the signal is all zeros&amp;quot;, &amp;quot;Update code to &amp;lt;this paper that improves on the
-original algorithm&amp;gt;&amp;quot;). Sure you could add a code comment to (poorly) document
-a few lines that changed, but what if those changes spanned multiple parts of
-the code. Your commit (and &lt;em&gt;descriptive&lt;/em&gt; commit message) groups those logical
-changes together.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;After&lt;/em&gt; you get into the habit of committing your changes using
-&lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt;, you'll want to evolve towards explicitly calling
-&lt;tt class="docutils literal"&gt;git add&lt;/tt&gt; to specify which files you want to add to a specific commit. This
-helps you group your changes better and helps you write a better, more
-&lt;em&gt;descriptive&lt;/em&gt; commit message.&lt;/p&gt;
-&lt;div class="section" id="git-add-organize-your-save"&gt;
-&lt;h4&gt;&lt;tt class="docutils literal"&gt;git add&lt;/tt&gt;: Organize your save&lt;/h4&gt;
-&lt;p&gt;We're not always great at concentrating on a single change. Explicitly
-specifying the files you want to add to the commit will force you to be more
-organized about the changes you made.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_add.png" /&gt;
-&lt;p&gt;&lt;tt class="docutils literal"&gt;git add&lt;/tt&gt; puts your changes into what's called the &amp;quot;staging area&amp;quot;, and then
-then you call &lt;tt class="docutils literal"&gt;git commit&lt;/tt&gt; to commit everything from the staging area.&lt;/p&gt;
-&lt;p&gt;More advanced: If you've made changes that aren't really part of the same
-fix/feature/whatever, you can add specific lines, but that's for another post.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="section" id="git-log-your-code-history"&gt;
-&lt;h3&gt;&lt;tt class="docutils literal"&gt;git log&lt;/tt&gt;: Your code history&lt;/h3&gt;
-&lt;p&gt;The log is your code notebook. You have a history of all the commits you have
-made. Most scientists want a history of the calculations they've done with all
-the missteps and epiphanies documented. Sometimes you just don't remember why
-you did something. This is a quick way to look back in time when your memory
-fails you.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_log.png" /&gt;
-&lt;/div&gt;
-&lt;div class="section" id="git-diff-what-did-i-do"&gt;
-&lt;h3&gt;&lt;tt class="docutils literal"&gt;git diff&lt;/tt&gt;: What did I do?&lt;/h3&gt;
-&lt;p&gt;(or: &amp;quot;Finally! this works. Wait. What actually fixed the problem?&amp;quot;)&lt;/p&gt;
-&lt;p&gt;You've made a ton of changes to fix some bug or add some feature. Inevitably,
-you've made some changes that weren't really part of the feature (e.g. print
-statements for debugging). &lt;tt class="docutils literal"&gt;git diff&lt;/tt&gt; allows you to check what has changed
-from the original implementation.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_diff.png" /&gt;
-&lt;p&gt;More advanced: If you're using the staging area properly, you call
-&lt;tt class="docutils literal"&gt;git diff &lt;span class="pre"&gt;--staged&lt;/span&gt;&lt;/tt&gt; to make sure that all the code you've added really
-pertains to the (very descriptive) commit message you're going to write.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="git-checkout-revisit-old-code"&gt;
-&lt;h3&gt;&lt;tt class="docutils literal"&gt;git checkout&lt;/tt&gt;: Revisit old code&lt;/h3&gt;
-&lt;p&gt;(or: &amp;quot;Argh, I wish I hadn’t made these changes!&amp;quot;)&lt;/p&gt;
-&lt;p&gt;&amp;quot;I know my function didn't behave this way before,... wait am I sure about
-that?&amp;quot; Well, you can always go back to old code by checking out an older
-version.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_checkout.png" /&gt;
-&lt;p&gt;Now you can try it out to see if this random dataset &lt;em&gt;actually&lt;/em&gt; worked with
-the old code and figure out what changed.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="git-blame-when-and-why-was-this-line-added"&gt;
-&lt;h3&gt;&lt;tt class="docutils literal"&gt;git blame&lt;/tt&gt;: When and why was this line added?&lt;/h3&gt;
-&lt;p&gt;We've all looked at some part of our code and forgotten why we added needed it.
-&lt;tt class="docutils literal"&gt;git blame&lt;/tt&gt; allows you to look each line of a file and figure out when it was
-added, and your commit message tells you why you added it.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_blame.png" /&gt;
-&lt;p&gt;Note that this only works well if your commit messages are informative.
-Otherwise, you still don't know why you wrote that perplexing line of code.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="section" id="summary"&gt;
-&lt;h2&gt;Summary&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;Stop trying to invent your own version control
-(i.e. don't write files named: &lt;tt class="docutils literal"&gt;my_script.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;my_script_2.py&lt;/tt&gt;,
-&lt;tt class="docutils literal"&gt;solver.py&lt;/tt&gt;/&lt;tt class="docutils literal"&gt;solver_old.py&lt;/tt&gt;)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Reproducibility and history are very important (especially for scientists)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;The basic usage of git is pretty simple. (If you're not comfortable on the
-command-line though, there are tools to help you out---see below.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;dl class="first docutils"&gt;
-&lt;dt&gt;Good commit messages are important&lt;/dt&gt;
-&lt;dd&gt;&lt;ul class="first last simple"&gt;
-&lt;li&gt;Bad:   &amp;quot;update code&amp;quot;&lt;/li&gt;
-&lt;li&gt;Good:  &amp;quot;Add calculate_standard_error function&amp;quot;, &amp;quot;Fix for NaN inputs&amp;quot;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/dd&gt;
-&lt;/dl&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This describes git usage from the perspective of someone who's comfortable
-using the command line. Since programming isn't the focus of many scientists,
-you may not be as comfortable on the command line. Fear not: There are many
-GUI clients for git. I can't really throw my weight behind any of them since
-I don't use any of them, but &lt;a class="reference external" href="https://www.atlassian.com/software/sourcetree/overview"&gt;SourceTree&lt;/a&gt; and &lt;a class="reference external" href="http://www.syntevo.com/smartgithg/"&gt;SmartGit&lt;/a&gt; both look pretty
-popular.&lt;/p&gt;
-&lt;p&gt;In the end, I don't think I was successful in converting any of my fellow
-scientists to use source control. The problem is that it takes a bit of
-discipline at the very beginning, and, like many things in life, it's hard to
-see the benefits until you've already invested a bit of time to learn it.&lt;/p&gt;
-&lt;p&gt;Now that my day job is software development, I don't need to convince anyone
-of the benefits of source control. But maybe there's a scientist out there who
-does need some convincing ...&lt;/p&gt;
-&lt;/div&gt;
-</summary><category term="git"></category><category term="craftsmanship"></category></entry></feed>
+</summary><category term="IPython"></category><category term="python"></category></entry></feed>

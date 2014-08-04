@@ -68,6 +68,21 @@ Tony S. Yu            </a>
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://tonysyu.github.io/plotting-error-bars.html">Plotting error bars</a></h2>
+                <div class="summary"><p>Let's say you have some continuous data with a continuous error (or variance)
+measurement. Typically, you would just call matplotlib's <cite>errorbar</cite> function:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">y_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_cos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar ...</span></pre></div>
+                    <a class="btn btn-default btn-xs" href="http://tonysyu.github.io/plotting-error-bars.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://tonysyu.github.io/line-color-cycling.html">Line-color cycling</a></h2>
                 <div class="summary"><p>When plotting a series of lines, it's nice to pull a series of colors from
 a colormap (especially if there's some sequential relationship between lines).
@@ -98,82 +113,18 @@ mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> a
     <section>
         <ul class="list-group list-group-flush">
 
+                
+<img class="sidebar"
+    src="http://tonysyu.github.io/images/tonysyu.jpg"
+    alt="Tony S. Yu">
+<p>
+    I'm a developer, (former?) engineer, and altogether good guy in Austin, TX,
+    USA.
+
+    Thanks for visiting!
+</p>
 
 
-                <li class="list-group-item"><a href="http://tonysyu.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
-                    <ul class="list-group" id="tags">
-                        <li class="list-group-item tag-1">
-                            <a href="http://tonysyu.github.io/tag/matplotlib.html">
-                                matplotlib
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/mpltools.html">
-                                mpltools
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/line-plots.html">
-                                line plots
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/sympy.html">
-                                sympy
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/fluids.html">
-                                fluids
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
-                                craftsmanship
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/animation.html">
-                                animation
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/git.html">
-                                git
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/numpy.html">
-                                numpy
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/scikit-image.html">
-                                scikit-image
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/io.html">
-                                io
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/data.html">
-                                data
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/scipy.html">
-                                scipy
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/color.html">
-                                color
-                            </a>
-                        </li>
-                    </ul>
-                </li>    
     <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
       <ul class="list-group" id="links">
         <li class="list-group-item">
@@ -198,6 +149,94 @@ mailing list (e.g., <a class="footnote-reference" href="#id5" id="id1">[1]</a> a
 <a href="https://www.enthought.com/services/training/python-training-on-demand">
     <img class="sidebar" src="https://www.enthought.com/static/img/Enthought-training-on-demand-logo-2014_colored-2000x555-2.png" alt="Enthought Training on Demand">
 </a>
+
+
+
+                <li class="list-group-item"><a href="http://tonysyu.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://tonysyu.github.io/tag/matplotlib.html">
+                                matplotlib
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/sympy.html">
+                                sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/line-plots.html">
+                                line plots
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/scikit-image.html">
+                                scikit-image
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/scipy.html">
+                                scipy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/numpy.html">
+                                numpy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
+                                craftsmanship
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/ipython.html">
+                                IPython
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/git.html">
+                                git
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/python.html">
+                                python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/color.html">
+                                color
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+
 
 
         </ul>
