@@ -22,6 +22,12 @@ img.sidebar {
     max-width: 100%;
 }
 
+
+img#about {
+    padding: 0px;
+    padding-right: 20px;
+}
+
 tt, literal-block, code {
     color: #d00;
     background-color: #f7f7f9;
