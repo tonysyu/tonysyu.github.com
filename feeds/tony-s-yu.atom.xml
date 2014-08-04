@@ -50,8 +50,9 @@ Python path from &lt;a class="reference external" href="http://ipython.org"&gt;I
 &lt;/div&gt;
 &lt;div class="section" id="how-to-use-pypath-magic"&gt;
 &lt;h2&gt;How to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt;&lt;/h2&gt;
-&lt;p&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; package adds an &lt;a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/tutorial.html#magic-functions"&gt;IPython magic&lt;/a&gt; (err... &lt;a class="reference external" href="http://jupyter.org/"&gt;Jupyter&lt;/a&gt; magic?)
-command for easily manipulating your Python path.&lt;/p&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic"&gt;module&lt;/a&gt; adds
+an &lt;a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/tutorial.html#magic-functions"&gt;IPython magic&lt;/a&gt; (err... &lt;a class="reference external" href="http://jupyter.org/"&gt;Jupyter&lt;/a&gt; magic?) command for easily manipulating
+your Python path.&lt;/p&gt;
 &lt;div class="section" id="load-the-extension"&gt;
 &lt;h3&gt;Load the extension&lt;/h3&gt;
 &lt;p&gt;To use the magic command, just load the extension from an IPython session:&lt;/p&gt;
