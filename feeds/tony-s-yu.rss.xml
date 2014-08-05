@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tony S. Yu</title><link>http://tonysyu.github.io/</link><description></description><atom:link href="http://tonysyu.github.io/feeds/tony-s-yu.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 04 Aug 2014 00:00:00 -0400</lastBuildDate><item><title>pypath-magic</title><link>http://tonysyu.github.io/pypath-magic.html</link><description>&lt;div class="section" id="pypath-an-ipython-magic-for-manipulating-your-python-path"&gt;
 &lt;h2&gt;&lt;tt class="docutils literal"&gt;%pypath&lt;/tt&gt;: An IPython magic for manipulating your Python path&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Edit: Now with support for Python 3!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;You're a pragmatic Python developer, so you extract the logically related bits
 of your code into functions and group those functions together into modules.&lt;/p&gt;
 &lt;p&gt;Now, &lt;strong&gt;how do you actually import those modules&lt;/strong&gt;? If you're in the directory containing those modules, you're good to go:&lt;/p&gt;
@@ -179,8 +180,8 @@ $ python setup.py install
 &lt;div class="section" id="dependencies"&gt;
 &lt;h2&gt;Dependencies&lt;/h2&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;Python 2.7&lt;/li&gt;
-&lt;li&gt;IPython&lt;/li&gt;
+&lt;li&gt;Python 2.7/3.4 (older versions probably work, but this is not tested)&lt;/li&gt;
+&lt;li&gt;IPython &amp;gt;= 1.0&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="license"&gt;
