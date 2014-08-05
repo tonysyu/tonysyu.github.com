@@ -14,7 +14,7 @@
             <meta property="og:type" content="article"/>
             <meta property="og:title" content="pypath-magic"/>
             <meta property="og:url" content="http://tonysyu.github.io/pypath-magic.html"/>
-            <meta property="og:description" content="%pypath: An IPython magic for manipulating your Python path So you're finally starting to write reusable code---extracting logically related bits into functions and grouping those functions together into modules. Now, how do you actually import those modules? If you're in the directory containing those modules, you're good ..."/>
+            <meta property="og:description" content="%pypath: An IPython magic for manipulating your Python path You're a pragmatic Python developer, so you extract the logically related bits of your code into functions and group those functions together into modules. Now, how do you actually import those modules? If you're in the directory containing those ..."/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -98,8 +98,8 @@ Tony S. Yu            </a>
                 </div>
                 <div class="section" id="pypath-an-ipython-magic-for-manipulating-your-python-path">
 <h2><tt class="docutils literal">%pypath</tt>: An IPython magic for manipulating your Python path</h2>
-<p>So you're finally starting to write reusable code---extracting logically
-related bits into functions and grouping those functions together into modules.</p>
+<p>You're a pragmatic Python developer, so you extract the logically related bits
+of your code into functions and group those functions together into modules.</p>
 <p>Now, <strong>how do you actually import those modules</strong>? If you're in the directory containing those modules, you're good to go:</p>
 <div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="o">%</span><span class="n">ls</span>  <span class="c"># Desired files are in the same directory.</span>
 <span class="n">data_wranglers</span><span class="o">.</span><span class="n">py</span>
@@ -122,8 +122,8 @@ this:</p>
 
 <span class="ne">ImportError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="n">plot_helpers</span>
 </pre></div>
-<div class="section" id="sys-path">
-<h3><tt class="docutils literal">sys.path</tt></h3>
+<div class="section" id="quickfix-sys-path">
+<h3>Quickfix: <tt class="docutils literal">sys.path</tt></h3>
 <p>The quick fix here is to append to <tt class="docutils literal">sys.path</tt>:</p>
 <div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">sys</span>
 
@@ -133,7 +133,7 @@ this:</p>
 <span class="p">[</span><span class="n">Success</span><span class="p">]</span>
 </pre></div>
 <p><strong>But</strong>, the next time you fire up python, you get the same <tt class="docutils literal">ImportError</tt> we
-saw before.</p>
+saw above.</p>
 </div>
 <div class="section" id="persistent-changes-to-your-path">
 <h3>Persistent changes to your path</h3>
@@ -141,18 +141,19 @@ saw before.</p>
 <a class="reference external" href="http://stackoverflow.com/questions/3402168/permanently-add-a-directory-to-pythonpath">tweak your PYTHONPATH</a> or figure out how to <a class="reference external" href="https://docs.python.org/2/library/site.html#module-site">add '*.pth' files to your
 site-packages directory</a>.</p>
 <p>These solutions are annoying for most users and downright intimidating to newer
-developers. <tt class="docutils literal">pypath</tt> provides a simple solution for manipulating your
-Python path from <a class="reference external" href="http://ipython.org">IPython</a>.</p>
+developers. With <tt class="docutils literal">%pypath</tt>, you can easily manipulate your Python path from
+<a class="reference external" href="http://ipython.org">IPython</a>.</p>
 </div>
 </div>
 <div class="section" id="how-to-use-pypath-magic">
-<h2>How to use <tt class="docutils literal"><span class="pre">pypath-magic</span></tt></h2>
-<p>The <tt class="docutils literal"><span class="pre">pypath-magic</span></tt> <a class="reference external" href="https://github.com/tonysyu/pypath-magic">module</a> adds
+<h2>How to use <tt class="docutils literal">pypath_magic</tt></h2>
+<p>The <tt class="docutils literal">pypath_magic</tt> <a class="reference external" href="https://github.com/tonysyu/pypath-magic">module</a> adds
 an <a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/tutorial.html#magic-functions">IPython magic</a> (err... <a class="reference external" href="http://jupyter.org/">Jupyter</a> magic?) command for easily manipulating
 your Python path.</p>
 <div class="section" id="load-the-extension">
 <h3>Load the extension</h3>
-<p>To use the magic command, just load the extension from an IPython session:</p>
+<p>To use the <tt class="docutils literal">%pypath</tt> magic command, just load the extension from an IPython
+session:</p>
 <div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="o">%</span><span class="n">load_ext</span> <span class="n">pypath_magic</span>
 </pre></div>
 </div>
@@ -234,12 +235,14 @@ passing arguments to the add and delete commands.</p>
 <p>Notice those numbers in the list above. We can use those indices to delete
 paths, or we can delete using string paths:</p>
 <div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">15</span><span class="p">]:</span> <span class="o">%</span><span class="n">pypath</span> <span class="o">-</span><span class="n">d</span> <span class="mi">1</span>
+<span class="n">Deleted</span> <span class="s">u&#39;/absolute/path/to/stuff&#39;</span> <span class="kn">from</span> <span class="nn">path.</span>
 
 <span class="n">In</span> <span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="o">%</span><span class="n">pypath</span>
 <span class="mf">0.</span> <span class="o">/</span><span class="n">absolute</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">useful</span><span class="o">-</span><span class="n">modules</span>
 <span class="mf">1.</span> <span class="o">/</span><span class="n">absolute</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">things</span>
 
-<span class="n">In</span> <span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="o">%</span><span class="n">pypath</span> <span class="o">-</span><span class="n">d</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">stuff</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="o">%</span><span class="n">pypath</span> <span class="o">-</span><span class="n">d</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">useful</span><span class="o">-</span><span class="n">modules</span>
+<span class="n">Deleted</span> <span class="s">u&#39;/absolute/path/to/useful-modules&#39;</span> <span class="kn">from</span> <span class="nn">path.</span>
 
 <span class="n">In</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="o">%</span><span class="n">pypath</span>
 <span class="mf">0.</span> <span class="o">/</span><span class="n">absolute</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">things</span>
@@ -263,7 +266,7 @@ $ pip install pypath_magic
 <pre class="literal-block">
 $ pip install git+https://github.com/tonysyu/pypath-magic
 </pre>
-<p>Or if you &lt;3 github:</p>
+<p>Or if you want to go <a class="reference external" href="https://github.com/tonysyu/pypath-magic">direct to the source</a>:</p>
 <pre class="literal-block">
 $ git clone https://github.com/tonysyu/pypath-magic.git
 $ cd pypath-magic
@@ -302,7 +305,7 @@ $ python setup.py install
         align="left"
         alt="Tony S. Yu">
         <p style="padding-top: 20px; margin-top: 20px;">
-        Software developer, (former?) engineer, and altogether good guy in
+        Software developer, (former?) engineer, and all-around good guy in
         Austin, TX, USA.
 
     </p>
@@ -346,8 +349,8 @@ $ python setup.py install
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/sympy.html">
-                                sympy
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -361,8 +364,13 @@ $ python setup.py install
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/mpltools.html">
-                                mpltools
+                            <a href="http://tonysyu.github.io/tag/sympy.html">
+                                sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/numpy.html">
+                                numpy
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -371,8 +379,13 @@ $ python setup.py install
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/color.html">
-                                color
+                            <a href="http://tonysyu.github.io/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
+                                craftsmanship
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -386,13 +399,13 @@ $ python setup.py install
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/data.html">
-                                data
+                            <a href="http://tonysyu.github.io/tag/ipython.html">
+                                IPython
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/io.html">
-                                io
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -401,23 +414,13 @@ $ python setup.py install
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
-                                craftsmanship
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/ipython.html">
-                                IPython
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://tonysyu.github.io/tag/python.html">
                                 python
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/numpy.html">
-                                numpy
+                            <a href="http://tonysyu.github.io/tag/color.html">
+                                color
                             </a>
                         </li>
                     </ul>

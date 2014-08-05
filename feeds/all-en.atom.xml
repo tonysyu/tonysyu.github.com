@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/all-en.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2014-08-04T00:00:00-04:00</updated><entry><title>pypath-magic</title><link href="http://tonysyu.github.io/pypath-magic.html" rel="alternate"></link><updated>2014-08-04T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-08-04:pypath-magic.html</id><summary type="html">&lt;div class="section" id="pypath-an-ipython-magic-for-manipulating-your-python-path"&gt;
 &lt;h2&gt;&lt;tt class="docutils literal"&gt;%pypath&lt;/tt&gt;: An IPython magic for manipulating your Python path&lt;/h2&gt;
-&lt;p&gt;So you're finally starting to write reusable code---extracting logically
-related bits into functions and grouping those functions together into modules.&lt;/p&gt;
+&lt;p&gt;You're a pragmatic Python developer, so you extract the logically related bits
+of your code into functions and group those functions together into modules.&lt;/p&gt;
 &lt;p&gt;Now, &lt;strong&gt;how do you actually import those modules&lt;/strong&gt;? If you're in the directory containing those modules, you're good to go:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;ls&lt;/span&gt;  &lt;span class="c"&gt;# Desired files are in the same directory.&lt;/span&gt;
 &lt;span class="n"&gt;data_wranglers&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
@@ -25,8 +25,8 @@ this:&lt;/p&gt;
 
 &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;named&lt;/span&gt; &lt;span class="n"&gt;plot_helpers&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;div class="section" id="sys-path"&gt;
-&lt;h3&gt;&lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;&lt;/h3&gt;
+&lt;div class="section" id="quickfix-sys-path"&gt;
+&lt;h3&gt;Quickfix: &lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;&lt;/h3&gt;
 &lt;p&gt;The quick fix here is to append to &lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
 
@@ -36,7 +36,7 @@ this:&lt;/p&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Success&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;But&lt;/strong&gt;, the next time you fire up python, you get the same &lt;tt class="docutils literal"&gt;ImportError&lt;/tt&gt; we
-saw before.&lt;/p&gt;
+saw above.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="persistent-changes-to-your-path"&gt;
 &lt;h3&gt;Persistent changes to your path&lt;/h3&gt;
@@ -44,18 +44,19 @@ saw before.&lt;/p&gt;
 &lt;a class="reference external" href="http://stackoverflow.com/questions/3402168/permanently-add-a-directory-to-pythonpath"&gt;tweak your PYTHONPATH&lt;/a&gt; or figure out how to &lt;a class="reference external" href="https://docs.python.org/2/library/site.html#module-site"&gt;add '*.pth' files to your
 site-packages directory&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;These solutions are annoying for most users and downright intimidating to newer
-developers. &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; provides a simple solution for manipulating your
-Python path from &lt;a class="reference external" href="http://ipython.org"&gt;IPython&lt;/a&gt;.&lt;/p&gt;
+developers. With &lt;tt class="docutils literal"&gt;%pypath&lt;/tt&gt;, you can easily manipulate your Python path from
+&lt;a class="reference external" href="http://ipython.org"&gt;IPython&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="how-to-use-pypath-magic"&gt;
-&lt;h2&gt;How to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt;&lt;/h2&gt;
-&lt;p&gt;The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic"&gt;module&lt;/a&gt; adds
+&lt;h2&gt;How to use &lt;tt class="docutils literal"&gt;pypath_magic&lt;/tt&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;pypath_magic&lt;/tt&gt; &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic"&gt;module&lt;/a&gt; adds
 an &lt;a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/tutorial.html#magic-functions"&gt;IPython magic&lt;/a&gt; (err... &lt;a class="reference external" href="http://jupyter.org/"&gt;Jupyter&lt;/a&gt; magic?) command for easily manipulating
 your Python path.&lt;/p&gt;
 &lt;div class="section" id="load-the-extension"&gt;
 &lt;h3&gt;Load the extension&lt;/h3&gt;
-&lt;p&gt;To use the magic command, just load the extension from an IPython session:&lt;/p&gt;
+&lt;p&gt;To use the &lt;tt class="docutils literal"&gt;%pypath&lt;/tt&gt; magic command, just load the extension from an IPython
+session:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;load_ext&lt;/span&gt; &lt;span class="n"&gt;pypath_magic&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -137,12 +138,14 @@ passing arguments to the add and delete commands.&lt;/p&gt;
 &lt;p&gt;Notice those numbers in the list above. We can use those indices to delete
 paths, or we can delete using string paths:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;Deleted&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;/absolute/path/to/stuff&amp;#39;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;path.&lt;/span&gt;
 
 &lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt;
 &lt;span class="mf"&gt;0.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;useful&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;
 &lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;things&lt;/span&gt;
 
-&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;17&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;stuff&lt;/span&gt;
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;17&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;useful&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;
+&lt;span class="n"&gt;Deleted&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;/absolute/path/to/useful-modules&amp;#39;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;path.&lt;/span&gt;
 
 &lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;pypath&lt;/span&gt;
 &lt;span class="mf"&gt;0.&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;absolute&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;things&lt;/span&gt;
@@ -166,7 +169,7 @@ $ pip install pypath_magic
 &lt;pre class="literal-block"&gt;
 $ pip install git+https://github.com/tonysyu/pypath-magic
 &lt;/pre&gt;
-&lt;p&gt;Or if you &amp;lt;3 github:&lt;/p&gt;
+&lt;p&gt;Or if you want to go &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic"&gt;direct to the source&lt;/a&gt;:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 $ git clone https://github.com/tonysyu/pypath-magic.git
 $ cd pypath-magic
