@@ -34,3 +34,7 @@ tt, literal-block, code {
     border: 1px solid #e1e1e8;
     padding: 2px 4px;
 }
+
+.panel-body {
+    padding: 15px 0px;
+}
