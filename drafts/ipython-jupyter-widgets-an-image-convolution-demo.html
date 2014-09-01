@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>IPython (Jupyter) widgets: An image convolution demo - Tony S. Yu</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <!-- Open Graph tags -->
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="IPython (Jupyter) widgets: An image convolution demo"/>
+            <meta property="og:url" content="/drafts/ipython-jupyter-widgets-an-image-convolution-demo.html"/>
+            <meta property="og:description" content="Convolution is one of the fundamental concepts of image processing (and more generally, signal processing). For the scikit-image tutorial at Scipy 2014, I created an IPython widget to help visualize convolution. This post explains that widget in more detail. Only a small portion of this post is actually about using ..."/>
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/friendly.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link href="/static/custom.css" rel="stylesheet">
+
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Tony S. Yu            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                    <li><a href="/pages/about-me.html">About me</a></li>
+                    <li><a href="/pages/research.html">Research</a></li>
+                    <li><a href="/index.html">Articles</a></li>
+                    <li><a href="/pages/design.html">Design</a></li>
+                        <li >
+                            <a href="/category/2014.html">2014</a>
+                        </li>
+                        <li >
+                            <a href="/category/2012.html">2012</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/drafts/ipython-jupyter-widgets-an-image-convolution-demo.html"
+                       rel="bookmark"
+                       title="Permalink to IPython (Jupyter) widgets: An image convolution demo">
+                        IPython (Jupyter) widgets: An image convolution demo
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-09-01T00:00:00"> Mon 01 September 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/ipython.html">IPython</a>
+        /
+	<a href="/tag/scikit-image.html">scikit-image</a>
+        /
+	<a href="/tag/matplotlib.html">matplotlib</a>
+        /
+	<a href="/tag/scipy.html">scipy</a>
+        /
+	<a href="/tag/numpy.html">numpy</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Convolution is one of the fundamental concepts of image processing (and
+more generally, signal processing). For the <a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html">scikit-image tutorial at Scipy
+2014</a>,
+I created an IPython widget to help visualize convolution. This post
+explains that widget in more detail.</p>
+<p>Only a small portion of this post is actually about using the widget API.
+<a class="reference external" href="http://nbviewer.ipython.org/github/ipython/ipython/blob/master/examples/Interactive%20Widgets/Index.ipynb">IPython notebook widgets</a> have a really easy-to-use API, so only a small
+bit of code is necessary. That said, this is a really nice demo of both image
+convolution and the usefulness of IPython widgets.</p>
+<p><strong>Requirements</strong></p>
+<p>If you want run the notebook version of this post (<a class="reference external" href="http://tonysyu.github.io/includes/Image_convolution_demo.ipynb">Download Notebook</a>),
+you'll need:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://ipython.org/">IPython</a> &gt;= 2.0</li>
+<li><a class="reference external" href="http://matplotlib.org/">matplotlib</a> &gt;= 1.3 (earlier versions
+probably work)</li>
+<li><a class="reference external" href="http://scikit-image.org/">scikit-image</a> &gt;= 0.9</li>
+</ul>
+<p><strong>Aside about plotting...</strong></p>
+<p>Before we get started, let's define a bit of boilerplate that's useful
+for any IPython notebook dealing with images:</p>
+<div class="highlight"><pre><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;gray&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;image.interpolation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;none&#39;</span>
+</pre></div>
+<p>I <em>highly</em> recommend setting the default colormap to <cite>'gray'</cite> for images
+and pretty much everything else. (There are, however, exceptions, as
+you'll see below.) Also, using nearest neighbor interpolation (which is
+what <cite>'none'</cite> does for zoomed-in images) makes pixel boundaries clearer.</p>
+<div class="section" id="image-convolution">
+<h2>Image convolution</h2>
+<p>The basic idea of image convolution is that you take an image like this:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">data</span><span class="p">,</span> <span class="nb">filter</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">()</span>
+<span class="c"># Ignore the Gaussian filter, for now.</span>
+<span class="c"># (This is explained at the end of the article.)</span>
+<span class="n">smooth_image</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">smooth_image</span><span class="p">);</span>
+</pre></div>
+<img alt="Blurred camera-man image" src="/images/posts/2014/camera_man_with_blur.png" />
+<p>... and filter the image using a convolution <strong>&quot;kernel&quot;</strong> that looks like
+this:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">horizontal_edge_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
+                                   <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="c"># Use non-gray colormap to display negative values as red and positive</span>
+<span class="c"># values as blue.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">horizontal_edge_kernel</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">);</span>
+</pre></div>
+<img alt="Image of horizontal-Sobel kernel" src="/images/posts/2014/horizontal_sobel_filter.png" />
+<p>... to arrive at a result that looks like this:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">convolve</span>
+
+<span class="n">horizontal_edge_response</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">smooth_image</span><span class="p">,</span> <span class="n">horizontal_edge_kernel</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">horizontal_edge_response</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">);</span>
+</pre></div>
+<img alt="Camera-man image after horizontal-Sobel filtering" src="/images/posts/2014/camera_man_with_hsobel.png" />
+<p>As the variable names suggest, this filter highlights the horizontal edges of
+an image. We'll see what's happening here later on.</p>
+<p>(Note that the coloring in the kernel and the filtered image come from the
+colormap that's used. The output is still a grayscale image: The red just
+means that a value is negative, and the blue is positive.)</p>
+</div>
+<div class="section" id="an-ipython-widget-for-demonstrating-image-convolution">
+<h2>An IPython widget for demonstrating image convolution</h2>
+<p>We're going to develop an IPython widget that looks something like this:</p>
+<div class="figure">
+<img alt="Image of convolution widget" src="/images/posts/2014/mean_filter_demo_step_19.png" />
+</div>
+<p>The slider in the widget allows you to step through the convolution process for
+each pixel in an image. The image (a white square with a black background) used
+for the demo is really boring to make the filtering process clearer.</p>
+<p>The plot on the left shows the original, unfiltered, image. On top of that, we
+overlay the kernel position: The center pixel of the kernel is tinted red, and
+the remaining pixels in the kernel are tinted yellow. The red pixel is the one
+being replaced by the current step of the convolution procedure, while red and
+yellow pixels are used to determine the replacement value.</p>
+<p>On the right, we see the image at the <tt class="docutils literal">i</tt>th step of the convolution
+process, which gives the (partially) filtered result.</p>
+<p>Before we get started though, let's define some helper functions.</p>
+</div>
+<div class="section" id="some-helper-functions">
+<h2>Some helper functions</h2>
+<p>Helper functions are great: They make code much more readable and
+reusable, which is what we should all be striving for. It's not
+necessary to understand these functions right away. You can easily skip
+over this for now, and revisit it if you have questions about the actual
+widget implementation. The function names, themselves, should be enough
+to describe their... ahem... functionality (except for
+<tt class="docutils literal">iter_kernel_labels</tt>, that one's tough to describe succinctly).</p>
+<div class="section" id="iterate-over-pixels-with-iter-pixels">
+<h3>Iterate over pixels with <tt class="docutils literal">iter_pixels</tt></h3>
+<p>First of all, we're going to want to look at the individual pixels of an
+image. So, let's define an iterator (or actually a generator) to make
+that easy:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">iter_pixels</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Yield pixel position (row, column) and pixel intensity. &quot;&quot;&quot;</span>
+    <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+</pre></div>
+<p>This &quot;yields&quot; the row, column, and pixel value for each iteration of a
+loop. By the way: You wouldn't normally loop over pixels (since Python
+loops are a bit slow) but the whole point of this widget is to go
+step-by-step.</p>
+</div>
+<div class="section" id="showing-images-side-by-side-with-imshow-pair">
+<h3>Showing images side-by-side with <tt class="docutils literal">imshow_pair</tt></h3>
+<p>Like I said, I like small utility functions, so I pulled out the code to
+plot side-by-side images into its own function:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">imshow_pair</span><span class="p">(</span><span class="n">image_pair</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">image_pair</span><span class="p">,</span> <span class="n">titles</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="dealing-with-boundary-conditions">
+<h3>Dealing with boundary conditions</h3>
+<p>What's the hardest part of any math problem (discrete, or otherwise)?</p>
+<p>Boundary conditions! (That's what they tell engineers, at least. If
+you're doing &quot;real&quot; math that's probably not true. Actually, even if
+that's not the case, it's probably not true.)</p>
+<p>There are many different solutions to dealing with boundaries; what
+we're going to do is just pad the input image with zeros based on the
+size of the kernel.</p>
+<div class="section" id="calculating-border-padding-with-padding-for-kernel">
+<h4>Calculating border padding with <tt class="docutils literal">padding_for_kernel</tt></h4>
+<p>First we define, a utility function to figure out how much padding to
+add based on the kernel shape. Basically, this just calculates the
+number of pixels that extend beyond the center pixel:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">padding_for_kernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Return the amount of padding needed for each side of an image.</span>
+
+<span class="sd">    For example, if the returned result is [1, 2], then this means an</span>
+<span class="sd">    image should be padded with 1 extra row on top and bottom, and 2</span>
+<span class="sd">    extra columns on the left and right.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Slice to ignore RGB channels if they exist.</span>
+    <span class="n">image_shape</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="c"># We only handle kernels with odd dimensions so make sure that&#39;s true.</span>
+    <span class="c"># (The &quot;center&quot; pixel of an even number of pixels is arbitrary.)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">((</span><span class="n">size</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">image_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">image_shape</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="padding-an-image-border-with-add-padding">
+<h4>Padding an image border with <tt class="docutils literal">add_padding</tt></h4>
+<p>Then we define another utility function that uses the above function to
+pad the border of an image with zeros:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">add_padding</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="n">h_pad</span><span class="p">,</span> <span class="n">w_pad</span> <span class="o">=</span> <span class="n">padding_for_kernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">((</span><span class="n">h_pad</span><span class="p">,</span> <span class="n">h_pad</span><span class="p">),</span> <span class="p">(</span><span class="n">w_pad</span><span class="p">,</span> <span class="n">w_pad</span><span class="p">)),</span>
+                  <span class="n">mode</span><span class="o">=</span><span class="s">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="reverse-add-padding-with-remove-padding">
+<h4>Reverse <tt class="docutils literal">add_padding</tt> with <tt class="docutils literal">remove_padding</tt></h4>
+<p>And sometimes, we need to take the padded image (or more likely, a
+filtered version of the padded image), and trim away the padded region,
+so we define a function to remove padding based on the kernel shape:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">remove_padding</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="n">inner_region</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c"># A 2D slice for grabbing the inner image region</span>
+    <span class="k">for</span> <span class="n">pad</span> <span class="ow">in</span> <span class="n">padding_for_kernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">):</span>
+        <span class="n">slice_i</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span> <span class="k">if</span> <span class="n">pad</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">slice</span><span class="p">(</span><span class="n">pad</span><span class="p">,</span> <span class="o">-</span><span class="n">pad</span><span class="p">)</span>
+        <span class="n">inner_region</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slice_i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="p">[</span><span class="n">inner_region</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="padding-demo">
+<h4>Padding demo</h4>
+<p>Just to make those functions a bit clearer, let's run through a demo. If
+you have an image that has a shape like:</p>
+<div class="highlight"><pre><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+(10, 20)
+</pre>
+<p>... and a kernel that has a shape like:</p>
+<div class="highlight"><pre><span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+(3, 5)
+</pre>
+<p>... adding padding to the image gives:</p>
+<div class="highlight"><pre><span class="n">padded</span> <span class="o">=</span> <span class="n">add_padding</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">padded</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+(12, 24)
+</pre>
+<p>Note that the total amount of padding is actually one less than the
+kernel size since you only need to add padding for <em>neighbors</em> of the
+center pixel, but not the center pixel, itself. (If this isn't clear,
+hopefully it will become clear when we start visualizing.)</p>
+<p>And of course, using <tt class="docutils literal">remove_padding</tt> gives us the original shape:</p>
+<div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="n">remove_padding</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+(10, 20)
+</pre>
+</div>
+</div>
+<div class="section" id="slicing-into-the-image-with-window-slice">
+<h3>Slicing into the image with <tt class="docutils literal">window_slice</tt></h3>
+<p>We're going to iterate over the pixels of an image and apply the
+convolution kernel in the 2D neighborhood (i.e. &quot;window&quot;) of each pixel.
+To that end, it really helps to have an easy way to slice into an image
+based on the center of the kernel and the kernel shape, so here's a
+pretty simple way of doing that:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">window_slice</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">center</span>
+    <span class="n">r_pad</span><span class="p">,</span> <span class="n">c_pad</span> <span class="o">=</span> <span class="n">padding_for_kernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+    <span class="c"># Slicing is (inclusive, exclusive) so add 1 to the stop value</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="n">r_pad</span><span class="p">,</span> <span class="n">r</span><span class="o">+</span><span class="n">r_pad</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="n">c_pad</span><span class="p">,</span> <span class="n">c</span><span class="o">+</span><span class="n">c_pad</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+<p>The <tt class="docutils literal">center</tt> parameter is just the (row, column) index corresponding
+to the center of the image patch where we'll be applying the convolution
+kernel.</p>
+<p>As a quick example, take a 2D array that looks like:</p>
+<div class="highlight"><pre><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+[[ 0  1  2  3]
+ [10 11 12 13]
+ [20 21 22 23]
+ [30 31 32 33]]
+</pre>
+<p>The values in this array are carefully chosen: The first and second digit
+match the row and column index.</p>
+<p>We can use <tt class="docutils literal">window_slice</tt> to slice-out a 3x3 window of our array as
+follows:</p>
+<div class="highlight"><pre><span class="n">dummy_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c"># We only care about the shape</span>
+<span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">window_slice</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">dummy_kernel</span><span class="p">)])</span>
+</pre></div>
+<pre class="literal-block">
+[[ 0  1  2]
+ [10 11 12]
+ [20 21 22]]
+</pre>
+<p>Note that the center pixel is 11, which corresponds to row 1, column 1
+of the original array. We can increment the column to shift to the
+right:</p>
+<div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">window_slice</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dummy_kernel</span><span class="p">)])</span>
+</pre></div>
+<pre class="literal-block">
+[[ 1  2  3]
+ [11 12 13]
+ [21 22 23]]
+</pre>
+<p>Or increment the row to shift down:</p>
+<div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">window_slice</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dummy_kernel</span><span class="p">)])</span>
+</pre></div>
+<pre class="literal-block">
+[[10 11 12]
+ [20 21 22]
+ [30 31 32]]
+</pre>
+<p>Non-square kernels would work too:</p>
+<div class="highlight"><pre><span class="n">dummy_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">window_slice</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dummy_kernel</span><span class="p">)])</span>
+</pre></div>
+<pre class="literal-block">
+[[11]
+ [21]
+ [31]]
+</pre>
+</div>
+<div class="section" id="applying-the-kernel-to-an-image-patch-with-apply-kernel">
+<h3>Applying the kernel to an image patch with <tt class="docutils literal">apply_kernel</tt></h3>
+<p>To actually &quot;apply&quot; the convolution kernel to an image patch, we just
+grab an image patch based on the center location and the kernel shape,
+and then &quot;apply&quot; the kernel by taking the sum of pixel intensities under
+the kernel, weighted by the kernel values:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">apply_kernel</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">original_image</span><span class="p">):</span>
+    <span class="n">image_patch</span> <span class="o">=</span> <span class="n">original_image</span><span class="p">[</span><span class="n">window_slice</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)]</span>
+    <span class="c"># An element-wise multiplication followed by the sum</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">kernel</span> <span class="o">*</span> <span class="n">image_patch</span><span class="p">)</span>
+</pre></div>
+<p>Technically, convolution requires flipping the kernel horizontally and
+vertically, but that's not really an important detail here.</p>
+</div>
+<div class="section" id="labeling-the-kernel-position-with-iter-kernel-labels">
+<h3>Labeling the kernel position with <tt class="docutils literal">iter_kernel_labels</tt></h3>
+<p>The whole point of this widget is to visualize how convolution works, so
+we need a way to display where the convolution kernel is located at any
+given iteration. To that end, we do a bit of array manipulation to mark:</p>
+<ul class="simple">
+<li>Pixels <em>under</em> the kernel with a value of 1</li>
+<li>The pixel at the center of the kernel with a value of 2</li>
+<li>All other pixels with a value of 0</li>
+</ul>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">iter_kernel_labels</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Yield position and kernel labels for each pixel in the image.</span>
+
+<span class="sd">    The kernel label-image has a 2 at the center and 1 for every other</span>
+<span class="sd">    pixel &quot;under&quot; the kernel. Pixels not under the kernel are labeled as 0.</span>
+
+<span class="sd">    Note that the mask is the same size as the input image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">original_image</span> <span class="o">=</span> <span class="n">image</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">add_padding</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+    <span class="n">i_pad</span><span class="p">,</span> <span class="n">j_pad</span> <span class="o">=</span> <span class="n">padding_for_kernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">pixel</span> <span class="ow">in</span> <span class="n">iter_pixels</span><span class="p">(</span><span class="n">original_image</span><span class="p">):</span>
+        <span class="c"># Shift the center of the kernel to ignore padded border.</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="n">i_pad</span>
+        <span class="n">j</span> <span class="o">+=</span> <span class="n">j_pad</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>  <span class="c"># Background = 0</span>
+        <span class="n">mask</span><span class="p">[</span><span class="n">window_slice</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">kernel</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c"># Kernel = 1</span>
+        <span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>                           <span class="c"># Kernel-center = 2</span>
+        <span class="k">yield</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">mask</span>
+</pre></div>
+</div>
+<div class="section" id="visualizing-our-kernel-overlay-with-visualize-kernel">
+<h3>Visualizing our kernel overlay with <tt class="docutils literal">visualize_kernel</tt></h3>
+<p>Now we want to take those 1s and 2s marking our kernel, and turn that
+into a color overlay. We do that using a little utility from
+scikit-image that overlays label values onto an image:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">color</span>
+
+<span class="k">def</span> <span class="nf">visualize_kernel</span><span class="p">(</span><span class="n">kernel_labels</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Return a composite image, where 1&#39;s are yellow and 2&#39;s are red.</span>
+
+<span class="sd">    See `iter_kernel_labels` for info on the meaning of 1 and 2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">color</span><span class="o">.</span><span class="n">label2rgb</span><span class="p">(</span><span class="n">kernel_labels</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                           <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;yellow&#39;</span><span class="p">,</span> <span class="s">&#39;red&#39;</span><span class="p">))</span>
+</pre></div>
+<p>Here we color the center value (i.e. 2) red and neighboring values (i.e. 1)
+yellow. The background value (i.e. 0) is transparent.</p>
+</div>
+</div>
+<div class="section" id="ipython-widget-demo">
+<h2>IPython widget demo</h2>
+<p>So all of the above helper functions were just to get us to this point:
+Making our own IPython widget.</p>
+<p>But before that (such a tease), here's a <em>really</em> basic example of IPython
+widgets, in case the concept is completely new to you.</p>
+<div class="section" id="a-very-simple-widget">
+<h3>A very simple widget</h3>
+<p>To define your own IPython widget, all you need to do is pass a function
+and the argument(s) you want to control to <tt class="docutils literal">widgets.interact</tt>. So a
+very simple example would just be:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">IPython.html</span> <span class="kn">import</span> <span class="n">widgets</span>
+
+<span class="k">def</span> <span class="nf">printer</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;i = {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+<span class="c"># This should be executed in an IPython notebook!</span>
+<span class="n">widgets</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">printer</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span>
+</pre></div>
+<p>If you run this code in an IPython notebook, you should see a slider and
+<tt class="docutils literal">i = 5</tt> printed by default. Moving the slider changes the value printed by
+<tt class="docutils literal">printer</tt>. The keyword argument, <tt class="docutils literal">i</tt>, must match the argument name in
+<tt class="docutils literal">printer</tt>; that's how slider value gets connected to the <tt class="docutils literal">printer</tt>
+function.</p>
+</div>
+<div class="section" id="a-stepper-function-for-image-convolution">
+<h3>A stepper function for image convolution</h3>
+<p>For the real widget, we're going to combine all of the helper functions
+defined above. Unfortunately, there are a couple of things here that make
+the code a bit more complicated than I would like:</p>
+<ul class="simple">
+<li>First, I wanted to make something that's fairly reusable. To that
+end, the following code snippet creates a function that <em>returns</em> the
+function passed to <tt class="docutils literal">widgets.interact</tt>. That way we can prep the
+image and cache results (see below).</li>
+<li>This function-that-returns-a-function is called a closure. Here's a
+pretty good explanation of the concept: <a class="reference external" href="http://stackoverflow.com/a/141426/260303">Closure
+explanation</a></li>
+<li>I'm going to do a bit of work here to cache results so that the demo
+function only computes the filtered result for each pixel once.
+Basically, we iterate over pixels in order, so we can cache a result
+for a pixel, and then we reuse the result to compute the result for
+the next pixel.</li>
+</ul>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">make_convolution_step_function</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c"># Initialize generator since we&#39;re only ever going to iterate over</span>
+    <span class="c"># a pixel once. The cached result is used, if we step back.</span>
+    <span class="n">gen_kernel_labels</span> <span class="o">=</span> <span class="n">iter_kernel_labels</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+
+    <span class="n">image_cache</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">add_padding</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">convolution_step</span><span class="p">(</span><span class="n">i_step</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Plot original image and kernel-overlay next to filtered image.</span>
+
+<span class="sd">        For a given step, check if it&#39;s in the image cache. If not</span>
+<span class="sd">        calculate all necessary images, then plot the requested step.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Create all images up to the current step, unless they&#39;re already</span>
+        <span class="c"># cached:</span>
+        <span class="k">while</span> <span class="n">i_step</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_cache</span><span class="p">):</span>
+
+            <span class="c"># For the first step (`i_step == 0`), the original image is the</span>
+            <span class="c"># filtered image; after that we look in the cache, which stores</span>
+            <span class="c"># (`kernel_overlay`, `filtered`).</span>
+            <span class="n">filtered_prev</span> <span class="o">=</span> <span class="n">image</span> <span class="k">if</span> <span class="n">i_step</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">image_cache</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c"># We don&#39;t want to overwrite the previously filtered image:</span>
+            <span class="n">filtered</span> <span class="o">=</span> <span class="n">filtered_prev</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c"># Get the labels used to visualize the kernel</span>
+            <span class="n">center</span><span class="p">,</span> <span class="n">kernel_labels</span> <span class="o">=</span> <span class="n">gen_kernel_labels</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+            <span class="c"># Modify the pixel value at the kernel center</span>
+            <span class="n">filtered</span><span class="p">[</span><span class="n">center</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_kernel</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+            <span class="c"># Take the original image and overlay our kernel visualization</span>
+            <span class="n">kernel_overlay</span> <span class="o">=</span> <span class="n">visualize_kernel</span><span class="p">(</span><span class="n">kernel_labels</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+            <span class="c"># Save images for reuse.</span>
+            <span class="n">image_cache</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">kernel_overlay</span><span class="p">,</span> <span class="n">filtered</span><span class="p">))</span>
+
+        <span class="c"># Remove padding we added to deal with boundary conditions</span>
+        <span class="c"># (Loop since each step has 2 images)</span>
+        <span class="n">image_pair</span> <span class="o">=</span> <span class="p">[</span><span class="n">remove_padding</span><span class="p">(</span><span class="n">each</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+                      <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">image_cache</span><span class="p">[</span><span class="n">i_step</span><span class="p">]]</span>
+        <span class="n">imshow_pair</span><span class="p">(</span><span class="n">image_pair</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">convolution_step</span>  <span class="c"># &lt;-- this is a function</span>
+</pre></div>
+<p>Now we just initialize the stepper function and pass that to
+<tt class="docutils literal">widgets.interact</tt>:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">IPython.html.widgets</span> <span class="kn">import</span> <span class="n">IntSliderWidget</span>
+
+<span class="k">def</span> <span class="nf">interactive_convolution_demo</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">stepper</span> <span class="o">=</span> <span class="n">make_convolution_step_function</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">step_slider</span> <span class="o">=</span> <span class="n">IntSliderWidget</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">widgets</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">stepper</span><span class="p">,</span> <span class="n">i_step</span><span class="o">=</span><span class="n">step_slider</span><span class="p">)</span>
+</pre></div>
+<p>There's a bit of tweaking here just to get the slider widget to start
+off at zero, but that's not crucial. You could have used</p>
+<div class="highlight"><pre><span class="n">widgets</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">stepper</span><span class="p">,</span> <span class="n">i_step</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+<p>but that would start with the slider at the midpoint, which isn't ideal
+for this particular demo.</p>
+</div>
+<div class="section" id="demo-mean-filtering">
+<h3>Demo: Mean filtering</h3>
+<p>Up until this point, the code written here would work perfectly well in
+a normal python script. To actually <em>use</em> the widget, however, we need to
+execute the following lines in an IPython notebook (<a class="reference external" href="http://tonysyu.github.io/includes/Image_convolution_demo.ipynb">Download Notebook</a>).</p>
+<p>Before using this widget, let's define a really small image, which makes
+this demo easier to understand:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">bright_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">bright_square</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">bright_square</span><span class="p">);</span>
+</pre></div>
+<img alt="Simple test image for demo" src="/images/posts/2014/convolution_demo_test_image.png" />
+<p>One of the classic smoothing filters is the mean filter. As you might
+expect, it calculates the mean under the kernel. The kernel itself is
+just the weights used for the mean. For 3x3 kernel, this looks like:</p>
+<div class="highlight"><pre><span class="n">mean_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">mean_kernel</span> <span class="o">/=</span> <span class="n">mean_kernel</span><span class="o">.</span><span class="n">size</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mean_kernel</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+[[ 0.11111111  0.11111111  0.11111111]
+ [ 0.11111111  0.11111111  0.11111111]
+ [ 0.11111111  0.11111111  0.11111111]]
+</pre>
+<p>These weights will then be multiplied by pixel intensities using
+<tt class="docutils literal">apply_kernel</tt>.</p>
+<p>Using our convolution widget, we can see how the mean-filtering process looks,
+step-by-step:</p>
+<div class="highlight"><pre><span class="c"># This should be executed in an IPython notebook!</span>
+<span class="n">titles</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Image and kernel&#39;</span><span class="p">,</span> <span class="s">&#39;Filtered image&#39;</span><span class="p">)</span>
+<span class="n">interactive_convolution_demo</span><span class="p">(</span><span class="n">bright_square</span><span class="p">,</span> <span class="n">mean_kernel</span><span class="p">,</span>
+                             <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="n">titles</span><span class="p">)</span>
+</pre></div>
+<p>which would create the following widget in an IPython notebook:</p>
+<img alt="First step of image of mean-filter widget" src="/images/posts/2014/mean_filter_demo_step_0.png" />
+<p>This sets up the widget at the first step of the convolution process. (As with
+most arrays/matrices, we'll start counting at the top-left corner). The
+filtered image (on the right) is unchanged because the kernel is centered on
+a very boring region (all zeros; including the out-of-bounds values, which are
+padded with zeros).</p>
+<p><strong>Boundary conditions, revisited:</strong> If you look at <tt class="docutils literal">i_step = 0</tt>, you
+can see why we went through the trouble of defining all that
+image-padding code: If we want to apply the convolution kernel to the
+top-left pixel, it has no neighbors above it or to the left. Adding
+padding (which was removed for display) allows us to handle those cases
+without too much trouble.</p>
+<p>As you increment <tt class="docutils literal">i_step</tt>, you should see how the filtered image changes as
+non-zero pixels fall under the kernel:</p>
+<img alt="Intermediate step of image of mean-filter widget" src="/images/posts/2014/mean_filter_demo_step_19.png" />
+<img alt="Final step of image of mean-filter widget" src="/images/posts/2014/mean_filter_demo_step_48.png" />
+<p>After playing around with the widget, you should notice that the mean
+kernel is really simple:</p>
+<ul class="simple">
+<li>Weight each pixel under the kernel (red+yellow) equally</li>
+<li>Add all products (pixel-values × 1/9) together</li>
+<li>Replace center pixel (red) with the sum</li>
+</ul>
+<p>In the filtered result, hard edges are smoothed: Since a pixel on an
+edge will be bordering both white and black pixels, the filtered result
+will be gray. This smoothing effect can be useful for blurring an image
+or removing noise (although <a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/plot_denoise.html">edge-preserving denoising filters</a> are probably
+preferable).</p>
+</div>
+<div class="section" id="demo-edge-filtering">
+<h3>Demo: Edge filtering</h3>
+<p>Finally, let's look at another really useful and easy-to-understand
+filter: The edge filter. For images, edges are basically boundaries
+between light and dark values. An easy way to calculate that is to take
+the difference of neighboring values.</p>
+<p>Here, we'll use the Sobel kernel for detecting horizontal edges (which
+was defined at the very beginning):</p>
+<div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="n">horizontal_edge_kernel</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+[[ 1  2  1]
+ [ 0  0  0]
+ [-1 -2 -1]]
+</pre>
+<p>Basically, using this kernel to calculate a weighted sum will subtract
+neighboring values <em>below</em> the center pixel from those <em>above</em> the
+center. If pixels above and below the center are the same, the filtered
+result is 0, but if they are very different, we get a strong &quot;edge&quot;
+response.</p>
+<p>Again, using our convolution widget, we can step through the process
+quite easily:</p>
+<div class="highlight"><pre><span class="c"># This should be executed in an IPython notebook!</span>
+<span class="n">interactive_convolution_demo</span><span class="p">(</span><span class="n">bright_square</span><span class="p">,</span> <span class="n">horizontal_edge_kernel</span><span class="p">,</span>
+                             <span class="n">vmin</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span><span class="p">)</span>
+</pre></div>
+<img alt="First step of image of Sobel-filter widget" src="/images/posts/2014/sobel_filter_demo_step_0.png" />
+<p>Again, we start off at a very boring region of the image, where all pixels
+under the kernel are zero. Incrementing the step shows the edge-filter at work:</p>
+<img alt="Intermediate step of image of Sobel-filter widget" src="/images/posts/2014/sobel_filter_demo_step_18.png" />
+<img alt="Final step of image of Sobel-filter widget" src="/images/posts/2014/sobel_filter_demo_step_48.png" />
+<p>Play around with the widget a bit. You should notice that:</p>
+<ul class="simple">
+<li>This filter responds to horizontal edges (i.e. it is sensitive to the
+orientation of the edge).</li>
+<li>The filter responds differently when going from white-to-black vs
+black-to-white (i.e. it is sensitive to the direction of the edge).</li>
+<li>The edge response diminishes as it approaches a vertical boundary. This is
+because the kernel has a finite width (i.e. it's 3x3 instead of 3x1).</li>
+</ul>
+<p>Often, you don't really care about the orientation or direction of the
+edge. In that case, you would just combine the horizontal-edge filter
+with the corresponding vertical-edge filter and calculate the gradient
+magnitude. This is exactly what the standard <a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/plot_edge_filter.html">Sobel filter</a> does.</p>
+<p>I hope that clarifies the idea of convolution filters.</p>
+</div>
+</div>
+<div class="section" id="leftovers">
+<h2>Leftovers</h2>
+<ul>
+<li><p class="first"><em>Why did the first example use a</em> <tt class="docutils literal">gaussian_filter</tt><em>?</em></p>
+<p>Edge filters (which are basically just derivatives) enhance noise.  We do
+some smoothing beforehand to reduce the likelihood of false edges.</p>
+</li>
+<li><p class="first"><em>Why are the &quot;edges&quot; (the red and blue regions) in that last filtered image
+so thick?</em></p>
+<p>The edge filter used here gives what's called a &quot;centered difference&quot;. In
+reality, the edges lie in-between pixel values, so the closest we can get
+(without biasing the edge up or down) is to mark the pixels above and below
+the edge.</p>
+</li>
+<li><p class="first"><em>What do you mean by &quot;neighbors&quot; and &quot;under&quot; the kernel?</em></p>
+<p>In the kernel overlay, red marks the center pixel, yellow marks the
+neighbors, and both red and yellow pixels are &quot;under&quot; the kernel.</p>
+</li>
+<li><p class="first"><em>Does the step-order matter?</em></p>
+<p>No. The widget steps from the top-left pixel down to the bottom-right
+pixel, but this order is arbitrary. The filtered value at each step is
+calculated from the <em>original</em> values so previous steps don't matter.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="references">
+<h2>References</h2>
+<ul class="simple">
+<li><a class="reference external" href="http://tonysyu.github.io/includes/Image_convolution_demo.ipynb">Notebook version of this article</a> (so you can actually use the widgets.)</li>
+<li><a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html">scikit-image tutorial at Scipy 2014</a></li>
+<li>Really useful linear filters:<ul>
+<li><a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.filter.html#gaussian-filter">Gaussian filter</a>, the classic smoothing filter</li>
+<li><a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/plot_edge_filter.html">Sobel filter</a> for detection edges (a little different from the above
+since it takes the gradient magnitude, which means it doesn't care about
+direction or orientation)</li>
+</ul>
+</li>
+<li>Useful generic filters:<ul>
+<li>Generic (local) filters work in a similar fashion to the convolution
+filters described above, but they aren't limited to a linear,
+weighted sum.</li>
+<li><a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/plot_denoise.html">Denoising filters</a> for removing noise without smoothing edges.</li>
+<li><a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/applications/plot_rank_filters.html">Rank filters</a></li>
+<li><a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/applications/plot_morphology.html">Morphological filters</a> for manipulating shapes.</li>
+</ul>
+</li>
+</ul>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style addthis_20x20_style">
+        <a class="addthis_button_email"></a>
+        <a class="addthis_button_reddit"></a>
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_google_plusone_share"></a>
+    </div>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f2c41705dd9003"></script>
+    <!-- AddThis Button END -->
+    <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
+            var disqus_identifier = 'ipython-jupyter-widgets-an-image-convolution-demo';
+            var disqus_url = '/drafts/ipython-jupyter-widgets-an-image-convolution-demo.html';
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+
+                
+<div id="about">
+    <div class="split-left">
+        <img class="sidebar"
+            src="http://tonysyu.github.io/images/tonysyu.jpg"
+            width="120px"
+            align="left"
+            alt="Tony S. Yu">
+    </div>
+
+    <div class="split-right">
+        <p class="sidebar">
+            Software developer, engineer, and all-around good guy in
+            Austin, TX, USA.
+        </p>
+    </div>
+</div>
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://www.enthought.com/" target="_blank">
+                Enthought
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://http://scikit-image.org/" target="_blank">
+                scikit-image
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://matplotlib.sourceforge.net/" target="_blank">
+                matplotlib
+            </a>
+        </li>
+      </ul>
+    </li>
+
+                
+<a href="https://www.enthought.com/services/training/python-training-on-demand">
+    <img class="sidebar" src="https://www.enthought.com/static/img/Enthought-training-on-demand-logo-2014_colored-2000x555-2.png" alt="Enthought Training on Demand">
+</a>
+
+
+
+                <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="/tag/matplotlib.html">
+                                matplotlib
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="/tag/mpltools.html">
+                                mpltools
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="/tag/line-plots.html">
+                                line plots
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="/tag/sympy.html">
+                                sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="/tag/fluids.html">
+                                fluids
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/git.html">
+                                git
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/numpy.html">
+                                numpy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/python.html">
+                                python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/scipy.html">
+                                scipy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/ipython.html">
+                                IPython
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/animation.html">
+                                animation
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/data.html">
+                                data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/scikit-image.html">
+                                scikit-image
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/color.html">
+                                color
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="/tag/craftsmanship.html">
+                                craftsmanship
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Tony S. Yu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29631580-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>
