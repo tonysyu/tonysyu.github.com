@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="static/css/gallery.css">
+  <title>Matplotlib Style Gallery</title>
+</head>
+<body>
+
+
+  <h1> Matplotlib Style Gallery </h1>
+
+  <p>
+    This gallery compares stylesheets defined in Matplotlib.
+  </p>
+
+
+    <p> <em> Note: User input has been disabled </em> <p>
+
+    <p>
+      To run this gallery with the ability compare results with custom
+      style sheets, download the source code and run the Flask app locally.
+      Source code for this gallery available on
+      <a href="https://github.com/tonysyu/matplotlib-style-gallery">github</a>.
+    </p>
+
+  <table id='gallery'>
+
+  <thead>
+    <tr>
+      <th>Style</th>
+
+
+        <th> artist-demo </th>
+
+        <th> bar-plots </th>
+
+        <th> streamplot </th>
+
+
+    </tr>
+  </thead>
+
+  <tbody>
+
+
+      <tr>
+        <td> bmh </td>
+
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/bmh/artist-demo.png">
+              <img src="build/images/bmh/artist-demo.png"
+                   alt="image"
+                   data-style="bmh"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/bmh/bar-plots.png">
+              <img src="build/images/bmh/bar-plots.png"
+                   alt="image"
+                   data-style="bmh"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/bmh/streamplot.png">
+              <img src="build/images/bmh/streamplot.png"
+                   alt="image"
+                   data-style="bmh"/>
+            </a>
+          </td>
+
+
+      </tr>
+
+      <tr>
+        <td> dark_background </td>
+
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/dark_background/artist-demo.png">
+              <img src="build/images/dark_background/artist-demo.png"
+                   alt="image"
+                   data-style="dark_background"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/dark_background/bar-plots.png">
+              <img src="build/images/dark_background/bar-plots.png"
+                   alt="image"
+                   data-style="dark_background"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/dark_background/streamplot.png">
+              <img src="build/images/dark_background/streamplot.png"
+                   alt="image"
+                   data-style="dark_background"/>
+            </a>
+          </td>
+
+
+      </tr>
+
+      <tr>
+        <td> fivethirtyeight </td>
+
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/fivethirtyeight/artist-demo.png">
+              <img src="build/images/fivethirtyeight/artist-demo.png"
+                   alt="image"
+                   data-style="fivethirtyeight"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/fivethirtyeight/bar-plots.png">
+              <img src="build/images/fivethirtyeight/bar-plots.png"
+                   alt="image"
+                   data-style="fivethirtyeight"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/fivethirtyeight/streamplot.png">
+              <img src="build/images/fivethirtyeight/streamplot.png"
+                   alt="image"
+                   data-style="fivethirtyeight"/>
+            </a>
+          </td>
+
+
+      </tr>
+
+      <tr>
+        <td> ggplot </td>
+
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/ggplot/artist-demo.png">
+              <img src="build/images/ggplot/artist-demo.png"
+                   alt="image"
+                   data-style="ggplot"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/ggplot/bar-plots.png">
+              <img src="build/images/ggplot/bar-plots.png"
+                   alt="image"
+                   data-style="ggplot"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/ggplot/streamplot.png">
+              <img src="build/images/ggplot/streamplot.png"
+                   alt="image"
+                   data-style="ggplot"/>
+            </a>
+          </td>
+
+
+      </tr>
+
+      <tr>
+        <td> grayscale </td>
+
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/grayscale/artist-demo.png">
+              <img src="build/images/grayscale/artist-demo.png"
+                   alt="image"
+                   data-style="grayscale"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/grayscale/bar-plots.png">
+              <img src="build/images/grayscale/bar-plots.png"
+                   alt="image"
+                   data-style="grayscale"/>
+            </a>
+          </td>
+
+          <td>
+            <a class="lightbox-viewable" href="build/images/grayscale/streamplot.png">
+              <img src="build/images/grayscale/streamplot.png"
+                   alt="image"
+                   data-style="grayscale"/>
+            </a>
+          </td>
+
+
+      </tr>
+
+
+  </tbody>
+
+</table>
+
+  <div id="lightbox">
+
+  <p>Press Esc to close</p>
+
+  <img src="#"/>
+
+</div>
+
+  <h2>Note:</h2>
+
+<p>
+  These plots were generated with the default matplotlib parameters,
+  <b>plus</b> a <em>default</em> colormap that was set to gray-scale and no
+  interpolation. You can do the same on your system by adding the following
+  to your <code>~/.matplotlib/matplotlibrc</code> file:
+
+  <pre><code>
+    image.cmap : gray
+    image.interpolation : none
+  </code></pre>
+
+  Without this change, most styles will default to "jet" colormap, which is
+
+  <a href="http://www.researchgate.net/publication/6419747_Rainbow_color_map_%28still%29_considered_harmful">
+      terrible
+  </a>
+
+  for so
+
+  <a href="https://jakevdp.github.io/blog/2014/10/16/how-bad-is-your-colormap/">
+      many reasons
+  </a>.
+
+</p>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="static/js/spin.min.js"></script>
+  <script src="static/js/gallery.js"></script>
+
+
+</body>
+</html>

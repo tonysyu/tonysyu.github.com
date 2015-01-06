@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="https://www.facebook.com/2008/fbml">
+<html lang="en"
+>
 <head>
     <title>Matplotlib named colors - Tony S. Yu</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
 
-    <!-- Open Graph tags -->
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Matplotlib named colors"/>
-            <meta property="og:url" content="http://tonysyu.github.io/drafts/matplotlib-named-colors.html"/>
-            <meta property="og:description" content="Most people just use a few of the most common colors; in particular, those with single-character shortcuts: 'b' = blue 'g' = green 'r' = red 'c' = cyan 'm' = magenta 'y' = yellow 'k' = black 'w' = white These colors are fine, but not ideal, for a number of use cases. One way around this ..."/>
+
+
+<link rel="canonical" href="http://tonysyu.github.io/drafts/matplotlib-named-colors.html">
+
+        <meta name="author" content="Tony S. Yu" />
+        <meta name="keywords" content="matplotlib,color" />
+        <meta name="description" content="Most people just use a few of the most common colors; in particular, those with single-character shortcuts: &#39;b&#39; = blue &#39;g&#39; = green &#39;r&#39; = red &#39;c&#39; = cyan &#39;m&#39; = magenta &#39;y&#39; = yellow &#39;k&#39; = black &#39;w&#39; = white These colors are fine, but not ideal, for a number of use cases. One way around this ..." />
+
+    <!-- Enable latex plugin -->
+
+
+
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -26,6 +31,10 @@
 
         <link href="http://tonysyu.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="Tony S. Yu ATOM Feed"/>
+
+
+        <link href="http://tonysyu.github.io/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu posts ATOM Feed"/>
 
 </head>
 <body>
@@ -48,6 +57,9 @@ Tony S. Yu            </a>
                     <li><a href="/pages/research.html">Research</a></li>
                     <li><a href="/index.html">Articles</a></li>
                     <li><a href="/pages/design.html">Design</a></li>
+                        <li class="active">
+                            <a href="http://tonysyu.github.io/category/posts.html">Posts</a>
+                        </li>
                         <li >
                             <a href="http://tonysyu.github.io/category/2014.html">2014</a>
                         </li>
@@ -84,8 +96,11 @@ Tony S. Yu            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2013-12-31T00:00:00"> Tue 31 December 2013</time>
+        <i class="fa fa-calendar"></i><time datetime="2013-12-31T00:00:00-05:00"> Tue 31 December 2013</time>
     </span>
+
+
+
 
 
 
@@ -185,18 +200,21 @@ saturation corresponds to muted colors.</p>
         <a class="addthis_button_twitter"></a>
         <a class="addthis_button_google_plusone_share"></a>
     </div>
-    <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f2c41705dd9003"></script>
     <!-- AddThis Button END -->
-    <hr />
+    <hr/>
     <section class="comments" id="comments">
         <h2>Comments</h2>
+
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'matplotlib-named-colors';
-            var disqus_url = 'http://tonysyu.github.io/drafts/matplotlib-named-colors.html';
+
+                    var disqus_identifier = 'matplotlib-named-colors';
+                var disqus_url = 'http://tonysyu.github.io/drafts/matplotlib-named-colors.html';
+
             var disqus_config = function () {
                 this.language = "en";
             };
@@ -279,13 +297,8 @@ saturation corresponds to muted colors.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/sympy.html">
-                                sympy
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/numpy.html">
-                                numpy
+                            <a href="http://tonysyu.github.io/tag/ipython.html">
+                                IPython
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -294,8 +307,8 @@ saturation corresponds to muted colors.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/mpltools.html">
-                                mpltools
+                            <a href="http://tonysyu.github.io/tag/sympy.html">
+                                sympy
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -304,13 +317,8 @@ saturation corresponds to muted colors.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/fluids.html">
-                                fluids
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/ipython.html">
-                                IPython
+                            <a href="http://tonysyu.github.io/tag/numpy.html">
+                                numpy
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -318,19 +326,14 @@ saturation corresponds to muted colors.</p>
                                 line plots
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/animation.html">
-                                animation
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
-                                craftsmanship
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/io.html">
-                                io
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -339,8 +342,18 @@ saturation corresponds to muted colors.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://tonysyu.github.io/tag/git.html">
                                 git
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -349,8 +362,13 @@ saturation corresponds to muted colors.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/data.html">
-                                data
+                            <a href="http://tonysyu.github.io/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
+                                craftsmanship
                             </a>
                         </li>
                     </ul>
@@ -376,7 +394,7 @@ saturation corresponds to muted colors.</p>
       </div>
    </div>
 </footer>
-<script src="//code.jquery.com/jquery.js"></script>
+<script src="http://tonysyu.github.io/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="http://tonysyu.github.io/theme/js/bootstrap.min.js"></script>
@@ -384,6 +402,7 @@ saturation corresponds to muted colors.</p>
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
 <script src="http://tonysyu.github.io/theme/js/respond.min.js"></script>
 
+    <!-- Disqus -->
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
@@ -397,6 +416,8 @@ saturation corresponds to muted colors.</p>
             (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
         }());
     </script>
+    <!-- End Disqus Code -->
+    <!-- Google Analytics -->
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -411,7 +432,7 @@ saturation corresponds to muted colors.</p>
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
         })();
-
     </script>
+    <!-- End Google Analytics Code -->
 </body>
 </html>

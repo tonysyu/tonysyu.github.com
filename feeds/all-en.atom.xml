@@ -9,7 +9,7 @@ explains that widget in more detail.&lt;/p&gt;
 bit of code is necessary. That said, this is a really nice demo of both image
 convolution and the usefulness of IPython widgets.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Requirements&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;If you want run the notebook version of this post (&lt;a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_widget.ipynb"&gt;Download Notebook&lt;/a&gt;),
+&lt;p&gt;If you want run the notebook version of this post (&lt;a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_demo.ipynb"&gt;Download Notebook&lt;/a&gt;),
 you'll need:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://ipython.org/"&gt;IPython&lt;/a&gt; &amp;gt;= 2.0&lt;/li&gt;
@@ -450,7 +450,7 @@ for this particular demo.&lt;/p&gt;
 &lt;h3&gt;Demo: Mean filtering&lt;/h3&gt;
 &lt;p&gt;Up until this point, the code written here would work perfectly well in
 a normal python script. To actually &lt;em&gt;use&lt;/em&gt; the widget, however, we need to
-execute the following lines in an IPython notebook (&lt;a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_widget.ipynb"&gt;Download Notebook&lt;/a&gt;).&lt;/p&gt;
+execute the following lines in an IPython notebook (&lt;a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_demo.ipynb"&gt;Download Notebook&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;Before using this widget, let's define a really small image, which makes
 this demo easier to understand:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
@@ -586,7 +586,7 @@ calculated from the &lt;em&gt;original&lt;/em&gt; values so previous steps don't
 &lt;div class="section" id="references"&gt;
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;&lt;a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_widget.ipynb"&gt;Notebook version of this article&lt;/a&gt; (so you can actually use the widgets.)&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_demo.ipynb"&gt;Notebook version of this article&lt;/a&gt; (so you can actually use the widgets.)&lt;/li&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html"&gt;scikit-image tutorial at Scipy 2014&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Really useful linear filters:&lt;ul&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.filter.html#gaussian-filter"&gt;Gaussian filter&lt;/a&gt;, the classic smoothing filter&lt;/li&gt;
@@ -1029,7 +1029,7 @@ videos:&lt;/p&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://youtu.be/pWnYjqudKHs"&gt;Part 4&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;But, even if don't want to watch these videos, the accompanying notebooks are
-worth a look: &lt;a class="reference external" href="https://github.com/scikit-image/skimage-tutorials/tree/master/scipy-2014"&gt;notebooks on github&lt;/a&gt;. Currently, the scikit-image website
+worth a look: &lt;a class="reference external" href="https://github.com/scikit-image/skimage-tutorials/tree/master/2014-scipy"&gt;notebooks on github&lt;/a&gt;. Currently, the scikit-image website
 doesn't have any introductory tutorial docs, so this is probably the most
 complete source for introductory material. I'd like to integrate these
 notebooks as a user guide on the website, but that may take a bit of time.&lt;/p&gt;

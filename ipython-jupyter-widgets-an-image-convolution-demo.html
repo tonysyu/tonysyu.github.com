@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="https://www.facebook.com/2008/fbml">
+<html lang="en"
+>
 <head>
     <title>IPython (Jupyter) widgets: An image convolution demo - Tony S. Yu</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
 
-    <!-- Open Graph tags -->
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="IPython (Jupyter) widgets: An image convolution demo"/>
-            <meta property="og:url" content="http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html"/>
-            <meta property="og:description" content="Convolution is one of the fundamental concepts of image processing (and more generally, signal processing). For the scikit-image tutorial at Scipy 2014, I created an IPython widget to help visualize convolution. This post explains that widget in more detail. Only a small portion of this post is actually about using ..."/>
+
+
+<link rel="canonical" href="http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html">
+
+        <meta name="author" content="Tony S. Yu" />
+        <meta name="keywords" content="IPython,scikit-image,matplotlib,scipy,numpy" />
+        <meta name="description" content="Convolution is one of the fundamental concepts of image processing (and more generally, signal processing). For the scikit-image tutorial at Scipy 2014, I created an IPython widget to help visualize convolution. This post explains that widget in more detail. Only a small portion of this post is actually about using ..." />
+
+    <!-- Enable latex plugin -->
+
+
+
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -26,6 +31,10 @@
 
         <link href="http://tonysyu.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="Tony S. Yu ATOM Feed"/>
+
+
+        <link href="http://tonysyu.github.io/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu posts ATOM Feed"/>
 
 </head>
 <body>
@@ -49,6 +58,9 @@ Tony S. Yu            </a>
                     <li><a href="/index.html">Articles</a></li>
                     <li><a href="/pages/design.html">Design</a></li>
                         <li class="active">
+                            <a href="http://tonysyu.github.io/category/posts.html">Posts</a>
+                        </li>
+                        <li >
                             <a href="http://tonysyu.github.io/category/2014.html">2014</a>
                         </li>
                         <li >
@@ -84,8 +96,11 @@ Tony S. Yu            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-09-01T00:00:00"> Mon 01 September 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-09-01T00:00:00-04:00"> Mon 01 September 2014</time>
     </span>
+
+
+
 
 
 
@@ -112,7 +127,7 @@ explains that widget in more detail.</p>
 bit of code is necessary. That said, this is a really nice demo of both image
 convolution and the usefulness of IPython widgets.</p>
 <p><strong>Requirements</strong></p>
-<p>If you want run the notebook version of this post (<a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_widget.ipynb">Download Notebook</a>),
+<p>If you want run the notebook version of this post (<a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_demo.ipynb">Download Notebook</a>),
 you'll need:</p>
 <ul class="simple">
 <li><a class="reference external" href="http://ipython.org/">IPython</a> &gt;= 2.0</li>
@@ -553,7 +568,7 @@ for this particular demo.</p>
 <h3>Demo: Mean filtering</h3>
 <p>Up until this point, the code written here would work perfectly well in
 a normal python script. To actually <em>use</em> the widget, however, we need to
-execute the following lines in an IPython notebook (<a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_widget.ipynb">Download Notebook</a>).</p>
+execute the following lines in an IPython notebook (<a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_demo.ipynb">Download Notebook</a>).</p>
 <p>Before using this widget, let's define a really small image, which makes
 this demo easier to understand:</p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -689,7 +704,7 @@ calculated from the <em>original</em> values so previous steps don't matter.</p>
 <div class="section" id="references">
 <h2>References</h2>
 <ul class="simple">
-<li><a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_widget.ipynb">Notebook version of this article</a> (so you can actually use the widgets.)</li>
+<li><a class="reference external" href="http://tonysyu.github.io/includes/image_convolution_demo.ipynb">Notebook version of this article</a> (so you can actually use the widgets.)</li>
 <li><a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html">scikit-image tutorial at Scipy 2014</a></li>
 <li>Really useful linear filters:<ul>
 <li><a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.filter.html#gaussian-filter">Gaussian filter</a>, the classic smoothing filter</li>
@@ -721,18 +736,21 @@ weighted sum.</li>
         <a class="addthis_button_twitter"></a>
         <a class="addthis_button_google_plusone_share"></a>
     </div>
-    <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f2c41705dd9003"></script>
     <!-- AddThis Button END -->
-    <hr />
+    <hr/>
     <section class="comments" id="comments">
         <h2>Comments</h2>
+
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'ipython-jupyter-widgets-an-image-convolution-demo';
-            var disqus_url = 'http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html';
+
+                    var disqus_identifier = 'ipython-jupyter-widgets-an-image-convolution-demo';
+                var disqus_url = 'http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html';
+
             var disqus_config = function () {
                 this.language = "en";
             };
@@ -815,13 +833,8 @@ weighted sum.</li>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/sympy.html">
-                                sympy
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/numpy.html">
-                                numpy
+                            <a href="http://tonysyu.github.io/tag/ipython.html">
+                                IPython
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -830,8 +843,8 @@ weighted sum.</li>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/mpltools.html">
-                                mpltools
+                            <a href="http://tonysyu.github.io/tag/sympy.html">
+                                sympy
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -840,13 +853,8 @@ weighted sum.</li>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/fluids.html">
-                                fluids
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://tonysyu.github.io/tag/ipython.html">
-                                IPython
+                            <a href="http://tonysyu.github.io/tag/numpy.html">
+                                numpy
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -854,19 +862,14 @@ weighted sum.</li>
                                 line plots
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/animation.html">
-                                animation
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
-                                craftsmanship
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/io.html">
-                                io
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -875,8 +878,18 @@ weighted sum.</li>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://tonysyu.github.io/tag/git.html">
                                 git
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -885,8 +898,13 @@ weighted sum.</li>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://tonysyu.github.io/tag/data.html">
-                                data
+                            <a href="http://tonysyu.github.io/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
+                                craftsmanship
                             </a>
                         </li>
                     </ul>
@@ -912,7 +930,7 @@ weighted sum.</li>
       </div>
    </div>
 </footer>
-<script src="//code.jquery.com/jquery.js"></script>
+<script src="http://tonysyu.github.io/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="http://tonysyu.github.io/theme/js/bootstrap.min.js"></script>
@@ -920,6 +938,7 @@ weighted sum.</li>
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
 <script src="http://tonysyu.github.io/theme/js/respond.min.js"></script>
 
+    <!-- Disqus -->
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
@@ -933,6 +952,8 @@ weighted sum.</li>
             (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
         }());
     </script>
+    <!-- End Disqus Code -->
+    <!-- Google Analytics -->
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -947,7 +968,7 @@ weighted sum.</li>
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
         })();
-
     </script>
+    <!-- End Google Analytics Code -->
 </body>
 </html>
