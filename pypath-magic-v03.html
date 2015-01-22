@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Git: tips - Tony S. Yu</title>
+    <title>pypath-magic v0.3 - Tony S. Yu</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,11 +10,11 @@
 
 
 
-<link rel="canonical" href="http://tonysyu.github.io/drafts/git-tips.html">
+<link rel="canonical" href="http://tonysyu.github.io/pypath-magic-v03.html">
 
         <meta name="author" content="Tony S. Yu" />
-        <meta name="keywords" content="git" />
-        <meta name="description" content="There are plenty of guides for learning git and there are plenty of reference manuals as well. The problem with git is that there are so many commands to do so many different things (and sometimes, many commands to do the same thing). This article just highlights a few commands ..." />
+        <meta name="keywords" content="IPython,python,CLI" />
+        <meta name="description" content="pypath command-line interface in pypath-magic v0.3 pypath-magic provides a simple interface for adding modules and packages to your Python path. Unlike modifications to sys.path, this allows you to easily modify your Python path across sessions. Unlike modifications to environment variables, this doesn&#39;t require you to explain to ..." />
 
     <!-- Enable latex plugin -->
 
@@ -33,8 +33,8 @@
               title="Tony S. Yu ATOM Feed"/>
 
 
-        <link href="http://tonysyu.github.io/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Tony S. Yu posts ATOM Feed"/>
+        <link href="http://tonysyu.github.io/feeds/2015.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu 2015 ATOM Feed"/>
 
 </head>
 <body>
@@ -57,10 +57,10 @@ Tony S. Yu            </a>
                     <li><a href="/pages/research.html">Research</a></li>
                     <li><a href="/index.html">Articles</a></li>
                     <li><a href="/pages/design.html">Design</a></li>
-                        <li class="active">
+                        <li >
                             <a href="http://tonysyu.github.io/category/posts.html">Posts</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://tonysyu.github.io/category/2015.html">2015</a>
                         </li>
                         <li >
@@ -86,10 +86,10 @@ Tony S. Yu            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://tonysyu.github.io/drafts/git-tips.html"
+                    <a href="http://tonysyu.github.io/pypath-magic-v03.html"
                        rel="bookmark"
-                       title="Permalink to Git: tips">
-                        Git: tips
+                       title="Permalink to pypath-magic v0.3">
+                        pypath-magic v0.3
                     </a>
                 </h1>
             </header>
@@ -99,7 +99,7 @@ Tony S. Yu            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2013-12-31T00:00:00-05:00"> Tue 31 December 2013</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-01-21T00:00:00-05:00"> Wed 21 January 2015</time>
     </span>
 
 
@@ -108,109 +108,213 @@ Tony S. Yu            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://tonysyu.github.io/tag/git.html">git</a>
+	<a href="http://tonysyu.github.io/tag/ipython.html">IPython</a>
+        /
+	<a href="http://tonysyu.github.io/tag/python.html">python</a>
+        /
+	<a href="http://tonysyu.github.io/tag/cli.html">CLI</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>There are plenty of guides for learning git and there are plenty of reference
-manuals as well. The problem with git is that there are so many commands to do
-so many different things (and sometimes, many commands to do the same thing).
-This article just highlights a few commands that I regularly find useful.
-Whether it's useful to you depends on what you want to do.</p>
-<div class="section" id="aliased-commands">
-<h2>Aliased commands</h2>
-<p>In your <cite>~/.gitconfig</cite> file, you can define shell aliases (under the heading
-<cite>[alias]</cite>) for some commonly used commands. This is really useful when you
-often call the same command with an option.</p>
-<blockquote>
-<dl class="docutils">
-<dt><cite>co = checkout</cite></dt>
-<dd>I switch between branches frequently, so this saves a lot of typing.</dd>
-<dt><cite>wdiff = diff --word-diff</cite></dt>
-<dd>I mainly use word-diff for LaTeX: If you don't hard-wrap paragraphs and
-change a single word, normal diffs can give you a big block of green and
-red. Word-diffs will highlight the individual words that were changed.</dd>
-<dt><cite>sdiff = diff --staged</cite></dt>
-<dd>When I make multiple changes (either in multiple files, or in the same
-file) but only want to commit a subset of them, I like check the diff
-(to make sure I'm not missing any relevant changes) and the diff for
-the files staged for commit (to make sure I'm not including any
-extraneous changes).</dd>
-</dl>
-</blockquote>
+                <div class="section" id="pypath-command-line-interface-in-pypath-magic-v0-3">
+<h2><tt class="docutils literal">pypath</tt> command-line interface in <tt class="docutils literal"><span class="pre">pypath-magic</span></tt> v0.3</h2>
+<p><tt class="docutils literal"><span class="pre">pypath-magic</span></tt> provides a simple interface for adding modules and packages
+to your Python path.</p>
+<p>Unlike modifications to <tt class="docutils literal">sys.path</tt>, this allows you to easily modify your
+Python path across sessions. Unlike modifications to environment variables,
+this doesn't require you to explain to users, students, and colleagues <em>how</em> to
+modify environment variables.</p>
+<p>In addition to the namesake IPython magic, version 0.3 of <tt class="docutils literal"><span class="pre">pypath-magic</span></tt> adds
+a command-line interface (CLI) that resembles the IPython interface. After
+installing the latest version (<tt class="docutils literal">pip install pypath_magic</tt>), you'll have
+access to a <tt class="docutils literal">pypath</tt> command in your favorite terminal/shell.</p>
+<p>You might also want to take a look at the original
+<a class="reference external" href="http://tonysyu.github.io/pypath-magic.html">quick-start article</a> for
+version 0.2. The rest of this article just translates the IPython workflow
+from that article to the new CLI.</p>
 </div>
-<div class="section" id="fixing-commits">
-<h2>Fixing commits</h2>
-<blockquote>
-<p><cite>git commit --amend</cite></p>
-<dl class="docutils">
-<dt><cite>git rebase or `git rebase -i</cite></dt>
-<dd>(where <cite>-i</cite> = using an image in <cite>skimage.data</cite>).
-This allows</dd>
-</dl>
-</blockquote>
+<div class="section" id="why-would-you-modify-your-python-path">
+<h2>Why would you modify your Python path?</h2>
+<p>You're a pragmatic Python developer, so you extract the logically related bits
+of your code into functions and group those functions together into modules.</p>
+<p>Now, <strong>how do you actually import those modules</strong>? If you're in the directory
+containing those modules, you're good to go:</p>
+<div class="highlight"><pre><span class="nv">$ </span>ls  <span class="c"># Helper files are in the same directory as the main script.</span>
+data_wranglers.py
+main.py
+plot_helpers.py
+</pre></div>
+<p>Now, if you want to execute a main script that needs to wrangle some data and
+plot the results, then you can just run:</p>
+<div class="highlight"><pre><span class="nv">$ </span>python main.py
+<span class="o">[</span>Success<span class="o">]</span>
+</pre></div>
+<p>If, instead, those files are located elsewhere, you might get something like
+this:</p>
+<div class="highlight"><pre><span class="nv">$ </span>ls                   <span class="c"># Main file is local ...</span>
+main.py
+path/
+
+<span class="nv">$ </span>ls path/to/my-utils  <span class="c"># ...but utilities are somewhere else.</span>
+data_wranglers.py
+plot_helpers.py
+
+<span class="nv">$ </span>python main.py
+
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;scratch.py&quot;</span>, line 1, in &lt;module&gt;
+    import plot_helpers
+ImportError: No module named plot_helpers
+</pre></div>
+<div class="section" id="quickfix-sys-path">
+<h3>Quickfix: <tt class="docutils literal">sys.path</tt></h3>
+<p>The quick fix here is to append to <tt class="docutils literal">sys.path</tt> in <tt class="docutils literal">main.py</tt>:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;path/to/my-utils&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">plot_helpers</span> <span class="kn">import</span> <span class="n">plot_slope_marker</span>
+</pre></div>
+<p><strong>But</strong>, if you want to use these utilities elsewhere, you'll have to jump
+through these hoops every time you use it.</p>
 </div>
-<div class="section" id="fixing-code">
-<h2>Fixing code</h2>
-<blockquote>
-<dl class="docutils">
-<dt><cite>git bisect</cite></dt>
-<dd>My typical workflow is to first find a commit that passes tests, and then
-set that as a &quot;good&quot; commit. Next, I let <cite>git bisect</cite> iterate through the
-commits and each time running the tests and marking a commit as good or
-bad until <cite>git</cite> finds the bad commit.</dd>
-</dl>
-</blockquote>
+<div class="section" id="persistent-changes-to-your-path">
+<h3>Persistent changes to your path</h3>
+<p>To make persistent changes to your Python path, you'll have to
+<a class="reference external" href="http://stackoverflow.com/questions/3402168/permanently-add-a-directory-to-pythonpath">tweak your PYTHONPATH</a> or figure out how to <a class="reference external" href="https://docs.python.org/2/library/site.html#module-site">add '*.pth' files to your
+site-packages directory</a>. Sure, you can package up your code properly, but
+for most people, that's a significant leap in effort.</p>
+<p>These solutions are annoying for most users and downright intimidating to newer
+developers. With <tt class="docutils literal">pypath</tt>, you can easily manipulate your Python path from
+<a class="reference external" href="http://ipython.org">IPython</a>.</p>
 </div>
-<div class="section" id="testing-someone-else-s-branch">
-<h2>Testing someone else's branch</h2>
-<blockquote>
-<ol class="arabic simple">
-<li><cite>git remote add my_name_for_repo github_path_for_repo</cite></li>
-<li><cite>git fetch my_name_for_repo</cite></li>
-<li><cite>git co -b my_name_for_branch my_name_for_repo/branch_name</cite></li>
-</ol>
-</blockquote>
-<p>The first command adds the repo as a remote branch. You can save this under any
-name you want, but it's easiest to save under the user name. For example, if
-you want to track my <a class="reference external" href="http://scikits-image.org/">scikits-image</a> branch, you might want to write:</p>
-<pre class="literal-block">
-git remote add tonysyu https://github.com/tonysyu/scikits-image.git
-</pre>
-<p>This line adds my fork of <a class="reference external" href="http://scikits-image.org/">scikits-image</a> to your repo. Now your repo &quot;knows&quot;
-about my repo. But it would doesn't necessary &quot;know&quot; what's in my repo (i.e.
-The second line . For convenience, steps 1 and 2 can be combined as:</p>
-<pre class="literal-block">
-git remote add -f tonysyu https://github.com/tonysyu/scikits-image.git
-</pre>
-<p>The <tt class="docutils literal"><span class="pre">-f</span></tt> here fetches my branches. I like to separate this command into 1.
-and 2. because if you ever want to play around with a new branch on my repo,
-you'll have to call fetch to find new branches and update old ones. Separating
-the two makes it explicit that there's more than one thing going on (plus,
-you'll know what to do in the future when you need to look at a new branch. The
-last line makes a copy of</p>
 </div>
-<div class="section" id="miscellany">
-<h2>Miscellany</h2>
-<blockquote>
-<dl class="docutils">
-<dt><cite>git stash</cite></dt>
-<dd>Save</dd>
-<dt><cite>git log -p</cite></dt>
-<dd>Show changes.</dd>
-</dl>
-</blockquote>
+<div class="section" id="how-to-use-the-pypath-cli">
+<h2>How to use the <tt class="docutils literal">pypath</tt> CLI</h2>
+<p>After installing the latest version (<tt class="docutils literal">pip install pypath_magic</tt>), you'll have
+access to a <tt class="docutils literal">pypath</tt> command in your favorite terminal/shell.</p>
+<div class="section" id="list-the-custom-paths">
+<h3>List the custom paths</h3>
+<p>To list all the custom paths added by <tt class="docutils literal">pypath</tt>, open a terminal and type:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pypath
+</pre></div>
+<p>When you get started, you won't have anything there, so you'll get:</p>
+<div class="highlight"><pre>No user paths are defined.
+See <span class="sb">`</span>pypath -h<span class="sb">`</span> <span class="k">for</span> usage information.
+</pre></div>
 </div>
-<div class="section" id="gotchas">
-<h2>Gotchas</h2>
-<blockquote>
-<dl class="docutils">
-<dt><cite>git add --all</cite> vs <cite>git commit -a</cite></dt>
-<dd><cite>git add --all</cite> adds all files not ignored by git to the index (i.e.
-staged for commit). In contrast <cite>git commit -a</cite> adds all <em>tracked</em> files
-to the index and, of course, commits them.</dd>
-</dl>
-</blockquote>
+<div class="section" id="add-to-your-python-path">
+<h3>Add to your Python path</h3>
+<p>To add some custom paths, just change to a directory and call <tt class="docutils literal">pypath add</tt>:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>path/to/my-utils
+
+<span class="nv">$ </span>ls
+data_wranglers.py
+plot_helpers.py
+
+<span class="nv">$ </span>pypath add
+Added u<span class="s1">&#39;/absolute/path/to/my-utils&#39;</span> to path.
+
+<span class="nv">$ </span>pypath
+0. /absolute/path/to/my-utils
+</pre></div>
+<p>Now you can reuse those helper functions from anywhere:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">plot_helpers</span> <span class="kn">import</span> <span class="n">plot_slope_marker</span>
+</pre></div>
+</div>
+<div class="section" id="deleting-one-of-your-custom-paths">
+<h3>Deleting one of your custom paths</h3>
+<p>If you later want to delete a directory from your path, just use
+<tt class="docutils literal">pypath delete</tt>:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>path/to/my-utils
+
+<span class="nv">$ </span>pypath delete
+Deleted u<span class="s1">&#39;/absolute/path/to/my-utils&#39;</span> from path.
+</pre></div>
+</div>
+<div class="section" id="list-everything-in-your-python-path">
+<h3>List everything in your Python path</h3>
+<p>You can also list your entire Python path with <tt class="docutils literal">pypath <span class="pre">list-all</span></tt>:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pypath list-all
+
+/Users/tonysyu/code/yutils
+/Users/tonysyu/code/skimage
+/Users/tonysyu/code/mpl/lib
+/Users/tonysyu/code/ipython
+/Users/tonysyu/code/deli
+/Users/tonysyu/code/mpltools
+/Applications/Canopy.app/appdata/canopy-1.4.1.1975.macosx-x86_64/Canopy.app/Contents/lib/python27.zip
+/Applications/Canopy.app/appdata/canopy-1.4.1.1975.macosx-x86_64/Canopy.app/Contents/lib/python2.7
+...
+/absolute/path/to/my-utils
+</pre></div>
+</div>
+<div class="section" id="adding-and-deleting-using-arguments">
+<h3>Adding and deleting using arguments</h3>
+<p>Finally, you can manipulate paths---without changing to those directories---by
+passing arguments to the add and delete commands.</p>
+<p>First we add paths using relative or absolute directory paths:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pypath add path/to/useful-modules
+Added u<span class="s1">&#39;/absolute/path/to/useful-modules&#39;</span> to path.
+
+<span class="nv">$ </span>pypath add /absolute/path/to/stuff
+Added u<span class="s1">&#39;/absolute/path/to/stuff&#39;</span> to path.
+
+<span class="nv">$ </span>pypath add path/to/things
+Added u<span class="s1">&#39;/absolute/path/to/things&#39;</span> to path.
+
+<span class="nv">$ </span>pypath
+0. /absolute/path/to/useful-modules
+1. /absolute/path/to/stuff
+2. /absolute/path/to/things
+</pre></div>
+<p>Notice those numbers in the list above. We can use those indices to delete
+paths, or we can delete using string paths:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pypath delete 1
+Deleted u<span class="s1">&#39;/absolute/path/to/stuff&#39;</span> from path.
+
+<span class="nv">$ </span>pypath
+0. /absolute/path/to/useful-modules
+1. /absolute/path/to/things
+
+<span class="nv">$ </span>pypath delete path/to/useful-modules
+Deleted u<span class="s1">&#39;/absolute/path/to/useful-modules&#39;</span> from path.
+
+<span class="nv">$ </span>pypath
+0. /absolute/path/to/things
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-it-works">
+<h2>How it works</h2>
+<p>The basic idea is really simple: The <tt class="docutils literal">pypath</tt> command just maintains a custom
+<tt class="docutils literal">*.pth</tt> file in your site-packages directory. Altering that file alters the
+paths in the Python path. Since this is a custom <tt class="docutils literal">*.pth</tt> file, you don't have
+to worry about screwing up packages installed by other means.</p>
+</div>
+<div class="section" id="install">
+<h2>Install</h2>
+<p>To install using pip, just type the following in a terminal:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install pypath_magic
+</pre></div>
+<p>Or if you're feeling lucky:</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install git+https://github.com/tonysyu/pypath-magic
+</pre></div>
+<p>Or if you want to go <a class="reference external" href="https://github.com/tonysyu/pypath-magic">direct to the source</a>:</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/tonysyu/pypath-magic.git
+<span class="nv">$ </span><span class="nb">cd </span>pypath-magic
+<span class="nv">$ </span>python setup.py install
+</pre></div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies</h2>
+<ul class="simple">
+<li>Python 2.7/3.4 (older versions probably work, but this is not tested)</li>
+<li>IPython &gt;= 1.0</li>
+</ul>
+</div>
+<div class="section" id="license">
+<h2>License</h2>
+<p>New BSD (a.k.a. Modified BSD). See <a class="reference external" href="https://github.com/tonysyu/pypath-magic/blob/master/LICENSE">LICENSE</a> file in this directory for details.</p>
 </div>
 
             </div>
@@ -236,8 +340,8 @@ to the index and, of course, commits them.</dd>
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
 
-                    var disqus_identifier = 'git-tips';
-                var disqus_url = 'http://tonysyu.github.io/drafts/git-tips.html';
+                    var disqus_identifier = 'pypath-magic-v03';
+                var disqus_url = 'http://tonysyu.github.io/pypath-magic-v03.html';
 
             var disqus_config = function () {
                 this.language = "en";

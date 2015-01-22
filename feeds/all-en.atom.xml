@@ -1,5 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/all-en.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2014-09-01T00:00:00-04:00</updated><entry><title>IPython (Jupyter) widgets: An image convolution demo</title><link href="http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html" rel="alternate"></link><updated>2014-09-01T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-09-01:ipython-jupyter-widgets-an-image-convolution-demo.html</id><summary type="html">&lt;p&gt;Convolution is one of the fundamental concepts of image processing (and
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/all-en.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2015-01-21T00:00:00-05:00</updated><entry><title>pypath-magic v0.3</title><link href="http://tonysyu.github.io/pypath-magic-v03.html" rel="alternate"></link><updated>2015-01-21T00:00:00-05:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2015-01-21:pypath-magic-v03.html</id><summary type="html">&lt;div class="section" id="pypath-command-line-interface-in-pypath-magic-v0-3"&gt;
+&lt;h2&gt;&lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; command-line interface in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; v0.3&lt;/h2&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; provides a simple interface for adding modules and packages
+to your Python path.&lt;/p&gt;
+&lt;p&gt;Unlike modifications to &lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;, this allows you to easily modify your
+Python path across sessions. Unlike modifications to environment variables,
+this doesn't require you to explain to users, students, and colleagues &lt;em&gt;how&lt;/em&gt; to
+modify environment variables.&lt;/p&gt;
+&lt;p&gt;In addition to the namesake IPython magic, version 0.3 of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; adds
+a command-line interface (CLI) that resembles the IPython interface. After
+installing the latest version (&lt;tt class="docutils literal"&gt;pip install pypath_magic&lt;/tt&gt;), you'll have
+access to a &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; command in your favorite terminal/shell.&lt;/p&gt;
+&lt;p&gt;You might also want to take a look at the original
+&lt;a class="reference external" href="http://tonysyu.github.io/pypath-magic.html"&gt;quick-start article&lt;/a&gt; for
+version 0.2. The rest of this article just translates the IPython workflow
+from that article to the new CLI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="why-would-you-modify-your-python-path"&gt;
+&lt;h2&gt;Why would you modify your Python path?&lt;/h2&gt;
+&lt;p&gt;You're a pragmatic Python developer, so you extract the logically related bits
+of your code into functions and group those functions together into modules.&lt;/p&gt;
+&lt;p&gt;Now, &lt;strong&gt;how do you actually import those modules&lt;/strong&gt;? If you're in the directory
+containing those modules, you're good to go:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ls  &lt;span class="c"&gt;# Helper files are in the same directory as the main script.&lt;/span&gt;
+data_wranglers.py
+main.py
+plot_helpers.py
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, if you want to execute a main script that needs to wrangle some data and
+plot the results, then you can just run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python main.py
+&lt;span class="o"&gt;[&lt;/span&gt;Success&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If, instead, those files are located elsewhere, you might get something like
+this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ls                   &lt;span class="c"&gt;# Main file is local ...&lt;/span&gt;
+main.py
+path/
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;ls path/to/my-utils  &lt;span class="c"&gt;# ...but utilities are somewhere else.&lt;/span&gt;
+data_wranglers.py
+plot_helpers.py
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;python main.py
+
+Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
+  File &lt;span class="s2"&gt;&amp;quot;scratch.py&amp;quot;&lt;/span&gt;, line 1, in &amp;lt;module&amp;gt;
+    import plot_helpers
+ImportError: No module named plot_helpers
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="quickfix-sys-path"&gt;
+&lt;h3&gt;Quickfix: &lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt;&lt;/h3&gt;
+&lt;p&gt;The quick fix here is to append to &lt;tt class="docutils literal"&gt;sys.path&lt;/tt&gt; in &lt;tt class="docutils literal"&gt;main.py&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;path/to/my-utils&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plot_helpers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plot_slope_marker&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;But&lt;/strong&gt;, if you want to use these utilities elsewhere, you'll have to jump
+through these hoops every time you use it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="persistent-changes-to-your-path"&gt;
+&lt;h3&gt;Persistent changes to your path&lt;/h3&gt;
+&lt;p&gt;To make persistent changes to your Python path, you'll have to
+&lt;a class="reference external" href="http://stackoverflow.com/questions/3402168/permanently-add-a-directory-to-pythonpath"&gt;tweak your PYTHONPATH&lt;/a&gt; or figure out how to &lt;a class="reference external" href="https://docs.python.org/2/library/site.html#module-site"&gt;add '*.pth' files to your
+site-packages directory&lt;/a&gt;. Sure, you can package up your code properly, but
+for most people, that's a significant leap in effort.&lt;/p&gt;
+&lt;p&gt;These solutions are annoying for most users and downright intimidating to newer
+developers. With &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt;, you can easily manipulate your Python path from
+&lt;a class="reference external" href="http://ipython.org"&gt;IPython&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-to-use-the-pypath-cli"&gt;
+&lt;h2&gt;How to use the &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; CLI&lt;/h2&gt;
+&lt;p&gt;After installing the latest version (&lt;tt class="docutils literal"&gt;pip install pypath_magic&lt;/tt&gt;), you'll have
+access to a &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; command in your favorite terminal/shell.&lt;/p&gt;
+&lt;div class="section" id="list-the-custom-paths"&gt;
+&lt;h3&gt;List the custom paths&lt;/h3&gt;
+&lt;p&gt;To list all the custom paths added by &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt;, open a terminal and type:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pypath
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;When you get started, you won't have anything there, so you'll get:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;No user paths are defined.
+See &lt;span class="sb"&gt;`&lt;/span&gt;pypath -h&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; usage information.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-to-your-python-path"&gt;
+&lt;h3&gt;Add to your Python path&lt;/h3&gt;
+&lt;p&gt;To add some custom paths, just change to a directory and call &lt;tt class="docutils literal"&gt;pypath add&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;path/to/my-utils
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;ls
+data_wranglers.py
+plot_helpers.py
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath add
+Added u&lt;span class="s1"&gt;&amp;#39;/absolute/path/to/my-utils&amp;#39;&lt;/span&gt; to path.
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath
+0. /absolute/path/to/my-utils
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now you can reuse those helper functions from anywhere:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plot_helpers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plot_slope_marker&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="deleting-one-of-your-custom-paths"&gt;
+&lt;h3&gt;Deleting one of your custom paths&lt;/h3&gt;
+&lt;p&gt;If you later want to delete a directory from your path, just use
+&lt;tt class="docutils literal"&gt;pypath delete&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;path/to/my-utils
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath delete
+Deleted u&lt;span class="s1"&gt;&amp;#39;/absolute/path/to/my-utils&amp;#39;&lt;/span&gt; from path.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="list-everything-in-your-python-path"&gt;
+&lt;h3&gt;List everything in your Python path&lt;/h3&gt;
+&lt;p&gt;You can also list your entire Python path with &lt;tt class="docutils literal"&gt;pypath &lt;span class="pre"&gt;list-all&lt;/span&gt;&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pypath list-all
+
+/Users/tonysyu/code/yutils
+/Users/tonysyu/code/skimage
+/Users/tonysyu/code/mpl/lib
+/Users/tonysyu/code/ipython
+/Users/tonysyu/code/deli
+/Users/tonysyu/code/mpltools
+/Applications/Canopy.app/appdata/canopy-1.4.1.1975.macosx-x86_64/Canopy.app/Contents/lib/python27.zip
+/Applications/Canopy.app/appdata/canopy-1.4.1.1975.macosx-x86_64/Canopy.app/Contents/lib/python2.7
+...
+/absolute/path/to/my-utils
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="adding-and-deleting-using-arguments"&gt;
+&lt;h3&gt;Adding and deleting using arguments&lt;/h3&gt;
+&lt;p&gt;Finally, you can manipulate paths---without changing to those directories---by
+passing arguments to the add and delete commands.&lt;/p&gt;
+&lt;p&gt;First we add paths using relative or absolute directory paths:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pypath add path/to/useful-modules
+Added u&lt;span class="s1"&gt;&amp;#39;/absolute/path/to/useful-modules&amp;#39;&lt;/span&gt; to path.
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath add /absolute/path/to/stuff
+Added u&lt;span class="s1"&gt;&amp;#39;/absolute/path/to/stuff&amp;#39;&lt;/span&gt; to path.
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath add path/to/things
+Added u&lt;span class="s1"&gt;&amp;#39;/absolute/path/to/things&amp;#39;&lt;/span&gt; to path.
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath
+0. /absolute/path/to/useful-modules
+1. /absolute/path/to/stuff
+2. /absolute/path/to/things
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notice those numbers in the list above. We can use those indices to delete
+paths, or we can delete using string paths:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pypath delete 1
+Deleted u&lt;span class="s1"&gt;&amp;#39;/absolute/path/to/stuff&amp;#39;&lt;/span&gt; from path.
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath
+0. /absolute/path/to/useful-modules
+1. /absolute/path/to/things
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath delete path/to/useful-modules
+Deleted u&lt;span class="s1"&gt;&amp;#39;/absolute/path/to/useful-modules&amp;#39;&lt;/span&gt; from path.
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pypath
+0. /absolute/path/to/things
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-it-works"&gt;
+&lt;h2&gt;How it works&lt;/h2&gt;
+&lt;p&gt;The basic idea is really simple: The &lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; command just maintains a custom
+&lt;tt class="docutils literal"&gt;*.pth&lt;/tt&gt; file in your site-packages directory. Altering that file alters the
+paths in the Python path. Since this is a custom &lt;tt class="docutils literal"&gt;*.pth&lt;/tt&gt; file, you don't have
+to worry about screwing up packages installed by other means.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install"&gt;
+&lt;h2&gt;Install&lt;/h2&gt;
+&lt;p&gt;To install using pip, just type the following in a terminal:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install pypath_magic
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Or if you're feeling lucky:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install git+https://github.com/tonysyu/pypath-magic
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Or if you want to go &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic"&gt;direct to the source&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/tonysyu/pypath-magic.git
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;pypath-magic
+&lt;span class="nv"&gt;$ &lt;/span&gt;python setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dependencies"&gt;
+&lt;h2&gt;Dependencies&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Python 2.7/3.4 (older versions probably work, but this is not tested)&lt;/li&gt;
+&lt;li&gt;IPython &amp;gt;= 1.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="license"&gt;
+&lt;h2&gt;License&lt;/h2&gt;
+&lt;p&gt;New BSD (a.k.a. Modified BSD). See &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic/blob/master/LICENSE"&gt;LICENSE&lt;/a&gt; file in this directory for details.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="IPython"></category><category term="python"></category><category term="CLI"></category></entry><entry><title>IPython (Jupyter) widgets: An image convolution demo</title><link href="http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html" rel="alternate"></link><updated>2014-09-01T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-09-01:ipython-jupyter-widgets-an-image-convolution-demo.html</id><summary type="html">&lt;p&gt;Convolution is one of the fundamental concepts of image processing (and
 more generally, signal processing). For the &lt;a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html"&gt;scikit-image tutorial at Scipy
 2014&lt;/a&gt;,
 I created an IPython widget to help visualize convolution. This post
