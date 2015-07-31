@@ -1,5 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/tony-s-yu.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2015-01-21T00:00:00-05:00</updated><entry><title>pypath-magic v0.3</title><link href="http://tonysyu.github.io/pypath-magic-v03.html" rel="alternate"></link><updated>2015-01-21T00:00:00-05:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2015-01-21:pypath-magic-v03.html</id><summary type="html">&lt;div class="section" id="pypath-command-line-interface-in-pypath-magic-v0-3"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/tony-s-yu.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2015-07-30T00:00:00-04:00</updated><entry><title>Readable regular expressions in Python</title><link href="http://tonysyu.github.io/readable-regular-expressions-in-python.html" rel="alternate"></link><updated>2015-07-30T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2015-07-30:readable-regular-expressions-in-python.html</id><summary type="html">&lt;p&gt;Awhile back, I needed to parse some strings that were created using Python's
+&lt;a class="reference external" href="https://mkaz.com/2012/10/10/python-string-format"&gt;string formatter&lt;/a&gt;.  There's actually a package called &lt;a class="reference external" href="https://pypi.python.org/pypi/parse"&gt;parse&lt;/a&gt; that's intended
+to do just that: Reuse the string formatting syntax to extract data from
+a string.  Unfortunately, there were a couple of reasons that prevented me from
+using that package, so I rolled a quick version of my own using &lt;a class="reference external" href="http://www.regular-expressions.info/quickstart.html"&gt;regular
+expressions&lt;/a&gt; (i.e. &amp;quot;regexes&amp;quot;).&lt;/p&gt;
+&lt;p&gt;Note that this article assumes you're already familiar with the basic
+syntax of regexes. If you're not familiar with regexes,
+&lt;a class="reference external" href="http://regexone.com/"&gt;http://regexone.com/&lt;/a&gt; offers a good interactive tutorial.&lt;/p&gt;
+&lt;div class="section" id="named-regex-patterns"&gt;
+&lt;h2&gt;Named regex patterns&lt;/h2&gt;
+&lt;p&gt;For this use case, I'm going to be using named regex patterns (a.k.a.
+&lt;a class="reference external" href="&amp;lt;http://www.regular-expressions.info/named.html&amp;gt;"&gt;named capturing groups&lt;/a&gt;).
+Unfortunately, the syntax for named regex patterns hurts my eyes. To fix
+that, let's create a really simple &lt;tt class="docutils literal"&gt;name_regex&lt;/tt&gt; function that makes it
+more readable:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;name_regex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Return regex string as a named capture group.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;r&amp;#39;(?P&amp;lt;{name}&amp;gt;{pattern})&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To clarify what's going on, you can just pass in two strings:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;name_regex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;myname&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Tony&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;which gives:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+(?P&amp;lt;myname&amp;gt;Tony)
+&lt;/pre&gt;
+&lt;p&gt;This string can be used as a regex to find the desired pattern
+(&lt;tt class="docutils literal"&gt;'Tony'&lt;/tt&gt;) and store the result as a named group (&lt;tt class="docutils literal"&gt;'myname'&lt;/tt&gt;).&lt;/p&gt;
+&lt;p&gt;For a more interesting example, suppose you want to extract a price from some
+text: You could look for a dollar sign, followed by numbers and decimal points.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# This isn&amp;#39;t a great regex pattern for a price because any number of decimal&lt;/span&gt;
+&lt;span class="c"&gt;# points and digits are accepted, but let&amp;#39;s keep this simple.&lt;/span&gt;
+&lt;span class="n"&gt;rx_price&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;name_regex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;price&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;r&amp;#39;\$[\d.]+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can just use this like any other regex pattern with Python's built-in regex
+package, &lt;tt class="docutils literal"&gt;re&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+
+&lt;span class="n"&gt;match&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rx_price&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;All your&amp;#39;s for only $9.95!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;match&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupdict&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;price&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+$9.95
+&lt;/pre&gt;
+&lt;p&gt;That extracted the text we wanted, but saving a named regex isn't that
+useful if you're looking for a single value.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="named-regexes-with-string-formatting"&gt;
+&lt;h2&gt;Named regexes with string formatting&lt;/h2&gt;
+&lt;p&gt;Instead of creating a single named regex, let's create a dictionary with (name,
+pattern) pairs:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;named_regexes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;names_and_patterns&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Return dictionary with regexes transformed into named capture groups.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;name_regex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;names_and_patterns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="p"&gt;()}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If that looks a bit strange, we're just &lt;a class="reference external" href="http://stackoverflow.com/questions/1769403/understanding-kwargs-in-python"&gt;packing arbitrary keyword-arguments
+into a dictionary&lt;/a&gt; and applying a &lt;a class="reference external" href="http://www.diveintopython3.net/comprehensions.html#dictionarycomprehension"&gt;dictionary comprehension&lt;/a&gt; on that
+dictionary. We can use this to create regexes for parts of a timestamp:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rx_letters&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;r&amp;#39;[A-z]+&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;rx_patterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;named_regexes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;month&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rx_letters&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;           &lt;span class="c"&gt;# any letters&lt;/span&gt;
+    &lt;span class="n"&gt;day&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;\d{1,2}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;             &lt;span class="c"&gt;# 1 or 2 digits&lt;/span&gt;
+    &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;\d{2}:\d{2}:\d{2}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="c"&gt;# 3 pairs of digits separated by &amp;#39;:&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;year&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;\d{4}&amp;#39;&lt;/span&gt;               &lt;span class="c"&gt;# 4 digits&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The result looks like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pprint&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pprint&lt;/span&gt;
+
+&lt;span class="n"&gt;pprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rx_patterns&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+{'day': '(?P&amp;lt;day&amp;gt;\d{1,2})',
+ 'month': '(?P&amp;lt;month&amp;gt;[A-z]+)',
+ 'time': '(?P&amp;lt;time&amp;gt;\d{2}:\d{2}:\d{2})',
+ 'year': '(?P&amp;lt;year&amp;gt;\d{4})'}
+&lt;/pre&gt;
+&lt;p&gt;That's not really readable, but the point is to actually use it. For
+example, let's consider the following timestamp:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;timestamp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Date: Apr 12 09:51:23 2015 -0500&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can parse data from it with a format string and the dictionary of
+regex patterns that we just defined:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rx_timestamp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Date: {month} {day} {time} {year}&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;rx_patterns&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rx_timestamp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;timestamp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupdict&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+{'month': 'Apr', 'year': '2015', 'day': '12', 'time': '09:51:23'}
+&lt;/pre&gt;
+&lt;p&gt;Success! We've extracted the data we wanted in a form that's easy use.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="putting-it-all-together"&gt;
+&lt;h2&gt;Putting it all together&lt;/h2&gt;
+&lt;p&gt;Let's wrap this up into a single function that returns a dictionary of
+interesting data from a string containing that data, a template string,
+and named regexes:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;match_regex_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;keys_and_patterns&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Return dictionary of matches.&lt;/span&gt;
+
+&lt;span class="sd"&gt;    Parameters&lt;/span&gt;
+&lt;span class="sd"&gt;    ----------&lt;/span&gt;
+&lt;span class="sd"&gt;    string : str&lt;/span&gt;
+&lt;span class="sd"&gt;        String containing desired data.&lt;/span&gt;
+&lt;span class="sd"&gt;    template : str&lt;/span&gt;
+&lt;span class="sd"&gt;        Template string with named fields.&lt;/span&gt;
+&lt;span class="sd"&gt;    keys_and_patterns : str&lt;/span&gt;
+&lt;span class="sd"&gt;        Regexes for each field in the template.&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;named_patterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;named_regexes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;keys_and_patterns&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;pattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;named_patterns&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;match&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;match&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;error_message&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                                &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                                                &lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;match&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupdict&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;error_message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    string: {string}&lt;/span&gt;
+&lt;span class="s"&gt;    template: {template}&lt;/span&gt;
+&lt;span class="s"&gt;    pattern: {pattern}&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;All this really does is combine the pieces that we discussed above.
+Inevitably, you'll run into errors when writing regexes, so there's also
+a bit of error handling to help with debugging.&lt;/p&gt;
+&lt;p&gt;To test this out, let's do a roundtrip: First, we take a template
+string, plus some data, and produce an output string.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;greeting_template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hey {name}! Welcome to {site}!&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;input_attrs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;you&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;tonysyu.github.io&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;greeting_template&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;input_attrs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;greeting&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+Hey you! Welcome to tonysyu.github.io!
+&lt;/pre&gt;
+&lt;p&gt;Then let's take the output string and extract the data using
+&lt;tt class="docutils literal"&gt;match_regex_template&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rx_anything&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;.+&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;attrs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;match_regex_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;greeting&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;greeting_template&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rx_anything&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rx_anything&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;attrs&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+{'name': 'you', 'site': 'tonysyu.github.io'}
+&lt;/pre&gt;
+&lt;p&gt;Success!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="caveats"&gt;
+&lt;h2&gt;Caveats&lt;/h2&gt;
+&lt;p&gt;That regex worked as expected, but you should be careful. This was a
+pretty lazy attempt at regexes: &lt;tt class="docutils literal"&gt;rx_anything&lt;/tt&gt; just captures ... uhm...
+anything. If you have clear data boundaries, then this isn't an issue.
+If the boundary is a bit more ambiguous, then you'll have to apply some
+knowledge about the problem. For example, we can modify the greeting
+above:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;excited_greeting&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;greeting&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;!!!&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;excited_greeting&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+Hello you! Welcome to tonysyu.github.io!!!!
+&lt;/pre&gt;
+&lt;p&gt;Using the same regexes from above, we get&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;attrs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;match_regex_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;excited_greeting&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;greeting_template&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rx_anything&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rx_anything&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;site&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+tonysyu.github.io!!!
+&lt;/pre&gt;
+&lt;p&gt;That enthusiasm is a bit too much to handle. To get back the desired
+data, we can just be a bit more strict with the allowed text by
+excluding exclamation marks:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rx_site&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;[^!]+&amp;#39;&lt;/span&gt;  &lt;span class="c"&gt;# anything other than &amp;#39;!&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;attrs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;match_regex_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;excited_greeting&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;greeting_template&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rx_anything&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                             &lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rx_site&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;site&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;pre class="literal-block"&gt;
+tonysyu.github.io
+&lt;/pre&gt;
+&lt;p&gt;This is a simple and contrived example, but you get the idea.&lt;/p&gt;
+&lt;p&gt;Regexes are notoriously confounding, but they can be pretty readable if
+you're careful to break up your parsing up into small, labeled chunks. A
+little discipline will make future-you hate past-you a little less.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="python"></category><category term="regex"></category></entry><entry><title>pypath-magic v0.3</title><link href="http://tonysyu.github.io/pypath-magic-v03.html" rel="alternate"></link><updated>2015-01-21T00:00:00-05:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2015-01-21:pypath-magic-v03.html</id><summary type="html">&lt;div class="section" id="pypath-command-line-interface-in-pypath-magic-v0-3"&gt;
 &lt;h2&gt;&lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; command-line interface in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; v0.3&lt;/h2&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; provides a simple interface for adding modules and packages
 to your Python path.&lt;/p&gt;

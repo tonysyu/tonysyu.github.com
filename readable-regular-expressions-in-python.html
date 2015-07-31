@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>Readable regular expressions in Python - Tony S. Yu</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="http://tonysyu.github.io/readable-regular-expressions-in-python.html">
+
+        <meta name="author" content="Tony S. Yu" />
+        <meta name="keywords" content="python,regex" />
+        <meta name="description" content="Awhile back, I needed to parse some strings that were created using Python&#39;s string formatter. There&#39;s actually a package called parse that&#39;s intended to do just that: Reuse the string formatting syntax to extract data from a string. Unfortunately, there were a couple of reasons that prevented ..." />
+
+    <!-- Enable latex plugin -->
+
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://tonysyu.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://tonysyu.github.io/theme/css/pygments/friendly.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://tonysyu.github.io/theme/css/style.css" type="text/css"/>
+        <link href="http://tonysyu.github.io/static/custom.css" rel="stylesheet">
+
+        <link href="http://tonysyu.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu ATOM Feed"/>
+
+
+        <link href="http://tonysyu.github.io/feeds/2015.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu 2015 ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://tonysyu.github.io/" class="navbar-brand">
+Tony S. Yu            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                    <li><a href="/pages/about-me.html">About me</a></li>
+                    <li><a href="/pages/research.html">Research</a></li>
+                    <li><a href="/index.html">Articles</a></li>
+                    <li><a href="/pages/design.html">Design</a></li>
+                        <li >
+                            <a href="http://tonysyu.github.io/category/posts.html">Posts</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://tonysyu.github.io/category/2015.html">2015</a>
+                        </li>
+                        <li >
+                            <a href="http://tonysyu.github.io/category/2014.html">2014</a>
+                        </li>
+                        <li >
+                            <a href="http://tonysyu.github.io/category/2012.html">2012</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://tonysyu.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://tonysyu.github.io/readable-regular-expressions-in-python.html"
+                       rel="bookmark"
+                       title="Permalink to Readable regular expressions in Python">
+                        Readable regular expressions in Python
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-07-30T00:00:00-04:00"> Thu 30 July 2015</time>
+    </span>
+
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://tonysyu.github.io/tag/python.html">python</a>
+        /
+	<a href="http://tonysyu.github.io/tag/regex.html">regex</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Awhile back, I needed to parse some strings that were created using Python's
+<a class="reference external" href="https://mkaz.com/2012/10/10/python-string-format">string formatter</a>.  There's actually a package called <a class="reference external" href="https://pypi.python.org/pypi/parse">parse</a> that's intended
+to do just that: Reuse the string formatting syntax to extract data from
+a string.  Unfortunately, there were a couple of reasons that prevented me from
+using that package, so I rolled a quick version of my own using <a class="reference external" href="http://www.regular-expressions.info/quickstart.html">regular
+expressions</a> (i.e. &quot;regexes&quot;).</p>
+<p>Note that this article assumes you're already familiar with the basic
+syntax of regexes. If you're not familiar with regexes,
+<a class="reference external" href="http://regexone.com/">http://regexone.com/</a> offers a good interactive tutorial.</p>
+<div class="section" id="named-regex-patterns">
+<h2>Named regex patterns</h2>
+<p>For this use case, I'm going to be using named regex patterns (a.k.a.
+<a class="reference external" href="&lt;http://www.regular-expressions.info/named.html&gt;">named capturing groups</a>).
+Unfortunately, the syntax for named regex patterns hurts my eyes. To fix
+that, let's create a really simple <tt class="docutils literal">name_regex</tt> function that makes it
+more readable:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">name_regex</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return regex string as a named capture group.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s">r&#39;(?P&lt;{name}&gt;{pattern})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">)</span>
+</pre></div>
+<p>To clarify what's going on, you can just pass in two strings:</p>
+<div class="highlight"><pre><span class="k">print</span> <span class="n">name_regex</span><span class="p">(</span><span class="s">&#39;myname&#39;</span><span class="p">,</span> <span class="s">&#39;Tony&#39;</span><span class="p">)</span>
+</pre></div>
+<p>which gives:</p>
+<pre class="literal-block">
+(?P&lt;myname&gt;Tony)
+</pre>
+<p>This string can be used as a regex to find the desired pattern
+(<tt class="docutils literal">'Tony'</tt>) and store the result as a named group (<tt class="docutils literal">'myname'</tt>).</p>
+<p>For a more interesting example, suppose you want to extract a price from some
+text: You could look for a dollar sign, followed by numbers and decimal points.</p>
+<div class="highlight"><pre><span class="c"># This isn&#39;t a great regex pattern for a price because any number of decimal</span>
+<span class="c"># points and digits are accepted, but let&#39;s keep this simple.</span>
+<span class="n">rx_price</span> <span class="o">=</span> <span class="n">name_regex</span><span class="p">(</span><span class="s">&#39;price&#39;</span><span class="p">,</span> <span class="s">r&#39;\$[\d.]+&#39;</span><span class="p">)</span>
+</pre></div>
+<p>You can just use this like any other regex pattern with Python's built-in regex
+package, <tt class="docutils literal">re</tt>:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">rx_price</span><span class="p">,</span> <span class="s">&quot;All your&#39;s for only $9.95!&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+<pre class="literal-block">
+$9.95
+</pre>
+<p>That extracted the text we wanted, but saving a named regex isn't that
+useful if you're looking for a single value.</p>
+</div>
+<div class="section" id="named-regexes-with-string-formatting">
+<h2>Named regexes with string formatting</h2>
+<p>Instead of creating a single named regex, let's create a dictionary with (name,
+pattern) pairs:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">named_regexes</span><span class="p">(</span><span class="o">**</span><span class="n">names_and_patterns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return dictionary with regexes transformed into named capture groups.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">name_regex</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">names_and_patterns</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
+<p>If that looks a bit strange, we're just <a class="reference external" href="http://stackoverflow.com/questions/1769403/understanding-kwargs-in-python">packing arbitrary keyword-arguments
+into a dictionary</a> and applying a <a class="reference external" href="http://www.diveintopython3.net/comprehensions.html#dictionarycomprehension">dictionary comprehension</a> on that
+dictionary. We can use this to create regexes for parts of a timestamp:</p>
+<div class="highlight"><pre><span class="n">rx_letters</span> <span class="o">=</span> <span class="s">r&#39;[A-z]+&#39;</span>
+<span class="n">rx_patterns</span> <span class="o">=</span> <span class="n">named_regexes</span><span class="p">(</span>
+    <span class="n">month</span><span class="o">=</span><span class="n">rx_letters</span><span class="p">,</span>           <span class="c"># any letters</span>
+    <span class="n">day</span><span class="o">=</span><span class="s">r&#39;\d{1,2}&#39;</span><span class="p">,</span>             <span class="c"># 1 or 2 digits</span>
+    <span class="n">time</span><span class="o">=</span><span class="s">r&#39;\d{2}:\d{2}:\d{2}&#39;</span><span class="p">,</span>  <span class="c"># 3 pairs of digits separated by &#39;:&#39;</span>
+    <span class="n">year</span><span class="o">=</span><span class="s">r&#39;\d{4}&#39;</span>               <span class="c"># 4 digits</span>
+<span class="p">)</span>
+</pre></div>
+<p>The result looks like:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="n">pprint</span><span class="p">(</span><span class="n">rx_patterns</span><span class="p">)</span>
+</pre></div>
+<pre class="literal-block">
+{'day': '(?P&lt;day&gt;\d{1,2})',
+ 'month': '(?P&lt;month&gt;[A-z]+)',
+ 'time': '(?P&lt;time&gt;\d{2}:\d{2}:\d{2})',
+ 'year': '(?P&lt;year&gt;\d{4})'}
+</pre>
+<p>That's not really readable, but the point is to actually use it. For
+example, let's consider the following timestamp:</p>
+<div class="highlight"><pre><span class="n">timestamp</span> <span class="o">=</span> <span class="s">&quot;Date: Apr 12 09:51:23 2015 -0500&quot;</span>
+</pre></div>
+<p>We can parse data from it with a format string and the dictionary of
+regex patterns that we just defined:</p>
+<div class="highlight"><pre><span class="n">rx_timestamp</span> <span class="o">=</span> <span class="s">&quot;Date: {month} {day} {time} {year}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">rx_patterns</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">rx_timestamp</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+</pre></div>
+<pre class="literal-block">
+{'month': 'Apr', 'year': '2015', 'day': '12', 'time': '09:51:23'}
+</pre>
+<p>Success! We've extracted the data we wanted in a form that's easy use.</p>
+</div>
+<div class="section" id="putting-it-all-together">
+<h2>Putting it all together</h2>
+<p>Let's wrap this up into a single function that returns a dictionary of
+interesting data from a string containing that data, a template string,
+and named regexes:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">match_regex_template</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="o">**</span><span class="n">keys_and_patterns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return dictionary of matches.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    string : str</span>
+<span class="sd">        String containing desired data.</span>
+<span class="sd">    template : str</span>
+<span class="sd">        Template string with named fields.</span>
+<span class="sd">    keys_and_patterns : str</span>
+<span class="sd">        Regexes for each field in the template.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">named_patterns</span> <span class="o">=</span> <span class="n">named_regexes</span><span class="p">(</span><span class="o">**</span><span class="n">keys_and_patterns</span><span class="p">)</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">named_patterns</span><span class="p">)</span>
+
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">,</span>
+                                                <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
+                                                <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+
+<span class="n">error_message</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    string: {string}</span>
+<span class="s">    template: {template}</span>
+<span class="s">    pattern: {pattern}</span>
+<span class="s">&quot;&quot;&quot;</span>
+</pre></div>
+<p>All this really does is combine the pieces that we discussed above.
+Inevitably, you'll run into errors when writing regexes, so there's also
+a bit of error handling to help with debugging.</p>
+<p>To test this out, let's do a roundtrip: First, we take a template
+string, plus some data, and produce an output string.</p>
+<div class="highlight"><pre><span class="n">greeting_template</span> <span class="o">=</span> <span class="s">&quot;Hey {name}! Welcome to {site}!&quot;</span>
+<span class="n">input_attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;you&#39;</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s">&#39;tonysyu.github.io&#39;</span><span class="p">)</span>
+<span class="n">greeting</span> <span class="o">=</span> <span class="n">greeting_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">input_attrs</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">greeting</span>
+</pre></div>
+<pre class="literal-block">
+Hey you! Welcome to tonysyu.github.io!
+</pre>
+<p>Then let's take the output string and extract the data using
+<tt class="docutils literal">match_regex_template</tt>.</p>
+<div class="highlight"><pre><span class="n">rx_anything</span> <span class="o">=</span> <span class="s">&#39;.+&#39;</span>
+<span class="n">attrs</span> <span class="o">=</span> <span class="n">match_regex_template</span><span class="p">(</span><span class="n">greeting</span><span class="p">,</span>
+                             <span class="n">greeting_template</span><span class="p">,</span>
+                             <span class="n">name</span><span class="o">=</span><span class="n">rx_anything</span><span class="p">,</span>
+                             <span class="n">site</span><span class="o">=</span><span class="n">rx_anything</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">attrs</span>
+</pre></div>
+<pre class="literal-block">
+{'name': 'you', 'site': 'tonysyu.github.io'}
+</pre>
+<p>Success!</p>
+</div>
+<div class="section" id="caveats">
+<h2>Caveats</h2>
+<p>That regex worked as expected, but you should be careful. This was a
+pretty lazy attempt at regexes: <tt class="docutils literal">rx_anything</tt> just captures ... uhm...
+anything. If you have clear data boundaries, then this isn't an issue.
+If the boundary is a bit more ambiguous, then you'll have to apply some
+knowledge about the problem. For example, we can modify the greeting
+above:</p>
+<div class="highlight"><pre><span class="n">excited_greeting</span> <span class="o">=</span> <span class="n">greeting</span> <span class="o">+</span> <span class="s">&#39;!!!&#39;</span>
+<span class="k">print</span> <span class="n">excited_greeting</span>
+</pre></div>
+<pre class="literal-block">
+Hello you! Welcome to tonysyu.github.io!!!!
+</pre>
+<p>Using the same regexes from above, we get</p>
+<div class="highlight"><pre><span class="n">attrs</span> <span class="o">=</span> <span class="n">match_regex_template</span><span class="p">(</span><span class="n">excited_greeting</span><span class="p">,</span>
+                             <span class="n">greeting_template</span><span class="p">,</span>
+                             <span class="n">name</span><span class="o">=</span><span class="n">rx_anything</span><span class="p">,</span>
+                             <span class="n">site</span><span class="o">=</span><span class="n">rx_anything</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">attrs</span><span class="p">[</span><span class="s">&#39;site&#39;</span><span class="p">]</span>
+</pre></div>
+<pre class="literal-block">
+tonysyu.github.io!!!
+</pre>
+<p>That enthusiasm is a bit too much to handle. To get back the desired
+data, we can just be a bit more strict with the allowed text by
+excluding exclamation marks:</p>
+<div class="highlight"><pre><span class="n">rx_site</span> <span class="o">=</span> <span class="s">&#39;[^!]+&#39;</span>  <span class="c"># anything other than &#39;!&#39;</span>
+<span class="n">attrs</span> <span class="o">=</span> <span class="n">match_regex_template</span><span class="p">(</span><span class="n">excited_greeting</span><span class="p">,</span>
+                             <span class="n">greeting_template</span><span class="p">,</span>
+                             <span class="n">name</span><span class="o">=</span><span class="n">rx_anything</span><span class="p">,</span>
+                             <span class="n">site</span><span class="o">=</span><span class="n">rx_site</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">attrs</span><span class="p">[</span><span class="s">&#39;site&#39;</span><span class="p">]</span>
+</pre></div>
+<pre class="literal-block">
+tonysyu.github.io
+</pre>
+<p>This is a simple and contrived example, but you get the idea.</p>
+<p>Regexes are notoriously confounding, but they can be pretty readable if
+you're careful to break up your parsing up into small, labeled chunks. A
+little discipline will make future-you hate past-you a little less.</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+    <hr />
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style addthis_20x20_style">
+        <a class="addthis_button_email"></a>
+        <a class="addthis_button_reddit"></a>
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_google_plusone_share"></a>
+    </div>
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f2c41705dd9003"></script>
+    <!-- AddThis Button END -->
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
+
+                    var disqus_identifier = 'readable-regular-expressions-in-python';
+                var disqus_url = 'http://tonysyu.github.io/readable-regular-expressions-in-python.html';
+
+            var disqus_config = function () {
+                this.language = "en";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+
+                
+<div id="about">
+    <div class="split-left">
+        <img class="sidebar"
+            src="http://tonysyu.github.io/images/tonysyu.jpg"
+            width="120px"
+            align="left"
+            alt="Tony S. Yu">
+    </div>
+
+    <div class="split-right">
+        <p class="sidebar">
+            Software developer, engineer, and all-around good guy in
+            Austin, TX, USA.
+        </p>
+    </div>
+</div>
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://www.enthought.com/" target="_blank">
+                Enthought
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://http://scikit-image.org/" target="_blank">
+                scikit-image
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://matplotlib.sourceforge.net/" target="_blank">
+                matplotlib
+            </a>
+        </li>
+      </ul>
+    </li>
+
+
+
+                <li class="list-group-item"><a href="http://tonysyu.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://tonysyu.github.io/tag/ipython.html">
+                                IPython
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://tonysyu.github.io/tag/matplotlib.html">
+                                matplotlib
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://tonysyu.github.io/tag/python.html">
+                                python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/sympy.html">
+                                sympy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/line-plots.html">
+                                line plots
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/mpltools.html">
+                                mpltools
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/fluids.html">
+                                fluids
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/scipy.html">
+                                scipy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/scikit-image.html">
+                                scikit-image
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://tonysyu.github.io/tag/numpy.html">
+                                numpy
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/animation.html">
+                                animation
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/data.html">
+                                data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/cli.html">
+                                CLI
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/io.html">
+                                io
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/craftsmanship.html">
+                                craftsmanship
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/color.html">
+                                color
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/git.html">
+                                git
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://tonysyu.github.io/tag/regex.html">
+                                regex
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Tony S. Yu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://tonysyu.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://tonysyu.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://tonysyu.github.io/theme/js/respond.min.js"></script>
+
+    <!-- Disqus -->
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <!-- End Disqus Code -->
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29631580-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+</body>
+</html>
