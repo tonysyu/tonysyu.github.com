@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tony S. Yu</title><link>http://tonysyu.github.io/</link><description></description><atom:link href="http://tonysyu.github.io/feeds/tony-s-yu.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 30 Jul 2015 00:00:00 -0400</lastBuildDate><item><title>Readable regular expressions in Python</title><link>http://tonysyu.github.io/readable-regular-expressions-in-python.html</link><description>&lt;p&gt;Awhile back, I needed to parse some strings that were created using Python's
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tony S. Yu</title><link>https://tonysyu.github.io/</link><description></description><atom:link href="https://tonysyu.github.io/feeds/tony-s-yu.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 30 Jul 2015 00:00:00 -0400</lastBuildDate><item><title>Readable regular expressions in Python</title><link>https://tonysyu.github.io/readable-regular-expressions-in-python.html</link><description>&lt;p&gt;Awhile back, I needed to parse some strings that were created using Python's
 &lt;a class="reference external" href="https://mkaz.com/2012/10/10/python-string-format"&gt;string formatter&lt;/a&gt;.  There's actually a package called &lt;a class="reference external" href="https://pypi.python.org/pypi/parse"&gt;parse&lt;/a&gt; that's intended
 to do just that: Reuse the string formatting syntax to extract data from
 a string.  Unfortunately, there were a couple of reasons that prevented me from
@@ -194,7 +194,7 @@ tonysyu.github.io
 you're careful to break up your parsing up into small, labeled chunks. A
 little discipline will make future-you hate past-you a little less.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Thu, 30 Jul 2015 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2015-07-30:readable-regular-expressions-in-python.html</guid><category>python</category><category>regex</category></item><item><title>pypath-magic v0.3</title><link>http://tonysyu.github.io/pypath-magic-v03.html</link><description>&lt;div class="section" id="pypath-command-line-interface-in-pypath-magic-v0-3"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Thu, 30 Jul 2015 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2015-07-30:readable-regular-expressions-in-python.html</guid><category>python</category><category>regex</category></item><item><title>pypath-magic v0.3</title><link>https://tonysyu.github.io/pypath-magic-v03.html</link><description>&lt;div class="section" id="pypath-command-line-interface-in-pypath-magic-v0-3"&gt;
 &lt;h2&gt;&lt;tt class="docutils literal"&gt;pypath&lt;/tt&gt; command-line interface in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; v0.3&lt;/h2&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pypath-magic&lt;/span&gt;&lt;/tt&gt; provides a simple interface for adding modules and packages
 to your Python path.&lt;/p&gt;
@@ -394,7 +394,7 @@ to worry about screwing up packages installed by other means.&lt;/p&gt;
 &lt;h2&gt;License&lt;/h2&gt;
 &lt;p&gt;New BSD (a.k.a. Modified BSD). See &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic/blob/master/LICENSE"&gt;LICENSE&lt;/a&gt; file in this directory for details.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Wed, 21 Jan 2015 00:00:00 -0500</pubDate><guid>tag:tonysyu.github.io,2015-01-21:pypath-magic-v03.html</guid><category>IPython</category><category>python</category><category>CLI</category></item><item><title>IPython (Jupyter) widgets: An image convolution demo</title><link>http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html</link><description>&lt;p&gt;Convolution is one of the fundamental concepts of image processing (and
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Wed, 21 Jan 2015 00:00:00 -0500</pubDate><guid>tag:tonysyu.github.io,2015-01-21:pypath-magic-v03.html</guid><category>IPython</category><category>python</category><category>CLI</category></item><item><title>IPython (Jupyter) widgets: An image convolution demo</title><link>https://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html</link><description>&lt;p&gt;Convolution is one of the fundamental concepts of image processing (and
 more generally, signal processing). For the &lt;a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html"&gt;scikit-image tutorial at Scipy
 2014&lt;/a&gt;,
 I created an IPython widget to help visualize convolution. This post
@@ -436,7 +436,7 @@ what &lt;cite&gt;'none'&lt;/cite&gt; does for zoomed-in images) makes pixel boun
 &lt;span class="n"&gt;smooth_image&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gaussian_filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;smooth_image&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Blurred camera-man image" src="http://tonysyu.github.io/images/posts/2014/camera_man_with_blur.png" /&gt;
+&lt;img alt="Blurred camera-man image" src="https://tonysyu.github.io/images/posts/2014/camera_man_with_blur.png" /&gt;
 &lt;p&gt;... and filter the image using a convolution &lt;strong&gt;&amp;quot;kernel&amp;quot;&lt;/strong&gt; that looks like
 this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
@@ -448,14 +448,14 @@ this:&lt;/p&gt;
 &lt;span class="c"&gt;# values as blue.&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;horizontal_edge_kernel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RdBu&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Image of horizontal-Sobel kernel" src="http://tonysyu.github.io/images/posts/2014/horizontal_sobel_filter.png" /&gt;
+&lt;img alt="Image of horizontal-Sobel kernel" src="https://tonysyu.github.io/images/posts/2014/horizontal_sobel_filter.png" /&gt;
 &lt;p&gt;... to arrive at a result that looks like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.ndimage&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;convolve&lt;/span&gt;
 
 &lt;span class="n"&gt;horizontal_edge_response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;convolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;smooth_image&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;horizontal_edge_kernel&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;horizontal_edge_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RdBu&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Camera-man image after horizontal-Sobel filtering" src="http://tonysyu.github.io/images/posts/2014/camera_man_with_hsobel.png" /&gt;
+&lt;img alt="Camera-man image after horizontal-Sobel filtering" src="https://tonysyu.github.io/images/posts/2014/camera_man_with_hsobel.png" /&gt;
 &lt;p&gt;As the variable names suggest, this filter highlights the horizontal edges of
 an image. We'll see what's happening here later on.&lt;/p&gt;
 &lt;p&gt;(Note that the coloring in the kernel and the filtered image come from the
@@ -466,7 +466,7 @@ means that a value is negative, and the blue is positive.)&lt;/p&gt;
 &lt;h2&gt;An IPython widget for demonstrating image convolution&lt;/h2&gt;
 &lt;p&gt;We're going to develop an IPython widget that looks something like this:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="Image of convolution widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
+&lt;img alt="Image of convolution widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;The slider in the widget allows you to step through the convolution process for
 each pixel in an image. The image (a white square with a black background) used
@@ -854,7 +854,7 @@ this demo easier to understand:&lt;/p&gt;
 &lt;span class="n"&gt;bright_square&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bright_square&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Simple test image for demo" src="http://tonysyu.github.io/images/posts/2014/convolution_demo_test_image.png" /&gt;
+&lt;img alt="Simple test image for demo" src="https://tonysyu.github.io/images/posts/2014/convolution_demo_test_image.png" /&gt;
 &lt;p&gt;One of the classic smoothing filters is the mean filter. As you might
 expect, it calculates the mean under the kernel. The kernel itself is
 just the weights used for the mean. For 3x3 kernel, this looks like:&lt;/p&gt;
@@ -877,7 +877,7 @@ step-by-step:&lt;/p&gt;
                              &lt;span class="n"&gt;vmax&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;titles&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;titles&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which would create the following widget in an IPython notebook:&lt;/p&gt;
-&lt;img alt="First step of image of mean-filter widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_0.png" /&gt;
+&lt;img alt="First step of image of mean-filter widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_0.png" /&gt;
 &lt;p&gt;This sets up the widget at the first step of the convolution process. (As with
 most arrays/matrices, we'll start counting at the top-left corner). The
 filtered image (on the right) is unchanged because the kernel is centered on
@@ -891,8 +891,8 @@ padding (which was removed for display) allows us to handle those cases
 without too much trouble.&lt;/p&gt;
 &lt;p&gt;As you increment &lt;tt class="docutils literal"&gt;i_step&lt;/tt&gt;, you should see how the filtered image changes as
 non-zero pixels fall under the kernel:&lt;/p&gt;
-&lt;img alt="Intermediate step of image of mean-filter widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
-&lt;img alt="Final step of image of mean-filter widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_48.png" /&gt;
+&lt;img alt="Intermediate step of image of mean-filter widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
+&lt;img alt="Final step of image of mean-filter widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_48.png" /&gt;
 &lt;p&gt;After playing around with the widget, you should notice that the mean
 kernel is really simple:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -932,11 +932,11 @@ quite easily:&lt;/p&gt;
 &lt;span class="n"&gt;interactive_convolution_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bright_square&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;horizontal_edge_kernel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                              &lt;span class="n"&gt;vmin&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;vmax&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RdBu&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="First step of image of Sobel-filter widget" src="http://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_0.png" /&gt;
+&lt;img alt="First step of image of Sobel-filter widget" src="https://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_0.png" /&gt;
 &lt;p&gt;Again, we start off at a very boring region of the image, where all pixels
 under the kernel are zero. Incrementing the step shows the edge-filter at work:&lt;/p&gt;
-&lt;img alt="Intermediate step of image of Sobel-filter widget" src="http://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_18.png" /&gt;
-&lt;img alt="Final step of image of Sobel-filter widget" src="http://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_48.png" /&gt;
+&lt;img alt="Intermediate step of image of Sobel-filter widget" src="https://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_18.png" /&gt;
+&lt;img alt="Final step of image of Sobel-filter widget" src="https://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_48.png" /&gt;
 &lt;p&gt;Play around with the widget a bit. You should notice that:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;This filter responds to horizontal edges (i.e. it is sensitive to the
@@ -1001,7 +1001,7 @@ weighted sum.&lt;/li&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Mon, 01 Sep 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-09-01:ipython-jupyter-widgets-an-image-convolution-demo.html</guid><category>IPython</category><category>scikit-image</category><category>matplotlib</category><category>scipy</category><category>numpy</category></item><item><title>pypath-magic</title><link>http://tonysyu.github.io/pypath-magic.html</link><description>&lt;div class="section" id="pypath-an-ipython-magic-for-manipulating-your-python-path"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Mon, 01 Sep 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-09-01:ipython-jupyter-widgets-an-image-convolution-demo.html</guid><category>IPython</category><category>scikit-image</category><category>matplotlib</category><category>scipy</category><category>numpy</category></item><item><title>pypath-magic</title><link>https://tonysyu.github.io/pypath-magic.html</link><description>&lt;div class="section" id="pypath-an-ipython-magic-for-manipulating-your-python-path"&gt;
 &lt;h2&gt;&lt;tt class="docutils literal"&gt;%pypath&lt;/tt&gt;: An IPython magic for manipulating your Python path&lt;/h2&gt;
 &lt;p&gt;&lt;em&gt;Edit: Now with support for Python 3!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;You're a pragmatic Python developer, so you extract the logically related bits
@@ -1190,15 +1190,15 @@ $ python setup.py install
 &lt;h2&gt;License&lt;/h2&gt;
 &lt;p&gt;New BSD (a.k.a. Modified BSD). See &lt;a class="reference external" href="https://github.com/tonysyu/pypath-magic/blob/master/LICENSE"&gt;LICENSE&lt;/a&gt; file in this directory for details.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Mon, 04 Aug 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-08-04:pypath-magic.html</guid><category>IPython</category><category>python</category></item><item><title>Source control for scientists and soloists</title><link>http://tonysyu.github.io/source-control-for-scientists-and-soloists.html</link><description>&lt;a class="reference external image-reference" href="http://git-scm.com/"&gt;&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_logo.png" /&gt;&lt;/a&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Mon, 04 Aug 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-08-04:pypath-magic.html</guid><category>IPython</category><category>python</category></item><item><title>Source control for scientists and soloists</title><link>https://tonysyu.github.io/source-control-for-scientists-and-soloists.html</link><description>&lt;a class="reference external image-reference" href="http://git-scm.com/"&gt;&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_logo.png" /&gt;&lt;/a&gt;
 &lt;p&gt;Normally when people talk about source control, they focus on collaboration: If
 you're collaborating on code and you're not using source control, you're doing
 it wrong! If you're collaborating with others, source control looks roughly
 like this:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_collaborative_workspace.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_collaborative_workspace.png" /&gt;
 &lt;p&gt;If you're just working on your own code, though, you should still be
 using source control. The soloist's workspace will look something like this:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_solo_workspace.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_solo_workspace.png" /&gt;
 &lt;p&gt;Whether or not you have a remote repository depends on how much you trust your
 hard drive. If the above doesn't make sense, don't worry: These diagrams should
 (I hope) become clear shortly.&lt;/p&gt;
@@ -1254,7 +1254,7 @@ Apologies to the original authors of this code.&lt;/p&gt;
 &lt;div class="section" id="you-re-already-trying-to-fake-it"&gt;
 &lt;h3&gt;You're already trying to fake it!&lt;/h3&gt;
 &lt;p&gt;Here are some files from the code base I adopted.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/duplicates_directory.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/duplicates_directory.png" /&gt;
 &lt;p&gt;You can see there are some newer versions of some files, but the author didn't
 want get rid of the older files ... just in case. Or wait, are some parts of
 the code still using the older versions? Sure, you can easily search (grep,
@@ -1262,7 +1262,7 @@ the code still using the older versions? Sure, you can easily search (grep,
 do extra work: I'm lazy.&lt;/p&gt;
 &lt;p&gt;Let's look closer at the two duplicates at the bottom: &lt;tt class="docutils literal"&gt;id_paths.m&lt;/tt&gt; and
 &lt;tt class="docutils literal"&gt;id_paths2.m&lt;/tt&gt;. Here's is a &lt;tt class="docutils literal"&gt;diff&lt;/tt&gt; of those two files:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/id_paths_diff.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/id_paths_diff.png" /&gt;
 &lt;p&gt;Note that these files were a few hundred lines each, but the &lt;strong&gt;only&lt;/strong&gt;
 difference between these two files are the lines highlighted in red. If there's
 a newer version of something, just keep the newest version! Version control
@@ -1274,7 +1274,7 @@ a distraction.&lt;/p&gt;
 &lt;p&gt;(or: &amp;quot;Stop commenting out code and delete it already!&amp;quot;)&lt;/p&gt;
 &lt;p&gt;Sometimes you add debugging code when you're developing your algorithms, but
 the final product shouldn't have the code, so you do this:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/commented_out_code.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/commented_out_code.png" /&gt;
 &lt;p&gt;Notice the return statement in the middle of that code block. What you don't
 see above is that there are a few hundred more lines of code that never get
 run because of the early return statement. Keeping all that code around makes
@@ -1288,7 +1288,7 @@ code, save that separately so that you can easily focus on the important stuff.&
 some basic commands, you can get pretty far along.&lt;/p&gt;
 &lt;div class="section" id="git-init-create-a-repository"&gt;
 &lt;h3&gt;&lt;tt class="docutils literal"&gt;git init&lt;/tt&gt;: Create a repository&lt;/h3&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_init.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_init.png" /&gt;
 &lt;p&gt;This is important to know, but it isn't that exciting. You just go into the
 directory that contains all of your code (subdirectories will be included) and
 run &lt;tt class="docutils literal"&gt;git init&lt;/tt&gt; to create the git repository (i.e. &amp;quot;repo&amp;quot;). This just needs to
@@ -1303,7 +1303,7 @@ you really know how to &lt;em&gt;use&lt;/em&gt; it.)&lt;/p&gt;
 you're coming from some other version control systems. Many other version
 control systems just do what's equivalent to &lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--all&lt;/span&gt;&lt;/tt&gt; (or &lt;tt class="docutils literal"&gt;git
 commit &lt;span class="pre"&gt;-a&lt;/span&gt;&lt;/tt&gt;).&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_commit.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_commit.png" /&gt;
 &lt;p&gt;So let's assumed that we're just committing everything for now. This basically
 saves all your changes... &amp;quot;But wait, I've been saving my changes in my
 editor/IDE; hell, it even auto-saves.&amp;quot;&lt;/p&gt;
@@ -1325,7 +1325,7 @@ helps you group your changes better and helps you write a better, more
 &lt;p&gt;We're not always great at concentrating on a single change. Explicitly
 specifying the files you want to add to the commit will force you to be more
 organized about the changes you made.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_add.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_add.png" /&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;git add&lt;/tt&gt; puts your changes into what's called the &amp;quot;staging area&amp;quot;, and then
 then you call &lt;tt class="docutils literal"&gt;git commit&lt;/tt&gt; to commit everything from the staging area.&lt;/p&gt;
 &lt;p&gt;More advanced: If you've made changes that aren't really part of the same
@@ -1339,7 +1339,7 @@ made. Most scientists want a history of the calculations they've done with all
 the missteps and epiphanies documented. Sometimes you just don't remember why
 you did something. This is a quick way to look back in time when your memory
 fails you.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_log.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_log.png" /&gt;
 &lt;/div&gt;
 &lt;div class="section" id="git-diff-what-did-i-do"&gt;
 &lt;h3&gt;&lt;tt class="docutils literal"&gt;git diff&lt;/tt&gt;: What did I do?&lt;/h3&gt;
@@ -1348,7 +1348,7 @@ fails you.&lt;/p&gt;
 you've made some changes that weren't really part of the feature (e.g. print
 statements for debugging). &lt;tt class="docutils literal"&gt;git diff&lt;/tt&gt; allows you to check what has changed
 from the original implementation.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_diff.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_diff.png" /&gt;
 &lt;p&gt;More advanced: If you're using the staging area properly, you call
 &lt;tt class="docutils literal"&gt;git diff &lt;span class="pre"&gt;--staged&lt;/span&gt;&lt;/tt&gt; to make sure that all the code you've added really
 pertains to the (very descriptive) commit message you're going to write.&lt;/p&gt;
@@ -1359,7 +1359,7 @@ pertains to the (very descriptive) commit message you're going to write.&lt;/p&g
 &lt;p&gt;&amp;quot;I know my function didn't behave this way before,... wait am I sure about
 that?&amp;quot; Well, you can always go back to old code by checking out an older
 version.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_checkout.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_checkout.png" /&gt;
 &lt;p&gt;Now you can try it out to see if this random dataset &lt;em&gt;actually&lt;/em&gt; worked with
 the old code and figure out what changed.&lt;/p&gt;
 &lt;/div&gt;
@@ -1368,7 +1368,7 @@ the old code and figure out what changed.&lt;/p&gt;
 &lt;p&gt;We've all looked at some part of our code and forgotten why we added needed it.
 &lt;tt class="docutils literal"&gt;git blame&lt;/tt&gt; allows you to look each line of a file and figure out when it was
 added, and your commit message tells you why you added it.&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2014/git_blame.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2014/git_blame.png" /&gt;
 &lt;p&gt;Note that this only works well if your commit messages are informative.
 Otherwise, you still don't know why you wrote that perplexing line of code.&lt;/p&gt;
 &lt;/div&gt;
@@ -1409,7 +1409,7 @@ see the benefits until you've already invested a bit of time to learn it.&lt;/p&
 of the benefits of source control. But maybe there's a scientist out there who
 does need some convincing ...&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Fri, 25 Jul 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-07-25:source-control-for-scientists-and-soloists.html</guid><category>git</category><category>craftsmanship</category></item><item><title>Scikit-image tutorial at SciPy 2014</title><link>http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html</link><description>&lt;a class="reference external image-reference" href="http://scikit-image.org/"&gt;&lt;img alt="" src="http://tonysyu.github.io/images/design/skimage_logo.png" /&gt;&lt;/a&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Fri, 25 Jul 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-07-25:source-control-for-scientists-and-soloists.html</guid><category>git</category><category>craftsmanship</category></item><item><title>Scikit-image tutorial at SciPy 2014</title><link>https://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html</link><description>&lt;a class="reference external image-reference" href="http://scikit-image.org/"&gt;&lt;img alt="" src="https://tonysyu.github.io/images/design/skimage_logo.png" /&gt;&lt;/a&gt;
 &lt;p&gt;Juan Nunez-Iglesias, a fellow core-developer of &lt;a class="reference external" href="http://scikit-image.org/"&gt;scikit-image&lt;/a&gt;, and I gave
 a scikit-image tutorial at &lt;a class="reference external" href="https://conference.scipy.org/scipy2014/"&gt;SciPy 2014&lt;/a&gt;! I gave the first 2 hours (minus
 a quick intro), and Juan gave the second 2 hours. Surprisingly, this was the
@@ -1429,7 +1429,7 @@ doesn't have any introductory tutorial docs, so this is probably the most
 complete source for introductory material. I'd like to integrate these
 notebooks as a user guide on the website, but that may take a bit of time.&lt;/p&gt;
 &lt;p&gt;Enjoy!&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Wed, 23 Jul 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-07-23:scikit-image-tutorial-at-scipy-2014.html</guid><category>scikit-image</category></item><item><title>Animating particles in a flow</title><link>http://tonysyu.github.io/animating-particles-in-a-flow.html</link><description>&lt;p&gt;This article demonstrates matplotlib's &lt;a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html"&gt;animation&lt;/a&gt; module by animating marker
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Wed, 23 Jul 2014 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2014-07-23:scikit-image-tutorial-at-scipy-2014.html</guid><category>scikit-image</category></item><item><title>Animating particles in a flow</title><link>https://tonysyu.github.io/animating-particles-in-a-flow.html</link><description>&lt;p&gt;This article demonstrates matplotlib's &lt;a class="reference external" href="http://matplotlib.sourceforge.net/api/animation_api.html"&gt;animation&lt;/a&gt; module by animating marker
 particles in a fluid flow around a cylinder. It's a bit long because it ties
 together a number of different ideas:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -1654,7 +1654,7 @@ cylinder.  I haven't noticed much difference between matplotlib's &lt;tt class="
 implementation and the more-accurate functions in &lt;tt class="docutils literal"&gt;scipy.integrate&lt;/tt&gt;, but in
 real-world use, scipy's functions are preferred.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Mon, 02 Jul 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-07-02:animating-particles-in-a-flow.html</guid><category>matplotlib</category><category>sympy</category><category>scipy</category><category>mpltools</category><category>animation</category><category>fluids</category></item><item><title>Ragged arrays</title><link>http://tonysyu.github.io/ragged-arrays.html</link><description>&lt;p&gt;I often need to save a series of arrays in which &lt;em&gt;one&lt;/em&gt; dimension varies in
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Mon, 02 Jul 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-07-02:animating-particles-in-a-flow.html</guid><category>matplotlib</category><category>sympy</category><category>scipy</category><category>mpltools</category><category>animation</category><category>fluids</category></item><item><title>Ragged arrays</title><link>https://tonysyu.github.io/ragged-arrays.html</link><description>&lt;p&gt;I often need to save a series of arrays in which &lt;em&gt;one&lt;/em&gt; dimension varies in
 length---sometimes called a ragged array &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt;. For example, I'm running
 particle tracking experiments, and I need to save the 2D coordinates of all
 particles in each video frame. The number of particles in each frame will vary
@@ -1745,7 +1745,7 @@ I've reinvented the wheel; it won't be the last.&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Sun, 27 May 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-05-27:ragged-arrays.html</guid><category>numpy</category><category>io</category><category>data</category></item><item><title>Plotting streamlines with Matplotlib and SymPy</title><link>http://tonysyu.github.io/plotting-streamlines-with-matplotlib-and-sympy.html</link><description>&lt;p&gt;Fluid mechanics lends itself to some beautiful &lt;a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion"&gt;visualizations&lt;/a&gt; and &lt;a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029"&gt;images&lt;/a&gt;.
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Sun, 27 May 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-05-27:ragged-arrays.html</guid><category>numpy</category><category>io</category><category>data</category></item><item><title>Plotting streamlines with Matplotlib and SymPy</title><link>https://tonysyu.github.io/plotting-streamlines-with-matplotlib-and-sympy.html</link><description>&lt;p&gt;Fluid mechanics lends itself to some beautiful &lt;a class="reference external" href="http://pof.aip.org/gallery_of_fluid_motion"&gt;visualizations&lt;/a&gt; and &lt;a class="reference external" href="http://www.amazon.com/Album-Fluid-Motion-Milton-Dyke/dp/0915760029"&gt;images&lt;/a&gt;.
 I won't cover anything too complicated here, just potential flow, which any
 undergrad who has taken a fluid mechanics course should be (at least somewhat)
 familiar with.&lt;/p&gt;
@@ -1897,7 +1897,7 @@ tex2jax: {
 "HTML-CSS": { availableFonts: ["TeX"] }
 });
 &lt;/script&gt;
-&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Sat, 21 Apr 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-04-21:plotting-streamlines-with-matplotlib-and-sympy.html</guid><category>fluids</category><category>matplotlib</category><category>sympy</category></item><item><title>Plotting error bars</title><link>http://tonysyu.github.io/plotting-error-bars.html</link><description>&lt;p&gt;Let's say you have some continuous data with a continuous error (or variance)
+&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Sat, 21 Apr 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-04-21:plotting-streamlines-with-matplotlib-and-sympy.html</guid><category>fluids</category><category>matplotlib</category><category>sympy</category></item><item><title>Plotting error bars</title><link>https://tonysyu.github.io/plotting-error-bars.html</link><description>&lt;p&gt;Let's say you have some continuous data with a continuous error (or variance)
 measurement. Typically, you would just call matplotlib's &lt;cite&gt;errorbar&lt;/cite&gt; function:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
@@ -1910,7 +1910,7 @@ measurement. Typically, you would just call matplotlib's &lt;cite&gt;errorbar&lt
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which produces the following plot:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/plotting-error-bars-1.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2012/plotting-error-bars-1.png" /&gt;
 &lt;p&gt;The numerous error bars make the plot really noisy, and, in my opinion, they're
 really distracting. Instead, you could use matplotlib's &lt;cite&gt;fillbetween&lt;/cite&gt; to
 denote the error as a region in the plot. In the following, I try to imitate
@@ -1933,11 +1933,11 @@ denote the error as a region in the plot. In the following, I try to imitate
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which gives:&lt;/p&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/plotting-error-bars-2.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2012/plotting-error-bars-2.png" /&gt;
 &lt;p&gt;With the fill method, you lose information about the direction of the error
 (especially if you have errors in both x and y), but for most use cases, this
 works pretty well.&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Sat, 24 Mar 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-03-24:plotting-error-bars.html</guid><category>matplotlib</category><category>line plots</category></item><item><title>Line-color cycling</title><link>http://tonysyu.github.io/line-color-cycling.html</link><description>&lt;p&gt;When plotting a series of lines, it's nice to pull a series of colors from
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Tony S. Yu</dc:creator><pubDate>Sat, 24 Mar 2012 00:00:00 -0400</pubDate><guid>tag:tonysyu.github.io,2012-03-24:plotting-error-bars.html</guid><category>matplotlib</category><category>line plots</category></item><item><title>Line-color cycling</title><link>https://tonysyu.github.io/line-color-cycling.html</link><description>&lt;p&gt;When plotting a series of lines, it's nice to pull a series of colors from
 a colormap (especially if there's some sequential relationship between lines).
 In fact, this has been asked (and answered) multiple times on the Matplotlib
 mailing list (e.g., &lt;a class="footnote-reference" href="#id5" id="id1"&gt;[1]&lt;/a&gt; and &lt;a class="footnote-reference" href="#id6" id="id2"&gt;[2]&lt;/a&gt;) and on StackOverflow (e.g., &lt;a class="footnote-reference" href="#id7" id="id3"&gt;[3]&lt;/a&gt; and &lt;a class="footnote-reference" href="#id8" id="id4"&gt;[4]&lt;/a&gt;).&lt;/p&gt;
@@ -1960,7 +1960,7 @@ colors from the &amp;quot;cool&amp;quot; colormap to color each curve:&lt;/p&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/line-color-cycling-1.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2012/line-color-cycling-1.png" /&gt;
 &lt;p&gt;Alternatively, you can set the color cycle of the plot axes:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;axes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color_cycle&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n_lines&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
@@ -2006,7 +2006,7 @@ label those rates with different colors:&lt;/p&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="" src="http://tonysyu.github.io/images/posts/2012/line-color-cycling-2.png" /&gt;
+&lt;img alt="" src="https://tonysyu.github.io/images/posts/2012/line-color-cycling-2.png" /&gt;
 &lt;p&gt;To simplify this process, I wrote a simple factory function (function that
 returns a function) called &lt;a class="reference external" href="http://tonysyu.github.com/mpltools/auto_examples/plot_color_mapper.html"&gt;color_mapper&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;mpltools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="http://tonysyu.github.io/" rel="alternate"></link><link href="http://tonysyu.github.io/feeds/posts.atom.xml" rel="self"></link><id>http://tonysyu.github.io/</id><updated>2014-09-01T00:00:00-04:00</updated><entry><title>IPython (Jupyter) widgets: An image convolution demo</title><link href="http://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html" rel="alternate"></link><updated>2014-09-01T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-09-01:ipython-jupyter-widgets-an-image-convolution-demo.html</id><summary type="html">&lt;p&gt;Convolution is one of the fundamental concepts of image processing (and
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tony S. Yu</title><link href="https://tonysyu.github.io/" rel="alternate"></link><link href="https://tonysyu.github.io/feeds/posts.atom.xml" rel="self"></link><id>https://tonysyu.github.io/</id><updated>2014-09-01T00:00:00-04:00</updated><entry><title>IPython (Jupyter) widgets: An image convolution demo</title><link href="https://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html" rel="alternate"></link><updated>2014-09-01T00:00:00-04:00</updated><author><name>Tony S. Yu</name></author><id>tag:tonysyu.github.io,2014-09-01:ipython-jupyter-widgets-an-image-convolution-demo.html</id><summary type="html">&lt;p&gt;Convolution is one of the fundamental concepts of image processing (and
 more generally, signal processing). For the &lt;a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html"&gt;scikit-image tutorial at Scipy
 2014&lt;/a&gt;,
 I created an IPython widget to help visualize convolution. This post
@@ -41,7 +41,7 @@ what &lt;cite&gt;'none'&lt;/cite&gt; does for zoomed-in images) makes pixel boun
 &lt;span class="n"&gt;smooth_image&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gaussian_filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;smooth_image&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Blurred camera-man image" src="http://tonysyu.github.io/images/posts/2014/camera_man_with_blur.png" /&gt;
+&lt;img alt="Blurred camera-man image" src="https://tonysyu.github.io/images/posts/2014/camera_man_with_blur.png" /&gt;
 &lt;p&gt;... and filter the image using a convolution &lt;strong&gt;&amp;quot;kernel&amp;quot;&lt;/strong&gt; that looks like
 this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
@@ -53,14 +53,14 @@ this:&lt;/p&gt;
 &lt;span class="c"&gt;# values as blue.&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;horizontal_edge_kernel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RdBu&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Image of horizontal-Sobel kernel" src="http://tonysyu.github.io/images/posts/2014/horizontal_sobel_filter.png" /&gt;
+&lt;img alt="Image of horizontal-Sobel kernel" src="https://tonysyu.github.io/images/posts/2014/horizontal_sobel_filter.png" /&gt;
 &lt;p&gt;... to arrive at a result that looks like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.ndimage&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;convolve&lt;/span&gt;
 
 &lt;span class="n"&gt;horizontal_edge_response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;convolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;smooth_image&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;horizontal_edge_kernel&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;horizontal_edge_response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RdBu&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Camera-man image after horizontal-Sobel filtering" src="http://tonysyu.github.io/images/posts/2014/camera_man_with_hsobel.png" /&gt;
+&lt;img alt="Camera-man image after horizontal-Sobel filtering" src="https://tonysyu.github.io/images/posts/2014/camera_man_with_hsobel.png" /&gt;
 &lt;p&gt;As the variable names suggest, this filter highlights the horizontal edges of
 an image. We'll see what's happening here later on.&lt;/p&gt;
 &lt;p&gt;(Note that the coloring in the kernel and the filtered image come from the
@@ -71,7 +71,7 @@ means that a value is negative, and the blue is positive.)&lt;/p&gt;
 &lt;h2&gt;An IPython widget for demonstrating image convolution&lt;/h2&gt;
 &lt;p&gt;We're going to develop an IPython widget that looks something like this:&lt;/p&gt;
 &lt;div class="figure"&gt;
-&lt;img alt="Image of convolution widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
+&lt;img alt="Image of convolution widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
 &lt;/div&gt;
 &lt;p&gt;The slider in the widget allows you to step through the convolution process for
 each pixel in an image. The image (a white square with a black background) used
@@ -459,7 +459,7 @@ this demo easier to understand:&lt;/p&gt;
 &lt;span class="n"&gt;bright_square&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bright_square&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="Simple test image for demo" src="http://tonysyu.github.io/images/posts/2014/convolution_demo_test_image.png" /&gt;
+&lt;img alt="Simple test image for demo" src="https://tonysyu.github.io/images/posts/2014/convolution_demo_test_image.png" /&gt;
 &lt;p&gt;One of the classic smoothing filters is the mean filter. As you might
 expect, it calculates the mean under the kernel. The kernel itself is
 just the weights used for the mean. For 3x3 kernel, this looks like:&lt;/p&gt;
@@ -482,7 +482,7 @@ step-by-step:&lt;/p&gt;
                              &lt;span class="n"&gt;vmax&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;titles&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;titles&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;which would create the following widget in an IPython notebook:&lt;/p&gt;
-&lt;img alt="First step of image of mean-filter widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_0.png" /&gt;
+&lt;img alt="First step of image of mean-filter widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_0.png" /&gt;
 &lt;p&gt;This sets up the widget at the first step of the convolution process. (As with
 most arrays/matrices, we'll start counting at the top-left corner). The
 filtered image (on the right) is unchanged because the kernel is centered on
@@ -496,8 +496,8 @@ padding (which was removed for display) allows us to handle those cases
 without too much trouble.&lt;/p&gt;
 &lt;p&gt;As you increment &lt;tt class="docutils literal"&gt;i_step&lt;/tt&gt;, you should see how the filtered image changes as
 non-zero pixels fall under the kernel:&lt;/p&gt;
-&lt;img alt="Intermediate step of image of mean-filter widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
-&lt;img alt="Final step of image of mean-filter widget" src="http://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_48.png" /&gt;
+&lt;img alt="Intermediate step of image of mean-filter widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_19.png" /&gt;
+&lt;img alt="Final step of image of mean-filter widget" src="https://tonysyu.github.io/images/posts/2014/mean_filter_demo_step_48.png" /&gt;
 &lt;p&gt;After playing around with the widget, you should notice that the mean
 kernel is really simple:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -537,11 +537,11 @@ quite easily:&lt;/p&gt;
 &lt;span class="n"&gt;interactive_convolution_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bright_square&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;horizontal_edge_kernel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                              &lt;span class="n"&gt;vmin&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;vmax&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RdBu&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;img alt="First step of image of Sobel-filter widget" src="http://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_0.png" /&gt;
+&lt;img alt="First step of image of Sobel-filter widget" src="https://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_0.png" /&gt;
 &lt;p&gt;Again, we start off at a very boring region of the image, where all pixels
 under the kernel are zero. Incrementing the step shows the edge-filter at work:&lt;/p&gt;
-&lt;img alt="Intermediate step of image of Sobel-filter widget" src="http://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_18.png" /&gt;
-&lt;img alt="Final step of image of Sobel-filter widget" src="http://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_48.png" /&gt;
+&lt;img alt="Intermediate step of image of Sobel-filter widget" src="https://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_18.png" /&gt;
+&lt;img alt="Final step of image of Sobel-filter widget" src="https://tonysyu.github.io/images/posts/2014/sobel_filter_demo_step_48.png" /&gt;
 &lt;p&gt;Play around with the widget a bit. You should notice that:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;This filter responds to horizontal edges (i.e. it is sensitive to the
