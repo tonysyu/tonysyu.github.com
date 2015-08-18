@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>numpy - Tony S. Yu</title>
+    <title>Code - Tony S. Yu</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,19 +10,19 @@
 
 
 
+<link rel="canonical" href="https://tonysyu.github.io/pages/code.html">
 
-    <meta name="author" content="Tony S. Yu" />
-    <meta name="keywords" content="numpy" />
+        <meta name="author" content="Tony S. Yu" />
+        <meta name="description" content="I come from a background in scientific research, so most of my open source contributions are related to data analysis and visualization in Python. That said, my day job is no longer science and uses Perl, Javascript, and C#; maybe I&#39;ll start having a bit more variety in the ..." />
 
     <!-- Enable latex plugin -->
 
 
-    <!-- Open Graph tags -->
-        <meta property="og:site_name" content="Tony S. Yu" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="Tony S. Yu"/>
-        <meta property="og:url" content="https://tonysyu.github.io"/>
-        <meta property="og:description" content="Tony S. Yu"/>
+    <meta property="og:site_name" content="Tony S. Yu" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Code"/>
+    <meta property="og:url" content="https://tonysyu.github.io/pages/code.html"/>
+    <meta property="og:description" content="I come from a background in scientific research, so most of my open source contributions are related to data analysis and visualization in Python. That said, my day job is no longer science and uses Perl, Javascript, and C#; maybe I&#39;ll start having a bit more variety in the ..." />
 
 
     <!-- Bootstrap -->
@@ -85,29 +85,98 @@ Tony S. Yu            </a>
     <div class="row">
         <div class="col-sm-9">
 
-            <article>
-                <h2><a href="https://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html">IPython (Jupyter) widgets: An image convolution demo</a></h2>
-                <div class="summary"><p>Convolution is one of the fundamental concepts of image processing (and
-more generally, signal processing). For the <a class="reference external" href="http://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html">scikit-image tutorial at Scipy
-2014</a>,
-I created an IPython widget to help visualize convolution. This post
-explains that widget in more detail.</p>
-<p>Only a small portion of this post is actually about using ...</p>
-                    <a class="btn btn-default btn-xs" href="https://tonysyu.github.io/ipython-jupyter-widgets-an-image-convolution-demo.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="https://tonysyu.github.io/ragged-arrays.html">Ragged arrays</a></h2>
-                <div class="summary"><p>I often need to save a series of arrays in which <em>one</em> dimension varies in
-length---sometimes called a ragged array <a class="footnote-reference" href="#id2" id="id1">[1]</a>. For example, I'm running
-particle tracking experiments, and I need to save the 2D coordinates of all
-particles in each video frame. The number of particles in each ...</p>
-                    <a class="btn btn-default btn-xs" href="https://tonysyu.github.io/ragged-arrays.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
+    <section id="content" class="body">
+        <h1 class="entry-title">Code</h1>
+        
+        <div class="entry-content">
+            <p>I come from a background in scientific research, so most of my open source
+contributions are related to data analysis and visualization in Python. That
+said, my day job is no longer science and uses Perl, Javascript, and C#;
+maybe I'll start having a bit more variety in the near future.</p>
+<div class="section" id="personal-projects">
+<h2>Personal projects</h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">pypath-magic</span></tt>: An IPython magic function, that turned into a command-line
+utility, for manipulating your Python path.
+(<a class="reference external" href="https://tonysyu.github.io/pypath-magic-v03.html#.VdEVHVNViko">CLI</a> |
+<a class="reference external" href="https://tonysyu.github.io/pypath-magic.html#.VdEVOVNViko">IPython-magic</a> |
+<a class="reference external" href="https://github.com/tonysyu/pypath-magic">github</a>).</li>
+<li><tt class="docutils literal"><span class="pre">matplotlib-style-gallery</span></tt>: A simple gallery for viewing and comparing
+matplotlib style sheets
+(<a class="reference external" href="https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html">static gallery</a> |
+<a class="reference external" href="https://github.com/tonysyu/matplotlib-style-gallery">github</a>).</li>
+<li><tt class="docutils literal">mpltools</tt>: A collection of tools for working with <a class="reference external" href="http://matplotlib.sourceforge.net/">matplotlib</a> that I
+developed during my Ph.D. and postdoc. I don't actively develop it anymore,
+but I keep it around for posterity. The most interesting bits are a
+subpackage for manipulating visual styles (which was integrated into
+<tt class="docutils literal">matplotlib.style</tt>) and the <a class="reference external" href="https://tonysyu.github.io/mpltools/auto_examples/sphinx/plot_plot2rst.html">plot2rst</a> Sphinx extension, which I used for
+creating examples in <tt class="docutils literal"><span class="pre">scikit-image</span></tt>.
+(<a class="reference external" href="https://tonysyu.github.io/mpltools/">docs</a> |
+<a class="reference external" href="https://tonysyu.github.io/mpltools/auto_examples/index.html">gallery</a> |
+<a class="reference external" href="https://github.com/tonysyu/mpltools">github</a>).</li>
+</ul>
+</div>
+<div class="section" id="presentations">
+<h2>Presentations</h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">scikit-image</span></tt> tutorial at SciPy 2014.
+(<a class="reference external" href="https://tonysyu.github.io/scikit-image-tutorial-at-scipy-2014.html">video</a> |
+<a class="reference external" href="https://github.com/scikit-image/skimage-tutorials/tree/master/2014-scipy">notebooks</a>)</li>
+<li>Lightening talk for <tt class="docutils literal"><span class="pre">scikit-image</span></tt> viewer at SciPy 2013.
+(<a class="reference external" href="https://www.youtube.com/watch?v=ywHqIEv3xXg&amp;feature=youtu.be&amp;t=20m57s">video</a> |
+<a class="reference external" href="https://github.com/tonysyu/skimage-viewer-demo-Scipy2013">code</a>)</li>
+</ul>
+</div>
+<div class="section" id="contributions">
+<h2>Contributions</h2>
+<p>I've contributed to a number of open-source packages---particularly packages
+in the scientific Python stack. Most of those contributions were bug fixes or
+examples. A few of the more notable contributions are listed below.</p>
+<div class="section" id="scikit-image">
+<h3><cite>scikit-image</cite></h3>
+<p>Technically, I'm a core developer on the <a class="reference external" href="http://scikit-image.org/">scikit-image</a> project, but I haven't
+contributed anything substantial recently because I don't do much image
+processing these days.</p>
+<ul class="simple">
+<li><tt class="docutils literal">skimage.viewer</tt> package for interactive image processing and
+analysis using Qt
+(<a class="reference external" href="http://scikit-image.org/docs/dev/user_guide/viewer.html">demo</a> |
+<a class="reference external" href="https://github.com/scikit-image/scikit-image/pull/229">PR</a>).</li>
+<li><tt class="docutils literal">label2rgb</tt> function for turning labeled images to false-color
+overlays (really useful for displaying segmentation results)
+(<a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/plot_join_segmentations.html">demo</a> |
+<a class="reference external" href="https://github.com/scikit-image/scikit-image/pull/485">PR</a>).</li>
+<li>Improvements to <tt class="docutils literal"><span class="pre">scikit-image</span></tt> gallery allowing plots to be easily
+embedded in the documentation
+(<a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/">gallery</a> |
+<a class="reference external" href="https://github.com/scikit-image/scikit-image/pull/190">PR</a>).</li>
+<li>Morphological reconstruction function
+(<a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/plot_holes_and_peaks.html">demo</a>
+| <a class="reference external" href="https://github.com/scikit-image/scikit-image/pull/215">PR</a>).</li>
+<li>Otsu thresholding function
+(<a class="reference external" href="http://scikit-image.org/docs/dev/auto_examples/plot_otsu.html">demo</a> |
+<a class="reference external" href="https://github.com/scikit-image/scikit-image/commit/fbbe38765d4afa7de1126540c31150a3ba94f862">commit</a>).</li>
+</ul>
+</div>
+<div class="section" id="matplotlib">
+<h3><cite>matplotlib</cite></h3>
+<ul class="simple">
+<li><tt class="docutils literal">matplotlib.style</tt> package for easily switching between style sheets
+in matplotlib
+(<a class="reference external" href="http://matplotlib.org/examples/style_sheets/plot_ggplot.html">demo</a> |
+<a class="reference external" href="https://github.com/matplotlib/matplotlib/pull/2236">PR</a>).</li>
+<li><tt class="docutils literal">streamplot</tt> method/function for plotting streamlines
+(<a class="reference external" href="http://matplotlib.org/examples/images_contours_and_fields/streamplot_demo_features.html">demo</a> |
+<a class="reference external" href="https://github.com/matplotlib/matplotlib/pull/664">PR</a>).</li>
+<li><tt class="docutils literal">LassoSelector</tt> for interactive data selection
+(<a class="reference external" href="http://matplotlib.org/examples/widgets/lasso_selector_demo.html">demo</a> |
+<a class="reference external" href="https://github.com/matplotlib/matplotlib/pull/730">PR</a>).</li>
+</ul>
+</div>
+</div>
 
+        </div>
+    </section>
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 
@@ -268,7 +337,7 @@ particles in each video frame. The number of particles in each ...</p>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Tony S. Yu
+         <div class="col-xs-10">&copy; 2015 Tony S. Yu
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
