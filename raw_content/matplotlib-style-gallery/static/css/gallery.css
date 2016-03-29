@@ -69,13 +69,24 @@ Lightbox implementation adapted from:
     display: none; /* Hide by default */
 }
 
-#lightbox p {
-    color: #fff;
+#lightbox #instructions,
+#lightbox #instructions p {
+    color: #ddd;
     font-size: 12px;
     text-align: right;
     max-width: 100%;
     margin-right: 20px;
+    line-height: 5px;
 }
+
+#lightbox #plot-info,
+#lightbox #plot-info p,
+#lightbox #plot-info p span {
+    color: #ddd;
+    max-width: 100%;
+    line-height: 5px;
+}
+
 
 /*
 ------------------------------------------------------------------------------
