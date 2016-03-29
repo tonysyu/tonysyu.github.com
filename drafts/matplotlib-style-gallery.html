@@ -10,7 +10,7 @@
 
 
 
-<link rel="canonical" href="https://tonysyu.github.io/drafts/matplotlib-style-gallery.html">
+<link rel="canonical" href="/drafts/matplotlib-style-gallery.html">
 
         <meta name="author" content="Tony S. Yu" />
         <meta name="keywords" content="matplotlib" />
@@ -22,19 +22,19 @@
 
 
     <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://tonysyu.github.io/theme/css/bootstrap.min.css" type="text/css"/>
-    <link href="https://tonysyu.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="https://tonysyu.github.io/theme/css/pygments/friendly.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://tonysyu.github.io/theme/css/style.css" type="text/css"/>
-        <link href="https://tonysyu.github.io/static/custom.css" rel="stylesheet">
+    <link href="/theme/css/pygments/friendly.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+        <link href="/static/custom.css" rel="stylesheet">
 
-        <link href="https://tonysyu.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="Tony S. Yu ATOM Feed"/>
 
 
-        <link href="https://tonysyu.github.io/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Tony S. Yu posts ATOM Feed"/>
+        <link href="/feeds/2016.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu 2016 ATOM Feed"/>
 
 </head>
 <body>
@@ -48,7 +48,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="https://tonysyu.github.io/" class="navbar-brand">
+            <a href="/" class="navbar-brand">
 Tony S. Yu            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -60,7 +60,7 @@ Tony S. Yu            </a>
                     <li><a href="/pages/design.html">Design</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://tonysyu.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+                <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -75,7 +75,7 @@ Tony S. Yu            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://tonysyu.github.io/drafts/matplotlib-style-gallery.html"
+                    <a href="/drafts/matplotlib-style-gallery.html"
                        rel="bookmark"
                        title="Permalink to Matplotlib Style Gallery">
                         Matplotlib Style Gallery
@@ -88,7 +88,7 @@ Tony S. Yu            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2015-01-05T00:00:00-05:00"> Mon 05 January 2015</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-03-29T00:00:00-04:00"> Tue 29 March 2016</time>
     </span>
 
 
@@ -97,7 +97,7 @@ Tony S. Yu            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://tonysyu.github.io/tag/matplotlib.html">matplotlib</a>
+	<a href="/tag/matplotlib.html">matplotlib</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -113,26 +113,28 @@ based on the implementation in
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="" src="https://tonysyu.github.io/images/posts/2015/hist-plot-defaults.png" />
+<img alt="" src="/images/posts/2016/hist-plot-defaults.png" />
 <p>Into a plot that looks like this:</p>
 <div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;ggplot&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<img alt="" src="https://tonysyu.github.io/images/posts/2015/hist-plot-ggplot.png" />
+<img alt="" src="/images/posts/2016/hist-plot-ggplot.png" />
 <p>Currently, there are only a handful of style-sheets included with Matplotlib,
 but even now, it may be difficult to choose between what's available <a class="footnote-reference" href="#id4" id="id2">[2]</a>.
-For easier comparison, I've created a <a class="reference external" href="https://matplotlib-style-gallery.herokuapp.com/">gallery app</a> to easily compare existing
+For easier comparison, I've created a <a class="reference external" href="https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html">gallery page</a> to easily compare existing
 style-sheets:</p>
-<a class="reference external image-reference" href="https://matplotlib-style-gallery.herokuapp.com/"><img alt="" src="https://tonysyu.github.io/images/posts/2014/style-gallery-snap-shot.png" /></a>
+<a class="reference external image-reference" href="https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html"><img alt="" src="/images/posts/2016/style-gallery-snap-shot.png" /></a>
 <p>The actual gallery app also allows you to compare custom style-sheets by
 passing a URL, or explicitly defining a style sheet
 (using <a class="reference external" href="http://matplotlib.org/users/customizing.html">matplotlibrc syntax</a>).</p>
 <p><strong>Note</strong> that this app is not properly designed for concurrent usage, so inputs
-have been disabled in the deployed <a class="reference external" href="https://matplotlib-style-gallery.herokuapp.com/">gallery app</a>. If you actually want to
-compare custom style-sheets
+have been disabled in the deployed <a class="reference external" href="https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html">gallery page</a>. You can select a given plot
+to zoom in and navigate between zoomed in plots with arrow keys.</p>
+<p>If you actually want to compare custom style-sheets
 <a class="reference external" href="https://github.com/tonysyu/matplotlib-style-gallery">download the gallery</a>
-app and run it locally.</p>
+app and run it locally. From there, you can enter URLs to custom style sheets
+or enter stylesheet settings directly.</p>
 <table class="docutils footnote" frame="void" id="id3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -170,7 +172,7 @@ app and run it locally.</p>
             var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
 
                     var disqus_identifier = 'matplotlib-style-gallery';
-                var disqus_url = 'https://tonysyu.github.io/drafts/matplotlib-style-gallery.html';
+                var disqus_url = '/drafts/matplotlib-style-gallery.html';
 
             var disqus_config = function () {
                 this.language = "en";
@@ -236,7 +238,7 @@ app and run it locally.</p>
 
 
 
-                <li class="list-group-item"><a href="https://tonysyu.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <li class="list-group-item"><a href="/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group" id="tags">
                     </ul>
                 </li>
@@ -261,13 +263,13 @@ app and run it locally.</p>
       </div>
    </div>
 </footer>
-<script src="https://tonysyu.github.io/theme/js/jquery.min.js"></script>
+<script src="/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://tonysyu.github.io/theme/js/bootstrap.min.js"></script>
+<script src="/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-<script src="https://tonysyu.github.io/theme/js/respond.min.js"></script>
+<script src="/theme/js/respond.min.js"></script>
 
     <!-- Disqus -->
     <script type="text/javascript">

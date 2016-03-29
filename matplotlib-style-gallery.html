@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Favorite vim commands - Tony S. Yu</title>
+    <title>Matplotlib Style Gallery - Tony S. Yu</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,11 +10,11 @@
 
 
 
-<link rel="canonical" href="https://tonysyu.github.io/drafts/favorite-vim-commands.html">
+<link rel="canonical" href="https://tonysyu.github.io/matplotlib-style-gallery.html">
 
         <meta name="author" content="Tony S. Yu" />
-        <meta name="keywords" content="vim" />
-        <meta name="description" content="Normal mode .: repeat command I use this frequently to replace the more cumbersome multiplier convention. For example, instead of d3w to delete 3 words in front of the cursor, I would most likely use dw.. to delete next word and repeat twice. I find this to be much easier than ..." />
+        <meta name="keywords" content="matplotlib" />
+        <meta name="description" content="This post is more than a year in the making (life got in the way), so this isn&#39;t exactly hot off the press. I added support for style-sheets back in Matplotlib 1.4, based on my implementation in mpltools [1], and built a gallery page to easily compare styles ..." />
 
     <!-- Enable latex plugin -->
 
@@ -33,8 +33,8 @@
               title="Tony S. Yu ATOM Feed"/>
 
 
-        <link href="https://tonysyu.github.io/feeds/posts.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Tony S. Yu posts ATOM Feed"/>
+        <link href="https://tonysyu.github.io/feeds/2016.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Tony S. Yu 2016 ATOM Feed"/>
 
 </head>
 <body>
@@ -75,10 +75,10 @@ Tony S. Yu            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://tonysyu.github.io/drafts/favorite-vim-commands.html"
+                    <a href="https://tonysyu.github.io/matplotlib-style-gallery.html"
                        rel="bookmark"
-                       title="Permalink to Favorite vim commands">
-                        Favorite vim commands
+                       title="Permalink to Matplotlib Style Gallery">
+                        Matplotlib Style Gallery
                     </a>
                 </h1>
             </header>
@@ -88,7 +88,7 @@ Tony S. Yu            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2013-12-31T00:00:00-05:00"> Tue 31 December 2013</time>
+        <i class="fa fa-calendar"></i><time datetime="2016-03-29T00:00:00-04:00"> Tue 29 March 2016</time>
     </span>
 
 
@@ -97,28 +97,55 @@ Tony S. Yu            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://tonysyu.github.io/tag/vim.html">vim</a>
+	<a href="https://tonysyu.github.io/tag/matplotlib.html">matplotlib</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <div class="section" id="normal-mode">
-<h2>Normal mode</h2>
-<dl class="docutils">
-<dt><cite>.</cite>: repeat command</dt>
-<dd>I use this frequently to replace the more cumbersome multiplier convention.
-For example, instead of <cite>d3w</cite> to delete 3 words in front of the cursor,
-I would most likely use <cite>dw..</cite> to delete next word and repeat twice. I find
-this to be much easier than counting letters, words, lines, etc.</dd>
-<dt><cite>;</cite>: repeat last line-search movement</dt>
-<dd>By line-search movment, I mean <cite>f</cite>, <cite>F</cite>, <cite>t</cite>, <cite>T</cite> commands. If I want</dd>
-<dt><cite>g;</cite>: go to previous edit</dt>
-<dd>With other text editors, I find myself using undo to find a place in
-a file. If you just want to go back to the last edited position, that's not
-a bad solution. But, if you want to go to the edit before that, then it
-gets difficult (because you have to redo (or undo?) the previous &quot;undo&quot;s).
-With vim, you can just do <cite>g;g;</cite>---repeat as necessary.</dd>
-</dl>
-</div>
+                <p>This post is more than a year in the making (life got in the way), so this
+isn't exactly hot off the press. I added support for style-sheets back in <a class="reference external" href="http://matplotlib.org/1.4.2/users/whats_new.html#style-package-added">Matplotlib 1.4</a>,
+based on my implementation in
+<a class="reference external" href="https://github.com/tonysyu/mpltools">mpltools</a> <a class="footnote-reference" href="#id3" id="id1">[1]</a>, and built a <a class="reference external" href="https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html">gallery
+page</a> to easily compare styles.</p>
+<p>Style-sheets allow you to turn a plot that looks like this:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+<img alt="" src="https://tonysyu.github.io/images/posts/2016/hist-plot-defaults.png" />
+<p>Into a plot that looks like this:</p>
+<div class="highlight"><pre><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;ggplot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+<img alt="" src="https://tonysyu.github.io/images/posts/2016/hist-plot-ggplot.png" />
+<p>Currently, there are only a handful of style-sheets included with Matplotlib,
+but even now, it may be difficult to choose between what's available <a class="footnote-reference" href="#id4" id="id2">[2]</a>.
+For easier comparison, I've created a <a class="reference external" href="https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html">gallery page</a> to easily compare existing
+style-sheets:</p>
+<a class="reference external image-reference" href="https://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html"><img alt="" src="https://tonysyu.github.io/images/posts/2016/style-gallery-snap-shot.png" /></a>
+<p>You can select a given plot to zoom in and navigate between zoomed in plots
+with arrow keys.</p>
+<p>This page disables user input, but the actual gallery app
+(<a class="reference external" href="https://github.com/tonysyu/matplotlib-style-gallery">github repo</a>)
+also allows you to compare custom style-sheets by passing a URL, or explicitly
+defining a style sheet
+(using <a class="reference external" href="http://matplotlib.org/users/customizing.html">matplotlibrc syntax</a>).</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://github.com/matplotlib/matplotlib/pull/2236">https://github.com/matplotlib/matplotlib/pull/2236</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://github.com/matplotlib/matplotlib/pull/3190">https://github.com/matplotlib/matplotlib/pull/3190</a></td></tr>
+</tbody>
+</table>
 
             </div>
             <!-- /.entry-content -->
@@ -143,8 +170,8 @@ With vim, you can just do <cite>g;g;</cite>---repeat as necessary.</dd>
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'tonysyu'; // required: replace example with your forum shortname
 
-                    var disqus_identifier = 'favorite-vim-commands';
-                var disqus_url = 'https://tonysyu.github.io/drafts/favorite-vim-commands.html';
+                    var disqus_identifier = 'matplotlib-style-gallery';
+                var disqus_url = 'https://tonysyu.github.io/matplotlib-style-gallery.html';
 
             var disqus_config = function () {
                 this.language = "en";
